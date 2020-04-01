@@ -13,8 +13,35 @@ public class Text {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String message;
+  private int cookerId;
+  private int ownerId;
+  private int customerId;
 
   public Text() {
+  }
+
+  public int getCookerId() {
+    return cookerId;
+  }
+
+  public void setCookerId(int cookerId) {
+    this.cookerId = cookerId;
+  }
+
+  public int getOwnerId() {
+    return ownerId;
+  }
+
+  public void setOwnerId(int ownerId) {
+    this.ownerId = ownerId;
+  }
+
+  public int getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(int customerId) {
+    this.customerId = customerId;
   }
 
   public int getId() {

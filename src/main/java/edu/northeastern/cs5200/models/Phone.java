@@ -14,6 +14,7 @@ public class Phone {
   private int id;
   private String phone;
   private boolean primary;
+  private Person person;
 
   public Phone() {
   }
@@ -40,5 +41,13 @@ public class Phone {
 
   public void setPrimary(boolean primary) {
     this.primary = primary;
+  }
+
+  public Person getPerson() {
+    return person;
+  }
+
+  public void setPerson(Person person) {
+    this.person = person;
   }
 }

@@ -14,8 +14,26 @@ public class FoodItem {
   private int id;
   private String name;
   private FoodCategory category;
+  private int menuId;
+  private int orderListId;
 
   public FoodItem() {
+  }
+
+  public int getMenuId() {
+    return menuId;
+  }
+
+  public int getOrderListId() {
+    return orderListId;
+  }
+
+  public void setOrderListId(int orderListId) {
+    this.orderListId = orderListId;
+  }
+
+  public void setMenuId(int menuId) {
+    this.menuId = menuId;
   }
 
   public int getId() {

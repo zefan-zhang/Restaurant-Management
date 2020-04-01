@@ -18,6 +18,7 @@ public class Address {
   private String state;
   private int zip;
   private boolean primary;
+  private Person person;
 
   public Address() {
   }
@@ -77,5 +78,13 @@ public class Address {
 
   public void setPrimary(boolean primary) {
     this.primary = primary;
+  }
+
+  public Person getPerson() {
+    return person;
+  }
+
+  public void setPerson(Person person) {
+    this.person = person;
   }
 }

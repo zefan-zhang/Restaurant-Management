@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Collection;
 
 @Entity
 @Table(name = "menus")
@@ -14,8 +15,26 @@ public class Menu {
   private int id;
   private String itemName;
   private double price;
+  private Collection<FoodItem> foodItems;
+  private int customerId;
 
   public Menu() {
+  }
+
+  public int getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(int customerId) {
+    this.customerId = customerId;
+  }
+
+  public Collection<FoodItem> getFoodItems() {
+    return foodItems;
+  }
+
+  public void setFoodItems(Collection<FoodItem> foodItems) {
+    this.foodItems = foodItems;
   }
 
   public int getId() {

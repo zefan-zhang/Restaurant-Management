@@ -1,6 +1,9 @@
 package edu.northeastern.cs5200.models;
 
+import net.bytebuddy.asm.Advice;
+
 import java.sql.Date;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +27,13 @@ public class Person {
   private String gender;
   private String email;
   private Date dob;
+  private Collection<Phone> phones;
+  private Collection<Address> addresses;
 
   public Person() {
   }
 
-  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
+  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob, Collection<Phone> phones, Collection<Address> addresses) {
     this.fistName = fistName;
     this.lastName = lastName;
     this.username = username;
@@ -36,6 +41,8 @@ public class Person {
     this.gender = gender;
     this.email = email;
     this.dob = dob;
+    this.phones = phones;
+    this.addresses = addresses;
   }
 
   public int getId() {
@@ -100,5 +107,21 @@ public class Person {
 
   public void setDob(Date dob) {
     this.dob = dob;
+  }
+
+  public Collection<Phone> getPhones() {
+    return phones;
+  }
+
+  public void setPhones(Collection<Phone> phones) {
+    this.phones = phones;
+  }
+
+  public Collection<Address> getAddresses() {
+    return addresses;
+  }
+
+  public void setAddresses(Collection<Address> addresses) {
+    this.addresses = addresses;
   }
 }
