@@ -1,24 +1,20 @@
 package edu.northeastern.cs5200.models;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.util.Collection;
 
 @Entity
+@Table(name = "owner")
 public class Owner extends Person{
-
   private int id;
+
+  @OneToMany(mappedBy = "owner")
   private Collection<Text> texts;
-  private int contractId;
 
   public Owner() {
-  }
-
-  public int getContractId() {
-    return contractId;
-  }
-
-  public void setContractId(int contractId) {
-    this.contractId = contractId;
   }
 
   @Override

@@ -1,29 +1,30 @@
 package edu.northeastern.cs5200.models;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.util.Collection;
 
 @Entity
+@Table(name = "customer")
 public class Customer extends Person {
 
   private boolean userAgreement;
   private boolean VIP;
   private String paymentMethod;
 
+  @OneToMany(mappedBy = "customer")
   private Collection<Menu> menus;
+
+  @OneToMany(mappedBy = "customer")
   private Collection<Order> orders;
+
+  @OneToMany(mappedBy = "customer")
   private Collection<Text> texts;
-  private int foodReviewId;
+
 
   public Customer() {
-  }
-
-  public int getFoodReviewId() {
-    return foodReviewId;
-  }
-
-  public void setFoodReviewId(int foodReviewId) {
-    this.foodReviewId = foodReviewId;
   }
 
   public Collection<Text> getTexts() {

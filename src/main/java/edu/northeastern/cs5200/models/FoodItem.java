@@ -4,36 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "fooditems")
+@Table(name = "foodItem")
 public class FoodItem {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
   private FoodCategory category;
-  private int menuId;
-  private int orderListId;
+
+  @ManyToOne()
+  private Menu menu;
+
+  @ManyToOne()
+  private OrderList orderList;
 
   public FoodItem() {
-  }
-
-  public int getMenuId() {
-    return menuId;
-  }
-
-  public int getOrderListId() {
-    return orderListId;
-  }
-
-  public void setOrderListId(int orderListId) {
-    this.orderListId = orderListId;
-  }
-
-  public void setMenuId(int menuId) {
-    this.menuId = menuId;
   }
 
   public int getId() {
@@ -58,5 +47,21 @@ public class FoodItem {
 
   public void setCategory(FoodCategory category) {
     this.category = category;
+  }
+
+  public void setMenu(Menu menu) {
+    this.menu = menu;
+  }
+
+  public Menu getMenu() {
+    return menu;
+  }
+
+  public void setOrderList(OrderList orderList){
+    this.orderList = orderList;
+  }
+
+  public OrderList getOrderList() {
+    return orderList;
   }
 }

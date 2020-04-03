@@ -4,26 +4,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.util.Collection;
 
 @Entity
-
+@Table(name = "cooker")
 public class Cooker extends Person{
   private int level;
   private String responsibility;
+
+  @OneToMany(mappedBy = "cooker")
   private Collection<Order> orders;
+
+  @OneToMany(mappedBy = "cooker")
   private Collection<Text> texts;
-  private int contractId;
 
   public Cooker() {
-  }
-
-  public int getContractId() {
-    return contractId;
-  }
-
-  public void setContractId(int contractId) {
-    this.contractId = contractId;
   }
 
   public Collection<Text> getTexts() {

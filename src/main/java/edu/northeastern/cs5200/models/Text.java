@@ -7,41 +7,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "texts")
+@Table(name = "text")
 public class Text {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String message;
-  private int cookerId;
-  private int ownerId;
-  private int customerId;
+  private Cooker cooker;
+  private Owner owner;
+  private Customer customer;
 
   public Text() {
   }
 
-  public int getCookerId() {
-    return cookerId;
+  public Cooker getCooker() {
+    return cooker;
   }
 
-  public void setCookerId(int cookerId) {
-    this.cookerId = cookerId;
+  public void setCooker(Cooker cooker) {
+    this.cooker = cooker;
   }
 
-  public int getOwnerId() {
-    return ownerId;
+  public Owner getOwner() {
+    return owner;
   }
 
-  public void setOwnerId(int ownerId) {
-    this.ownerId = ownerId;
+  public void setOwner(Owner owner) {
+    this.owner = owner;
   }
 
-  public int getCustomerId() {
-    return customerId;
+  public Customer getCustomer() {
+    return customer;
   }
 
-  public void setCustomerId(int customerId) {
-    this.customerId = customerId;
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
   public int getId() {

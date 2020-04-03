@@ -4,11 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "orderlists")
+@Table(name = "orderList")
 public class OrderList {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,7 @@ public class OrderList {
 
   private int orderId;
 
+  @OneToMany(mappedBy = "orderList")
   private Collection<FoodItem> foodItems;
 
   public OrderList() {

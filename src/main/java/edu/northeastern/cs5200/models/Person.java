@@ -1,7 +1,5 @@
 package edu.northeastern.cs5200.models;
 
-import net.bytebuddy.asm.Advice;
-
 import java.sql.Date;
 import java.util.Collection;
 
@@ -11,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,13 +26,13 @@ public class Person {
   private String gender;
   private String email;
   private Date dob;
-  private Collection<Phone> phones;
-  private Collection<Address> addresses;
+  private Phone phone;
+  private Address address;
 
   public Person() {
   }
 
-  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob, Collection<Phone> phones, Collection<Address> addresses) {
+  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob, Phone phone, Address address) {
     this.fistName = fistName;
     this.lastName = lastName;
     this.username = username;
@@ -41,8 +40,8 @@ public class Person {
     this.gender = gender;
     this.email = email;
     this.dob = dob;
-    this.phones = phones;
-    this.addresses = addresses;
+    this.phone = phone;
+    this.address = address;
   }
 
   public int getId() {
@@ -109,19 +108,19 @@ public class Person {
     this.dob = dob;
   }
 
-  public Collection<Phone> getPhones() {
-    return phones;
+  public Phone getPhone() {
+    return phone;
   }
 
-  public void setPhones(Collection<Phone> phones) {
-    this.phones = phones;
+  public void setPhones(Phone phone) {
+    this.phone = phone;
   }
 
-  public Collection<Address> getAddresses() {
-    return addresses;
+  public Address getAddresses() {
+    return address;
   }
 
-  public void setAddresses(Collection<Address> addresses) {
-    this.addresses = addresses;
+  public void setAddresses(Address addresses) {
+    this.address = addresses;
   }
 }

@@ -4,29 +4,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "menus")
+@Table(name = "menu")
 public class Menu {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String itemName;
   private double price;
+
+  @OneToMany(mappedBy = "menu")
   private Collection<FoodItem> foodItems;
-  private int customerId;
+
+  @OneToOne()
+  private Customer customer;
 
   public Menu() {
   }
 
-  public int getCustomerId() {
-    return customerId;
+  public void setCustomer(Customer customer){
+    this.customer = customer;
   }
 
-  public void setCustomerId(int customerId) {
-    this.customerId = customerId;
+  public Customer getCustomer(){
+    return customer;
   }
 
   public Collection<FoodItem> getFoodItems() {

@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "contracts")
+@Table(name = "contract")
 public class Contract {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,12 @@ public class Contract {
   private Date employmentDate;
   private double salary;
   private String title;
+
+  @OneToOne()
+  private Cooker cooker;
+
+  @OneToOne()
+  private Owner owner;
 
   public Contract() {
   }
@@ -51,5 +58,21 @@ public class Contract {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public Cooker getCooker() {
+    return cooker;
+  }
+
+  public void setCooker(Cooker cooker) {
+    this.cooker = cooker;
+  }
+
+  public void setOwner(Owner owner) {
+    this.owner = owner;
+  }
+
+  public Owner getOwner() {
+    return owner;
   }
 }

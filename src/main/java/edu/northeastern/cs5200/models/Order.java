@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="orders")
+@Table(name ="order")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,35 +22,22 @@ public class Order {
   private double totalPrice;
   private String instruction;
   private OrderStatus status;
-  private Collection<OrderList> orderLists;
-  private int cookerId;
-  private int customerId;
+  private OrderList orderList;
+
+  @ManyToOne()
+  private Cooker cooker;
+  @ManyToOne()
+  private Customer customer;
 
   public Order() {
   }
 
-  public int getCustomerId() {
-    return customerId;
+  public OrderList getOrderLists() {
+    return orderList;
   }
 
-  public void setCustomerId(int customerId) {
-    this.customerId = customerId;
-  }
-
-  public int getCookerId() {
-    return cookerId;
-  }
-
-  public void setCookerId(int cookerId) {
-    this.cookerId = cookerId;
-  }
-
-  public Collection<OrderList> getOrderLists() {
-    return orderLists;
-  }
-
-  public void setOrderLists(Collection<OrderList> orderLists) {
-    this.orderLists = orderLists;
+  public void setOrderLists(OrderList orderList) {
+    this.orderList = orderList;
   }
 
   public int getId() {
@@ -88,5 +78,21 @@ public class Order {
 
   public void setStatus(OrderStatus status) {
     this.status = status;
+  }
+
+  public void setCooker(Cooker cooker) {
+    this.cooker = cooker;
+  }
+
+  public Cooker getCooker() {
+    return cooker;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
+
+  public Customer getCustomer() {
+    return customer;
   }
 }
