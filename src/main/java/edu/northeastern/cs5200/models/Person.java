@@ -27,13 +27,13 @@ public class Person {
   private String gender;
   private String email;
   private Date dob;
-  private Collection<Phone> phones;
-  private Collection<Address> addresses;
+//  private Collection<Phone> phones;
+//  private Collection<Address> addresses;
 
   public Person() {
   }
 
-  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob, Collection<Phone> phones, Collection<Address> addresses) {
+  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
     this.fistName = fistName;
     this.lastName = lastName;
     this.username = username;
@@ -41,8 +41,8 @@ public class Person {
     this.gender = gender;
     this.email = email;
     this.dob = dob;
-    this.phones = phones;
-    this.addresses = addresses;
+//    this.phones = phones;
+//    this.addresses = addresses;
   }
 
   public int getId() {
@@ -109,19 +109,19 @@ public class Person {
     this.dob = dob;
   }
 
-  public Collection<Phone> getPhones() {
-    return phones;
-  }
-
-  public void setPhones(Collection<Phone> phones) {
-    this.phones = phones;
-  }
-
-  public Collection<Address> getAddresses() {
-    return addresses;
-  }
-
-  public void setAddresses(Collection<Address> addresses) {
-    this.addresses = addresses;
-  }
+//  public Collection<Phone> getPhones() {
+//    return phones;
+//  }
+//
+//  public void setPhones(Collection<Phone> phones) {
+//    this.phones = phones;
+//  }
+//
+//  public Collection<Address> getAddresses() {
+//    return addresses;
+//  }
+//
+//  public void setAddresses(Collection<Address> addresses) {
+//    this.addresses = addresses;
+//  }
 }

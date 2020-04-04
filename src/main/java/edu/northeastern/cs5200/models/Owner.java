@@ -7,7 +7,7 @@ import java.util.Collection;
 public class Owner extends Person{
 
   private int id;
-  private Collection<Text> texts;
+//  private Collection<Text> texts;
   private int contractId;
 
   public Owner() {
@@ -31,11 +31,11 @@ public class Owner extends Person{
     this.id = id;
   }
 
-  public Collection<Text> getTexts() {
-    return texts;
-  }
-
-  public void setTexts(Collection<Text> texts) {
-    this.texts = texts;
-  }
+//  public Collection<Text> getTexts() {
+//    return texts;
+//  }
+//
+//  public void setTexts(Collection<Text> texts) {
+//    this.texts = texts;
+//  }
 }
