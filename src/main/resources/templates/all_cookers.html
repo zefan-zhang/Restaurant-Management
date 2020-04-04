@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Owner</title>
+</head>
+<body>
+<div align="center">
+    <h1>All the cookers</h1>
+    <a href="add_cooker">Add a new cooker</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Cooker ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>Responsibility</th>
+            <th>Salary</th>
+            <th>Hired Date</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cooker : ${cookers}">
+            <td th:text="${cooker.id}">Cooker ID</td>
+            <td th:text="${cooker.fistName}">First Name</td>
+            <td th:text="${cooker.lastName}">Last Name</td>
+            <td th:text="${cooker.userName}">Username</td>
+            <td th:text="${cooker.password}">Password</td>
+            <td th:text="${cooker.gender}">Gender</td>
+            <td th:text="${cooker.email}">Email</td>
+            <td th:text="${cooker.dob}">Date Of Birth</td>
+            <td th:text="${cooker.responsibility}">Responsibility</td>
+            <td th:text="${cooker.salary}">Salary</td>
+            <td th:text="${cooker.employmentDate}">Hired Date</td>
+            <td>
+                <a th:href="@{'/edit_cooker/' + ${cooker.id}}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{'/delete_cooker/' + ${cooker.id}}">Remove</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
