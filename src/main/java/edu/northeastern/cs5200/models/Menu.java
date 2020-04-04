@@ -1,9 +1,12 @@
 package edu.northeastern.cs5200.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
@@ -20,8 +23,9 @@ public class Menu {
   @OneToMany(mappedBy = "menu")
   private Collection<FoodItem> foodItems;
 
-  @OneToMany(mappedBy = "menu")
-  private Collection<Customer> customers;
+  @ManyToOne
+  @JsonIgnore
+  private Customer customer;
 
   public Menu() {
   }
@@ -42,12 +46,12 @@ public class Menu {
     this.id = id;
   }
 
-  public Collection<Customer> getCustomers() {
-    return customers;
+  public Customer getCustomers() {
+    return customer;
   }
 
-  public void setCustomers(Collection<Customer> customers) {
-    this.customers = customers;
+  public void setCustomers(Customer customers) {
+    this.customer = customers;
   }
 
   public String getName() {

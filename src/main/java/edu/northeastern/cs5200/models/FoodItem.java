@@ -2,8 +2,6 @@ package edu.northeastern.cs5200.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.thymeleaf.standard.expression.Fragment;
-
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -14,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -38,7 +35,7 @@ public class FoodItem {
   private Collection<FoodReview> foodReviews;
 
   @OneToMany(mappedBy = "foodItem")
-  private Collection<OrderList> orderLists;
+  private Collection<ShoppingCart> shoppingCarts;
 
   public FoodItem() {
   }
@@ -75,12 +72,12 @@ public class FoodItem {
     return menu;
   }
 
-  public Collection<OrderList> getOrderLists() {
-    return orderLists;
+  public Collection<ShoppingCart> getShoppingCarts() {
+    return shoppingCarts;
   }
 
-  public void setOrderLists(Collection<OrderList> orderLists) {
-    this.orderLists = orderLists;
+  public void setShoppingCarts(Collection<ShoppingCart> shoppingCarts) {
+    this.shoppingCarts = shoppingCarts;
   }
 
   public Collection<FoodReview> getFoodReviews() {

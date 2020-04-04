@@ -16,9 +16,8 @@ public class Customer extends Person {
   private boolean VIP;
   private String paymentMethod;
 
-  @ManyToOne
-  @JsonIgnore
-  private Menu menu;
+  @OneToMany(mappedBy = "customer")
+  private Collection<Menu> menus;
 
   @OneToMany(mappedBy = "customer")
   private Collection<Order> orders;
@@ -72,12 +71,12 @@ public class Customer extends Person {
     this.paymentMethod = paymentMethod;
   }
 
-  public Menu getMenu() {
-    return menu;
+  public Collection<Menu> getMenus() {
+    return menus;
   }
 
-  public void setMenu(Menu menu) {
-    this.menu = menu;
+  public void setMenus(Collection<Menu> menus) {
+    this.menus = menus;
   }
 
   public Collection<FoodReview> getFoodReviews() {

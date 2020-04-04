@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import java.util.Collection;
@@ -22,6 +23,9 @@ public class Cooker extends Person{
   private Collection<Text> texts;
   @OneToMany(mappedBy = "cooker")
   private Collection<Order> orders;
+
+  @OneToOne
+  private Contract contract;
 
   public Cooker() {
   }
@@ -64,5 +68,13 @@ public class Cooker extends Person{
 
   public void setOrders(Collection<Order> orders) {
     this.orders = orders;
+  }
+
+  public Contract getContract() {
+    return contract;
+  }
+
+  public void setContract(Contract contract) {
+    this.contract = contract;
   }
 }

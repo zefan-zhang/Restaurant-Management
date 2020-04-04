@@ -2,8 +2,6 @@ package edu.northeastern.cs5200.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -13,7 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,8 +27,9 @@ public class Order {
 
   @Enumerated(EnumType.STRING)
   private OrderStatus orderStatus;
-  @OneToOne
-  private OrderList orderList;
+
+  @OneToMany(mappedBy = "order")
+  private Collection<ShoppingCart> shoppingCarts;
 
   @ManyToOne()
   @JsonIgnore
@@ -44,12 +42,20 @@ public class Order {
   public Order() {
   }
 
-  public OrderList getOrderLists() {
-    return orderList;
+  public OrderStatus getOrderStatus() {
+    return orderStatus;
   }
 
-  public void setOrderLists(OrderList orderList) {
-    this.orderList = orderList;
+  public void setOrderStatus(OrderStatus orderStatus) {
+    this.orderStatus = orderStatus;
+  }
+
+  public Collection<ShoppingCart> getShoppingCarts() {
+    return shoppingCarts;
+  }
+
+  public void setShoppingCarts(Collection<ShoppingCart> shoppingCarts) {
+    this.shoppingCarts = shoppingCarts;
   }
 
   public int getId() {
@@ -100,10 +106,5 @@ public class Order {
     return customer;
   }
 
-  public OrderList getOrderList() {
-    return orderList;
-  }
-  public void setOrderList(OrderList orderList) {
-    this.orderList = orderList;
-  }
+
 }

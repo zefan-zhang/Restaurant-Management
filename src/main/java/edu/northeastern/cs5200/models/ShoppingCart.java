@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "orderList")
-public class OrderList {
+@Table(name = "shopping_carts")
+public class ShoppingCart {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -24,10 +24,11 @@ public class OrderList {
   @JsonIgnore
   private FoodItem foodItem;
 
-  @OneToOne
+  @ManyToOne
+  @JsonIgnore
   private Order order;
 
-  public OrderList() {
+  public ShoppingCart() {
   }
 
 
