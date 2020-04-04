@@ -2,5 +2,7 @@ package edu.northeastern.cs5200.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface Person extends CrudRepository<Person, Integer> {
+import edu.northeastern.cs5200.models.Person;
+
+public interface PersonRepository extends CrudRepository<Person, Integer> {
 }
