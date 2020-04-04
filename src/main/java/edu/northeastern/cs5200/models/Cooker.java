@@ -8,33 +8,24 @@ import javax.persistence.Id;
 import java.sql.Date;
 import java.util.Collection;
 
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import java.util.Collection;
+
 @Entity
+@Table(name = "cookers")
 public class Cooker extends Person{
   private String responsibility;
-//  private Collection<Order> orders;
-//  private Collection<Text> texts;
   private Date employmentDate;
   private double salary;
+  @OneToMany(mappedBy = "cooker")
+  private Collection<Text> texts;
+  @OneToMany(mappedBy = "cooker")
+  private Collection<Order> orders;
 
   public Cooker() {
   }
-
-
-//  public Collection<Text> getTexts() {
-//    return texts;
-//  }
-//
-//  public void setTexts(Collection<Text> texts) {
-//    this.texts = texts;
-//  }
-//
-//  public Collection<Order> getOrders() {
-//    return orders;
-//  }
-//
-//  public void setOrders(Collection<Order> orders) {
-//    this.orders = orders;
-//  }
 
   public String getResponsibility() {
     return responsibility;
@@ -58,5 +49,21 @@ public class Cooker extends Person{
 
   public void setSalary(double salary) {
     this.salary = salary;
+  }
+
+  public Collection<Text> getTexts() {
+    return texts;
+  }
+
+  public void setTexts(Collection<Text> texts) {
+    this.texts = texts;
+  }
+
+  public Collection<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(Collection<Order> orders) {
+    this.orders = orders;
   }
 }
