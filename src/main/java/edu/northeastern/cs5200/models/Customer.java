@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "customers")
 public class Customer extends Person {
 
   private boolean userAgreement;

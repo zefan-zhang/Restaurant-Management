@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "cookers")
 public class Cooker extends Person{
   private String responsibility;
   private Date employmentDate;

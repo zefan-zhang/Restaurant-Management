@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "orderList")
-public class OrderDetail {
+public class OrderList {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -27,7 +27,7 @@ public class OrderDetail {
   @OneToOne
   private Order order;
 
-  public OrderDetail() {
+  public OrderList() {
   }
 
 

@@ -14,9 +14,7 @@ public class Menu {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private FoodCategory foodCategory;
-  private String itemName;
-  private double price;
+  private String name;
 
 
   @OneToMany(mappedBy = "menu")
@@ -44,30 +42,6 @@ public class Menu {
     this.id = id;
   }
 
-  public String getItemName() {
-    return itemName;
-  }
-
-  public void setItemName(String itemName) {
-    this.itemName = itemName;
-  }
-
-  public double getPrice() {
-    return price;
-  }
-
-  public void setPrice(double price) {
-    this.price = price;
-  }
-
-  public FoodCategory getFoodCategory() {
-    return foodCategory;
-  }
-
-  public void setFoodCategory(FoodCategory foodCategory) {
-    this.foodCategory = foodCategory;
-  }
-
   public Collection<Customer> getCustomers() {
     return customers;
   }
@@ -76,5 +50,11 @@ public class Menu {
     this.customers = customers;
   }
 
+  public String getName() {
+    return name;
+  }
 
+  public void setName(String name) {
+    this.name = name;
+  }
 }

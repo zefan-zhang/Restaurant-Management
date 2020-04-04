@@ -7,11 +7,14 @@ import org.thymeleaf.standard.expression.Fragment;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +24,11 @@ public class FoodItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
+
+  @Enumerated(EnumType.STRING)
   private FoodCategory category;
+  private double price;
+  private int inventory;
 
   @ManyToOne()
   @JsonIgnore
@@ -30,8 +37,8 @@ public class FoodItem {
   @OneToMany(mappedBy = "foodItem")
   private Collection<FoodReview> foodReviews;
 
-  @ManyToOne()
-  private OrderList orderList;
+  @OneToMany(mappedBy = "foodItem")
+  private Collection<OrderList> orderLists;
 
   public FoodItem() {
   }
@@ -68,12 +75,12 @@ public class FoodItem {
     return menu;
   }
 
-  public void setOrderList(OrderList orderList){
-    this.orderList = orderList;
+  public Collection<OrderList> getOrderLists() {
+    return orderLists;
   }
 
-  public OrderList getOrderList() {
-    return orderList;
+  public void setOrderLists(Collection<OrderList> orderLists) {
+    this.orderLists = orderLists;
   }
 
   public Collection<FoodReview> getFoodReviews() {
@@ -84,5 +91,19 @@ public class FoodItem {
     this.foodReviews = foodReviews;
   }
 
+  public double getPrice() {
+    return price;
+  }
 
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public int getInventory() {
+    return inventory;
+  }
+
+  public void setInventory(int inventory) {
+    this.inventory = inventory;
+  }
 }

@@ -17,7 +17,7 @@ public class Phone {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String phone;
-  private boolean primary;
+  private boolean isPrimary;
   @ManyToOne
   @JsonIgnore
   private Person person;
@@ -42,11 +42,11 @@ public class Phone {
   }
 
   public boolean isPrimary() {
-    return primary;
+    return isPrimary;
   }
 
   public void setPrimary(boolean primary) {
-    this.primary = primary;
+    isPrimary = primary;
   }
 
   public Person getPerson() {

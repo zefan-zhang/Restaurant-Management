@@ -2,10 +2,14 @@ package edu.northeastern.cs5200.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,21 +20,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="order")
+@Table(name ="orders")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private Time orderTime;
+  private Timestamp timePlaced;
   private double totalPrice;
-  private String instruction;
-  private OrderStatus status;
+
+  @Enumerated(EnumType.STRING)
+  private OrderStatus orderStatus;
   @OneToOne
   private OrderList orderList;
 
   @ManyToOne()
   @JsonIgnore
   private Cooker cooker;
+
   @ManyToOne()
   @JsonIgnore
   private Customer customer;
@@ -54,12 +60,12 @@ public class Order {
     this.id = id;
   }
 
-  public Time getOrderTime() {
-    return orderTime;
+  public Timestamp getTimePlaced() {
+    return timePlaced;
   }
 
-  public void setOrderTime(Time orderTime) {
-    this.orderTime = orderTime;
+  public void setTimePlaced(Timestamp timePlaced) {
+    this.timePlaced = timePlaced;
   }
 
   public double getTotalPrice() {
@@ -70,20 +76,12 @@ public class Order {
     this.totalPrice = totalPrice;
   }
 
-  public String getInstruction() {
-    return instruction;
-  }
-
-  public void setInstruction(String instruction) {
-    this.instruction = instruction;
-  }
-
   public OrderStatus getStatus() {
-    return status;
+    return this.orderStatus;
   }
 
   public void setStatus(OrderStatus status) {
-    this.status = status;
+    this.orderStatus = status;
   }
 
   public void setCooker(Cooker cooker) {
