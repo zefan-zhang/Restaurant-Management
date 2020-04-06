@@ -23,9 +23,8 @@ public class Menu {
   @OneToMany(mappedBy = "menu")
   private Collection<FoodItem> foodItems;
 
-  @ManyToOne
-  @JsonIgnore
-  private Customer customer;
+//  @OneToMany(mappedBy = "menu")
+//  private Collection<Customer> customers;
 
   public Menu() {
   }
@@ -46,13 +45,13 @@ public class Menu {
     this.id = id;
   }
 
-  public Customer getCustomers() {
-    return customer;
-  }
-
-  public void setCustomers(Customer customers) {
-    this.customer = customers;
-  }
+//  public Collection<Customer> getCustomers() {
+//    return customers;
+//  }
+//
+//  public void setCustomers(Collection<Customer> customers) {
+//    this.customers = customers;
+//  }
 
   public String getName() {
     return name;
