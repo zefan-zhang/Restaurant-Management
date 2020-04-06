@@ -23,9 +23,38 @@
                 </td>
             </tr>
             <tr>
+                <td>Menu ID</td>
+                <td>
+                    <input type="number" th:field="*{menu.id}"/>
+                </td>
+            </tr>
+            <tr>
                 <td>Food Category</td>
                 <td>
-                    <input type="text" th:field="*{category}"/>
+                    <input type="checkbox" name="category1" value="appetizer" th:field="*{category}"/>
+                    <label for="category1">Appetizer</label><br>
+                    <input type="checkbox" name="category2" value="mainDish" th:field="*{category}"/>
+                    <label for="category2">Main Dish</label><br>
+                    <input type="checkbox" name="category3" value="salad" th:field="*{category}"/>
+                    <label for="category3">Salad</label><br>
+                    <input type="checkbox" name="category4" value="meat" th:field="*{category}"/>
+                    <label for="category4">Meat</label><br>
+                    <input type="checkbox" name="category5" value="dessert" th:field="*{category}"/>
+                    <label for="category5">Dessert</label><br>
+                    <input type="checkbox" name="category6" value="beverage" th:field="*{category}"/>
+                    <label for="category6">Beverage</label><br>
+                </td>
+            </tr>
+            <tr>
+                <td>Inventory</td>
+                <td>
+                    <input type="number" th:field="*{inventory}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>
+                    <input type="number" th:field="*{price}"/>
                 </td>
             </tr>
             <tr>

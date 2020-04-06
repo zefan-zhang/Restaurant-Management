@@ -10,19 +10,60 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 import edu.northeastern.cs5200.daos.OwnerDao;
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.FoodItem;
-import edu.northeastern.cs5200.models.Person;
+import edu.northeastern.cs5200.models.Menu;
 
 @Controller
 public class OwnerController {
   @Autowired
   private OwnerDao ownerDao;
+
+  // menu
+  @GetMapping("/owner")
+  public String homePage(Model model) {
+    List<Menu> menus = ownerDao.findAllMenus();
+    model.addAttribute("menus", menus);
+    List<FoodItem> foodItems = ownerDao.findAllFoodItem();
+    model.addAttribute("foodItems", foodItems);
+    return "owner";
+  }
+
+  @GetMapping("add_menu")
+  public String createMenu(Model model) {
+    Menu menu = new Menu();
+    model.addAttribute("menu", menu);
+    return "new_menu";
+  }
+
+  @PostMapping(value = "/save_menu")
+  public String saveMenu(@ModelAttribute("menu") Menu menu) {
+    ownerDao.saveMenu(menu);
+    return "redirect:/owner";
+  }
+
+  @GetMapping("edit_menu/{id}")
+  public ModelAndView goEditMenuPage(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("update_menu");
+    Menu menu = ownerDao.findMenuById(id);
+    modelAndView.addObject("menu", menu);
+    return modelAndView;
+  }
+
+  @GetMapping(value = "/delete_menu/{id}")
+  public String deleteMenu(@PathVariable(name = "id") int id){
+    Menu menu = ownerDao.findMenuById(id);
+    List<FoodItem> foodItems = (List<FoodItem>) menu.getFoodItems();
+    for (FoodItem foodItem : foodItems) {
+      ownerDao.deleteFoodById(foodItem.getId());
+    }
+    ownerDao.deleteMenuById(id);
+    return "redirect:/owner";
+  }
 
   // contract
   @GetMapping("/contracts")
@@ -52,6 +93,8 @@ public class OwnerController {
     modelAndView.addObject("contract", contract);
     return modelAndView;
   }
+
+
 
   // cooker
   @GetMapping("/cookers")
@@ -92,9 +135,19 @@ public class OwnerController {
     return modelAndView;
   }
 
+//  @GetMapping("/assign/{subordinateId}/{managerId}")
+//  public String assignSubordinateForManager(@PathVariable(name = "managerId") int managerId,
+//                                            @PathVariable(name = "subordinateId") int subordinateId){
+//    ownerDao.assignCookerForManager(subordinateId, managerId);
+//    return "redirect:/cookers";
+//
+//  }
+
+
   @GetMapping(value = "/delete_cooker/{id}")
   public String deleteCooker(@PathVariable(name = "id") int id){
     Cooker cooker = ownerDao.findCookerById(id);
+    ownerDao.AddCooker(cooker);
     ownerDao.deleteContractById(cooker.getContract().getId());
     ownerDao.deleteCookerById(id);
     return "redirect:/cookers";
@@ -102,7 +155,7 @@ public class OwnerController {
 
 
   // foodItem
-  @GetMapping("/")
+  @GetMapping("/foods")
   public String goFoodItemPage(Model model) {
     List<FoodItem> foodItems = ownerDao.findAllFoodItem();
     model.addAttribute("foodItems", foodItems);
@@ -118,7 +171,7 @@ public class OwnerController {
   @PostMapping(value = "/save_food")
   public String saveFood(@ModelAttribute("food") FoodItem food) {
     ownerDao.CreateFoodItem(food);
-    return "redirect:/";
+    return "redirect:/owner";
   }
 
   @GetMapping("/edit_food/{id}")
@@ -132,7 +185,7 @@ public class OwnerController {
   @GetMapping(value = "/delete_food/{id}")
   public String deleteFood(@PathVariable(name = "id") int id){
     ownerDao.deleteFoodById(id);
-    return "redirect:/";
+    return "redirect:/owner";
   }
 
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.FoodItem;
+import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
@@ -29,6 +30,26 @@ public class OwnerDao {
   @Autowired
   private MenuRepository menuRepository;
 
+  // menu
+  public List<Menu> findAllMenus() {
+    return (List<Menu>) menuRepository.findAll();
+  }
+
+  public void saveMenu(Menu menu) {
+    menuRepository.save(menu);
+  }
+
+  public Menu findMenuById(int id) {
+    Optional<Menu> optional = menuRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public void deleteMenuById(int id) {
+    menuRepository.deleteById(id);
+  }
   // cooker
   public List<Cooker> findAllCookers() {
     return (List<Cooker>) cookerRepository.findAll();
@@ -44,6 +65,14 @@ public class OwnerDao {
       return optional.get();
     }
     return null;
+  }
+
+  public void assignCookerForManager(int subordinateId, int mangerId) {
+    Optional<Cooker> cooker = cookerRepository.findById(subordinateId);
+    Optional<Cooker> manager = cookerRepository.findById(mangerId);
+    if (cooker.isPresent() && manager.isPresent()) {
+      cooker.get().setManager(manager.get());
+    }
   }
   public void deleteCookerById(int id) {
     cookerRepository.deleteById(id);

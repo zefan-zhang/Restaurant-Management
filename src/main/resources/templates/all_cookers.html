@@ -22,6 +22,7 @@
             <th>Date Of Birth</th>
             <th>Level</th>
             <th>Responsibility</th>
+            <th>Manager</th>
             <th>Contract ID</th>
             <th>Edit</th>
             <th>Remove</th>
@@ -39,6 +40,10 @@
             <td th:text="${cooker.dob}">Date Of Birth</td>
             <td th:text="${cooker.level}">Level</td>
             <td th:text="${cooker.responsibility}">Responsibility</td>
+            <td th:text="${cooker?.manager?.lastName}">Manager</td>
+<!--            <td>-->
+<!--                <a th:href="@{'/assign/' + ${cooker.id} + '/' + ${cooker?.manager?.id}}">Detail</a>-->
+<!--            </td>-->
             <td>
                 <a th:href="@{'/contract/' + ${cooker.contract.id}}">Detail</a>
             </td>
@@ -52,9 +57,6 @@
         </tr>
         </tbody>
     </table>
-
-
-
 </div>
 
 </body>
