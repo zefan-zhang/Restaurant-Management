@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import java.sql.Date;
 import java.util.Collection;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,15 +19,21 @@ import java.util.Collection;
 
 @Entity
 public class Cooker extends Person{
+  private int level;
   private String responsibility;
-  private Date employmentDate;
-  private double salary;
   @OneToMany(mappedBy = "cooker")
   private Collection<Text> texts;
   @OneToMany(mappedBy = "cooker")
   private Collection<Order> orders;
 
-  @OneToOne
+  @ManyToOne
+  private Cooker manager;
+
+  @OneToMany(mappedBy = "manager")
+  private Collection<Cooker> subordinates;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Contract contract;
 
   public Cooker() {
@@ -36,22 +45,6 @@ public class Cooker extends Person{
 
   public void setResponsibility(String responsibility) {
     this.responsibility = responsibility;
-  }
-
-  public Date getEmploymentDate() {
-    return employmentDate;
-  }
-
-  public void setEmploymentDate(Date employmentDate) {
-    this.employmentDate = employmentDate;
-  }
-
-  public double getSalary() {
-    return salary;
-  }
-
-  public void setSalary(double salary) {
-    this.salary = salary;
   }
 
   public Collection<Text> getTexts() {
@@ -76,5 +69,29 @@ public class Cooker extends Person{
 
   public void setContract(Contract contract) {
     this.contract = contract;
+  }
+
+  public int getLevel() {
+    return level;
+  }
+
+  public void setLevel(int level) {
+    this.level = level;
+  }
+
+  public Cooker getManager() {
+    return manager;
+  }
+
+  public void setManager(Cooker manager) {
+    this.manager = manager;
+  }
+
+  public Collection<Cooker> getSubordinates() {
+    return subordinates;
+  }
+
+  public void setSubordinates(Collection<Cooker> subordinates) {
+    this.subordinates = subordinates;
   }
 }

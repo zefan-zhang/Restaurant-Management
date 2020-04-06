@@ -3,6 +3,8 @@ package edu.northeastern.cs5200.models;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +19,10 @@ public class Contract {
   private int id;
   private Date hiredDate;
   private double salary;
+  @Enumerated(EnumType.STRING)
+  private ContractStatus contractStatus;
 
-  @OneToOne
+  @OneToOne(mappedBy = "contract")
   private Cooker cooker;
 
   public Contract() {
@@ -55,4 +59,14 @@ public class Contract {
   public void setCooker(Cooker cooker) {
     this.cooker = cooker;
   }
+
+  public ContractStatus getContractStatus() {
+    return contractStatus;
+  }
+
+  public void setContractStatus(ContractStatus contractStatus) {
+    this.contractStatus = contractStatus;
+  }
+
+
 }
