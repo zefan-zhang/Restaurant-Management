@@ -11,12 +11,6 @@
     <form action="#" th:action="@{/save_cooker}" th:object="${cooker}" method="post">
         <table border="0" cellpadding="10">
             <tr>
-                <td>Cooker ID</td>
-                <td>
-                    <input type="number" th:field="*{id}"/>
-                </td>
-            </tr>
-            <tr>
                 <td>First Name</td>
                 <td>
                     <input type="text" th:field="*{fistName}"/>
@@ -59,21 +53,15 @@
                 </td>
             </tr>
             <tr>
+                <td>Level</td>
+                <td>
+                    <input type="number" th:field="*{level}"/>
+                </td>
+            </tr>
+            <tr>
                 <td>Responsibility</td>
                 <td>
                     <input type="text" th:field="*{responsibility}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Hired Date</td>
-                <td>
-                    <input type="date" th:field="*{employmentDate}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Salary</td>
-                <td>
-                    <input type="number" th:field="*{salary}"/>
                 </td>
             </tr>
             <tr>

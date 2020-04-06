@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Owner</title>
+</head>
+<body>
+<div align="center">
+    <h1>Contracts</h1>
+    <a href="/cookers">Go Back</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Contract ID</th>
+            <th>Cooker ID</th>
+            <th>Hired Date</th>
+            <th>Salary</th>
+            <th>Contract Status</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contract : ${contracts}">
+            <td th:text="${contract.id}">Contract ID</td>
+            <td th:text="${contract.cooker.id}">Cooker ID</td>
+            <td th:text="${contract.hiredDate}">Hired Date</td>
+            <td th:text="${contract.salary}">Salary</td>
+            <td th:text="${contract.getContractStatus()}">Contract Status</td>
+            <td>
+                <a th:href="@{'/edit_contract/' + ${contract.id}}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+</body>
+</html>

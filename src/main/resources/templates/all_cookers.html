@@ -20,9 +20,9 @@
             <th>Gender</th>
             <th>Email</th>
             <th>Date Of Birth</th>
+            <th>Level</th>
             <th>Responsibility</th>
-            <th>Salary</th>
-            <th>Hired Date</th>
+            <th>Contract ID</th>
             <th>Edit</th>
             <th>Remove</th>
         </tr>
@@ -37,9 +37,11 @@
             <td th:text="${cooker.gender}">Gender</td>
             <td th:text="${cooker.email}">Email</td>
             <td th:text="${cooker.dob}">Date Of Birth</td>
+            <td th:text="${cooker.level}">Level</td>
             <td th:text="${cooker.responsibility}">Responsibility</td>
-            <td th:text="${cooker.salary}">Salary</td>
-            <td th:text="${cooker.employmentDate}">Hired Date</td>
+            <td>
+                <a th:href="@{'/contract/' + ${cooker.contract.id}}">Detail</a>
+            </td>
             <td>
                 <a th:href="@{'/edit_cooker/' + ${cooker.id}}">Edit</a>
             </td>
@@ -50,6 +52,9 @@
         </tr>
         </tbody>
     </table>
+
+
+
 </div>
 
 </body>
