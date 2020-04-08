@@ -23,7 +23,9 @@
         <tr th:each="menu : ${menus}">
             <td th:text="${menu.id}">Menu ID</td>
             <td th:text="${menu.name}">Name</td>
-            <td th:text="${menu?.foodItems}">Foods</td>
+            <td>
+                <a th:href="@{'/menu/' + ${menu.id}}">Detail</a>
+            </td>
             <td>
                 <a th:href="@{'/edit_menu/' + ${menu.id}}">Edit</a>
             </td>
@@ -35,35 +37,53 @@
     </table>
 </div>
 <div align="center">
-    <h1>All Foods</h1>
-    <a href="create_food">Create New Food</a>
+    <h1>All the cookers</h1>
+    <a href="add_cooker">Add a new cooker</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
         <tr>
-            <th>Food ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Inventory</th>
-            <th>Price</th>
-            <th>Menu ID</th>
+            <th>Cooker ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>Level</th>
+            <th>Responsibility</th>
+            <th>Manager</th>
+            <th>Subordinates</th>
+            <th>Contract ID</th>
             <th>Edit</th>
-            <th>Delete</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="fooditem : ${foodItems}">
-            <td th:text="${fooditem.id}">Food ID</td>
-            <td th:text="${fooditem.name}">Name</td>
-            <td th:text="${fooditem.category}">Category</td>
-            <td th:text="${fooditem.inventory}">Inventory</td>
-            <td th:text="${fooditem.price}">Price</td>
-            <td th:text="${fooditem.menu.id}">Menu ID</td>
+        <tr th:each="cooker : ${cookers}">
+            <td th:text="${cooker.id}">Cooker ID</td>
+            <td th:text="${cooker.fistName}">First Name</td>
+            <td th:text="${cooker.lastName}">Last Name</td>
+            <td th:text="${cooker.userName}">Username</td>
+            <td th:text="${cooker.password}">Password</td>
+            <td th:text="${cooker.gender}">Gender</td>
+            <td th:text="${cooker.email}">Email</td>
+            <td th:text="${cooker.dob}">Date Of Birth</td>
+            <td th:text="${cooker.level}">Level</td>
+            <td th:text="${cooker.responsibility}">Responsibility</td>
+            <td th:text="${cooker?.manager?.lastName}">Manager</td>
             <td>
-                <a th:href="@{'/edit_food/' + ${fooditem.id}}">Edit</a>
+                <a th:href="@{'/subordinates/' + ${cooker.id}}">Detail</a>
             </td>
             <td>
-                <a th:href="@{'/delete_food/' + ${fooditem.id}}">Delete</a>
+                <a th:href="@{'/contract/' + ${cooker.contract.id}}">Detail</a>
+            </td>
+            <td>
+                <a th:href="@{'/edit_cooker/' + ${cooker.id}}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{'/delete_cooker/' + ${cooker.id}}">Remove</a>
             </td>
 
         </tr>
@@ -71,5 +91,59 @@
     </table>
 </div>
 
+<div align="center">
+    <h1>All Customers</h1>
+    <a href="add_customer">Add a new customer</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>VIP</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>User Agreement</th>
+            <th>Payment Method</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}">Cooker ID</td>
+            <td th:text="${customer.VIP}">VIP</td>
+            <td th:text="${customer.fistName}">First Name</td>
+            <td th:text="${customer.lastName}">Last Name</td>
+            <td th:text="${customer.userName}">Username</td>
+            <td th:text="${customer.password}">Password</td>
+            <td>
+                <a th:href="@{'/address/' + ${customer.id}}">Detail</a>
+            </td>
+            <td>
+                <a th:href="@{'/phone/' + ${customer.id}}">Detail</a>
+            </td>
+            <td th:text="${customer.gender}">Gender</td>
+            <td th:text="${customer.email}">Email</td>
+            <td th:text="${customer.dob}">Date Of Birth</td>
+            <td th:text="${customer.userAgreement}">User Agreement</td>
+            <td th:text="${customer.paymentMethod}">Payment Method</td>
+            <td>
+                <a th:href="@{'/edit_customer/' + ${customer.id}}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{'/delete_customer/' + ${customer.id}}">Remove</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

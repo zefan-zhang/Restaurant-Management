@@ -15,6 +15,7 @@ import edu.northeastern.cs5200.daos.OwnerDao;
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
+import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
 
@@ -30,6 +31,10 @@ public class OwnerController {
     model.addAttribute("menus", menus);
     List<FoodItem> foodItems = ownerDao.findAllFoodItem();
     model.addAttribute("foodItems", foodItems);
+    List<Cooker> cookers = ownerDao.findAllCookers();
+    model.addAttribute("cookers", cookers);
+    List<Customer> customers = ownerDao.findAllCustomer();
+    model.addAttribute("customers", customers);
     return "owner";
   }
 
@@ -65,6 +70,13 @@ public class OwnerController {
     return "redirect:/owner";
   }
 
+  @GetMapping("/menu/{id}")
+  public String getFoodItemsByMenuId(@PathVariable(name = "id") int id, Model model) {
+    List<FoodItem> foodItems = ownerDao.findFoodsByMenuId(id);
+    model.addAttribute("foodsOnMenu", foodItems);
+    return "menu_foods";
+  }
+
   // contract
   @GetMapping("/contracts")
   public String listAllCookerContracts(Model model) {
@@ -93,9 +105,19 @@ public class OwnerController {
     modelAndView.addObject("contract", contract);
     return modelAndView;
   }
+  // customer
+  @GetMapping("/add_customer")
+  public String addCustomerPage(Model model) {
+    Customer customer = new Customer();
+    model.addAttribute("customer", customer);
+    return "new_customer";
+  }
 
-
-
+  @PostMapping(value = "/save_customer")
+  public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+    ownerDao.addCustomer(customer);
+    return "redirect:/owner";
+  }
   // cooker
   @GetMapping("/cookers")
   public String listAllCookers(Model model) {
@@ -116,8 +138,8 @@ public class OwnerController {
     Contract contract = new Contract();
     contract.setContractStatus(ContractStatus.no_sign);
     cooker.setContract(contract);
-    ownerDao.AddCooker(cooker);
-    return "redirect:/cookers";
+    ownerDao.addCooker(cooker);
+    return "redirect:/owner";
   }
 
   @GetMapping("contract/{id}")
@@ -147,10 +169,17 @@ public class OwnerController {
   @GetMapping(value = "/delete_cooker/{id}")
   public String deleteCooker(@PathVariable(name = "id") int id){
     Cooker cooker = ownerDao.findCookerById(id);
-    ownerDao.AddCooker(cooker);
+    ownerDao.addCooker(cooker);
     ownerDao.deleteContractById(cooker.getContract().getId());
     ownerDao.deleteCookerById(id);
     return "redirect:/cookers";
+  }
+
+  @GetMapping("/subordinates/{id}")
+  public String goSubordinatesPage(@PathVariable(name = "id") int id, Model model) {
+    List<Cooker> subordinates = ownerDao.findSubordinateByMId(id);
+    model.addAttribute("subordinates", subordinates);
+    return "subordinates";
   }
 
 

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200.daos;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +9,12 @@ import java.util.Optional;
 
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.Cooker;
+import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
-import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
+import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
 
@@ -23,6 +25,9 @@ public class OwnerDao {
 
   @Autowired
   private CookerRepository cookerRepository;
+
+  @Autowired
+  private CustomerRepository customerRepository;
 
   @Autowired
   private ContractRepository contractRepository;
@@ -47,6 +52,10 @@ public class OwnerDao {
     return null;
   }
 
+  public List<FoodItem> findFoodsByMenuId(int id) {
+    return (List<FoodItem>) foodItemRepository.findFoodItemByMenuId(id);
+  }
+
   public void deleteMenuById(int id) {
     menuRepository.deleteById(id);
   }
@@ -55,12 +64,36 @@ public class OwnerDao {
     return (List<Cooker>) cookerRepository.findAll();
   }
 
-  public void AddCooker(Cooker cooker) {
+  public void addCooker(Cooker cooker) {
     cookerRepository.save(cooker);
   }
 
   public Cooker findCookerById(int id) {
     Optional<Cooker> optional = cookerRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+  public void deleteCookerById(int id) {
+    cookerRepository.deleteById(id);
+  }
+
+  public List<Cooker> findSubordinateByMId(int id) {
+    return (List<Cooker>) cookerRepository.findSubordinateByMId(id);
+  }
+
+  // customer
+  public List<Customer> findAllCustomer() {
+    return (List<Customer>) customerRepository.findAll();
+  }
+
+  public void addCustomer(Customer customer) {
+    customerRepository.save(customer);
+  }
+
+  public Customer findCustomerById(int id) {
+    Optional<Customer> optional = customerRepository.findById(id);
     if (optional.isPresent()) {
       return optional.get();
     }
@@ -74,9 +107,11 @@ public class OwnerDao {
       cooker.get().setManager(manager.get());
     }
   }
-  public void deleteCookerById(int id) {
-    cookerRepository.deleteById(id);
+
+  public void deleteCustomerById(int id) {
+    customerRepository.deleteById(id);
   }
+
 
   // contract
   public List<Contract> findAllContract() {

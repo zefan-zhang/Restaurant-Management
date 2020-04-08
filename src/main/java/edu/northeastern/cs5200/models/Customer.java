@@ -12,13 +12,9 @@ import java.util.Collection;
 @Entity
 public class Customer extends Person {
 
-  private boolean userAgreement;
+  private ContractStatus userAgreement;
   private boolean VIP;
   private String paymentMethod;
-
-//  @ManyToOne
-//  @JsonIgnore
-//  private  Menu menu;
 
   @OneToMany(mappedBy = "customer")
   private Collection<Order> orders;
@@ -48,11 +44,11 @@ public class Customer extends Person {
     this.orders = orders;
   }
 
-  public boolean isUserAgreement() {
+  public ContractStatus getUserAgreement() {
     return userAgreement;
   }
 
-  public void setUserAgreement(boolean userAgreement) {
+  public void setUserAgreement(ContractStatus userAgreement) {
     this.userAgreement = userAgreement;
   }
 
@@ -71,14 +67,6 @@ public class Customer extends Person {
   public void setPaymentMethod(String paymentMethod) {
     this.paymentMethod = paymentMethod;
   }
-
-//  public Menu getMenu() {
-//    return menu;
-//  }
-//
-//  public void setMenu(Menu menu) {
-//    this.menu = menu;
-//  }
 
   public Collection<FoodReview> getFoodReviews() {
     return foodReviews;
