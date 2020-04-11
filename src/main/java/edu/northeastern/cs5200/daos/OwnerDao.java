@@ -7,16 +7,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import edu.northeastern.cs5200.models.Address;
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Person;
+import edu.northeastern.cs5200.repositories.AddressRepository;
 import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
 import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
+import edu.northeastern.cs5200.repositories.PersonRepository;
 
 @Service
 public class OwnerDao {
@@ -34,6 +38,12 @@ public class OwnerDao {
 
   @Autowired
   private MenuRepository menuRepository;
+
+  @Autowired
+  private AddressRepository addressRepository;
+
+  @Autowired
+  private PersonRepository personRepository;
 
   // menu
   public List<Menu> findAllMenus() {
@@ -58,6 +68,40 @@ public class OwnerDao {
 
   public void deleteMenuById(int id) {
     menuRepository.deleteById(id);
+  }
+
+  // address
+  public List<Address> getAddressByPersonId(int id) {
+    return (List<Address>) addressRepository.findAddressByPersonId(id);
+  }
+
+  public Address findAddressById(int id) {
+    Optional<Address> optional = addressRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public void saveAddress(Address address) {
+    addressRepository.save(address);
+  }
+
+  public void deleteAddressById(int id) {
+    addressRepository.deleteById(id);
+  }
+
+  // person
+  public Person findPersonById(int id) {
+    Optional<Person> optional = personRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public void savePerson(Person person){
+    personRepository.save(person);
   }
   // cooker
   public List<Cooker> findAllCookers() {

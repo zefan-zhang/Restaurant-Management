@@ -37,7 +37,7 @@
     </table>
 </div>
 <div align="center">
-    <h1>All the cookers</h1>
+    <h1>All Cookers</h1>
     <a href="add_cooker">Add a new cooker</a>
     <br/><br/>
     <table border="1" cellpadding="10">
@@ -95,7 +95,7 @@
     <h1>All Customers</h1>
     <a href="add_customer">Add a new customer</a>
     <br/><br/>
-    <table border="1" cellpadding="10">
+    <table border="1" cellpadding="15">
         <thead>
         <tr>
             <th>Customer ID</th>
@@ -124,7 +124,9 @@
             <td th:text="${customer.userName}">Username</td>
             <td th:text="${customer.password}">Password</td>
             <td>
-                <a th:href="@{'/address/' + ${customer.id}}">Detail</a>
+                <a th:href="@{'/address/' + ${customer.id}}">Details</a>
+                <br/><br/>
+                <a th:href="@{'/add_address/' + ${customer.id}}">Add address</a>
             </td>
             <td>
                 <a th:href="@{'/phone/' + ${customer.id}}">Detail</a>

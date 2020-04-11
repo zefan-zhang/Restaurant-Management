@@ -20,7 +20,7 @@ public class Address {
   private String city;
   private String state;
   private int zip;
-  private boolean isPrimary;
+  private boolean primaryAddress;
   @ManyToOne
   @JsonIgnore
   private Person person;
@@ -76,12 +76,12 @@ public class Address {
     this.zip = zip;
   }
 
-  public boolean isPrimary() {
-    return isPrimary;
+  public boolean isPrimaryAddress() {
+    return primaryAddress;
   }
 
-  public void setPrimary(boolean primary) {
-    isPrimary = primary;
+  public void setPrimaryAddress(boolean primaryAddress) {
+    this.primaryAddress = primaryAddress;
   }
 
   public Person getPerson() {

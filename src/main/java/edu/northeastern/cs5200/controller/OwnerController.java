@@ -12,12 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 import edu.northeastern.cs5200.daos.OwnerDao;
+import edu.northeastern.cs5200.models.Address;
 import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Person;
 
 @Controller
 public class OwnerController {
@@ -118,6 +120,45 @@ public class OwnerController {
     ownerDao.addCustomer(customer);
     return "redirect:/owner";
   }
+
+  // address
+  @GetMapping("address/{personId}")
+  public String getAddressByUserId(@PathVariable(name = "personId") int id, Model model) {
+    List<Address> addresses = ownerDao.getAddressByPersonId(id);
+    model.addAttribute("addresses", addresses);
+    return "user_address";
+  }
+
+  @GetMapping("add_address/{PersonId}")
+  public String addAddress(@PathVariable(name = "PersonId") int id, Model model) {
+    Person person = ownerDao.findPersonById(id);
+    Address address = new Address();
+    person.addAddress(address);
+    address.setPerson(person);
+    model.addAttribute("address", address);
+    return "new_address";
+  }
+
+  @GetMapping("edit_address/{id}")
+  public String goEditAddress(@PathVariable(name = "id") int id, Model model) {
+    Address address = ownerDao.findAddressById(id);
+    model.addAttribute("address", address);
+    return "update_address";
+  }
+
+  @PostMapping(value = "/save_address")
+  public String saveAddress(@ModelAttribute("address") Address address) {
+    ownerDao.saveAddress(address);
+    return "redirect:/address/" + address.getPerson().getId();
+  }
+
+  @GetMapping(value = "/delete_address/{id}")
+  public String deleteAddress(@PathVariable(name = "id") int id){
+    Address address = ownerDao.findAddressById(id);
+    ownerDao.deleteAddressById(id);
+    return "redirect:/address/" + address.getPerson().getId();
+  }
+
   // cooker
   @GetMapping("/cookers")
   public String listAllCookers(Model model) {
@@ -156,15 +197,6 @@ public class OwnerController {
     modelAndView.addObject("cooker", cooker);
     return modelAndView;
   }
-
-//  @GetMapping("/assign/{subordinateId}/{managerId}")
-//  public String assignSubordinateForManager(@PathVariable(name = "managerId") int managerId,
-//                                            @PathVariable(name = "subordinateId") int subordinateId){
-//    ownerDao.assignCookerForManager(subordinateId, managerId);
-//    return "redirect:/cookers";
-//
-//  }
-
 
   @GetMapping(value = "/delete_cooker/{id}")
   public String deleteCooker(@PathVariable(name = "id") int id){

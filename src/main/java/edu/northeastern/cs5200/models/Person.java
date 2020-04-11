@@ -125,4 +125,8 @@ public class Person {
     this.addresses = addresses;
   }
 
+  public void addAddress(Address address) {
+    this.addresses.add(address);
+  }
+
 }
