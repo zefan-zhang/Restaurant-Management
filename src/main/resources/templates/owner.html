@@ -48,6 +48,8 @@
             <th>Last Name</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Address</th>
+            <th>Phone</th>
             <th>Gender</th>
             <th>Email</th>
             <th>Date Of Birth</th>
@@ -67,6 +69,16 @@
             <td th:text="${cooker.lastName}">Last Name</td>
             <td th:text="${cooker.userName}">Username</td>
             <td th:text="${cooker.password}">Password</td>
+            <td>
+            <a th:href="@{'/address/' + ${cooker.id}}">Details</a>
+            <br/><br/>
+            <a th:href="@{'/add_address/' + ${cooker.id}}">Add address</a>
+            </td>
+            <td>
+                <a th:href="@{'/phone/' + ${cooker.id}}">Detail</a>
+                <br/><br/>
+                <a th:href="@{'/add_phone/' + ${cooker.id}}">Add phone</a>
+            </td>
             <td th:text="${cooker.gender}">Gender</td>
             <td th:text="${cooker.email}">Email</td>
             <td th:text="${cooker.dob}">Date Of Birth</td>
