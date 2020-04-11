@@ -254,9 +254,6 @@ public class OwnerController {
 
   @GetMapping(value = "/delete_cooker/{id}")
   public String deleteCooker(@PathVariable(name = "id") int id){
-    Cooker cooker = ownerDao.findCookerById(id);
-    ownerDao.addCooker(cooker);
-    ownerDao.deleteContractById(cooker.getContract().getId());
     ownerDao.deleteCookerById(id);
     return "redirect:/cookers";
   }

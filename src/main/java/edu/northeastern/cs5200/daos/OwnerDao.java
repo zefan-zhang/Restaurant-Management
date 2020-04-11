@@ -145,7 +145,22 @@ public class OwnerDao {
     }
     return null;
   }
+
+  public void deleteUserPhoneAndAdd(int id) {
+    List<Phone> phones = this.getPhoneByPersonId(id);
+    for (Phone phone : phones) {
+      phoneRepository.delete(phone);
+    }
+    List<Address> addresses = this.getAddressByPersonId(id);
+    for (Address address : addresses) {
+      addressRepository.delete(address);
+    }
+  }
+
   public void deleteCookerById(int id) {
+    Cooker cooker = this.findCookerById(id);
+    this.deleteContractById(cooker.getContract().getId());
+    this.deleteContractById(id);
     cookerRepository.deleteById(id);
   }
 
@@ -170,23 +185,8 @@ public class OwnerDao {
     return null;
   }
 
-  public void assignCookerForManager(int subordinateId, int mangerId) {
-    Optional<Cooker> cooker = cookerRepository.findById(subordinateId);
-    Optional<Cooker> manager = cookerRepository.findById(mangerId);
-    if (cooker.isPresent() && manager.isPresent()) {
-      cooker.get().setManager(manager.get());
-    }
-  }
-
   public void deleteCustomerById(int id) {
-    List<Phone> phones = this.getPhoneByPersonId(id);
-    for (Phone phone : phones) {
-      phoneRepository.delete(phone);
-    }
-    List<Address> addresses = this.getAddressByPersonId(id);
-    for (Address address : addresses) {
-      addressRepository.delete(address);
-    }
+    this.deleteUserPhoneAndAdd(id);
     customerRepository.deleteById(id);
   }
 
@@ -230,9 +230,6 @@ public class OwnerDao {
 
   public void deleteFoodById(int id) {
     foodItemRepository.deleteById(id);
-  }
-  public void deleteAllFoodItem() {
-    foodItemRepository.deleteAll();
   }
 
 }
