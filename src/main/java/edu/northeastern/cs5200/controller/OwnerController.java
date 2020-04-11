@@ -122,6 +122,20 @@ public class OwnerController {
     return "redirect:/owner";
   }
 
+  @GetMapping("edit_customer/{id}")
+  public ModelAndView goEditCustomer(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("update_customer");
+    Customer customer = ownerDao.findCustomerById(id);
+    modelAndView.addObject("customer", customer);
+    return modelAndView;
+  }
+
+  @GetMapping(value = "/delete_customer/{id}")
+  public String deleteCustomer(@PathVariable(name = "id") int id) {
+    ownerDao.deleteCustomerById(id);
+    return "redirect:/owner";
+  }
+
   // address
   @GetMapping("address/{personId}")
   public String getAddressByUserId(@PathVariable(name = "personId") int id, Model model) {
@@ -141,10 +155,11 @@ public class OwnerController {
   }
 
   @GetMapping("edit_address/{id}")
-  public String goEditAddress(@PathVariable(name = "id") int id, Model model) {
+  public ModelAndView goEditAddress(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("update_address");
     Address address = ownerDao.findAddressById(id);
-    model.addAttribute("address", address);
-    return "update_address";
+    modelAndView.addObject("address", address);
+    return modelAndView;
   }
 
   @PostMapping(value = "/save_address")
@@ -178,10 +193,11 @@ public class OwnerController {
   }
 
   @GetMapping("edit_phone/{id}")
-  public String goEditPhone(@PathVariable(name = "id") int id, Model model) {
+  public ModelAndView goEditPhone(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("update_phone");
     Phone phone = ownerDao.findPhoneById(id);
-    model.addAttribute("phone", phone);
-    return "update_phone";
+    modelAndView.addObject("phone", phone);
+    return modelAndView;
   }
 
   @PostMapping(value = "/save_phone")

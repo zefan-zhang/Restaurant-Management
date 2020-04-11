@@ -179,6 +179,14 @@ public class OwnerDao {
   }
 
   public void deleteCustomerById(int id) {
+    List<Phone> phones = this.getPhoneByPersonId(id);
+    for (Phone phone : phones) {
+      phoneRepository.delete(phone);
+    }
+    List<Address> addresses = this.getAddressByPersonId(id);
+    for (Address address : addresses) {
+      addressRepository.delete(address);
+    }
     customerRepository.deleteById(id);
   }
 
