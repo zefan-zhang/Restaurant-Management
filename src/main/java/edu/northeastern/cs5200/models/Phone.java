@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,8 +15,8 @@ public class Phone {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private String phone;
-  private boolean isPrimary;
+  private String number;
+  private boolean primaryPhone;
   @ManyToOne
   @JsonIgnore
   private Person person;
@@ -33,20 +32,20 @@ public class Phone {
     this.id = id;
   }
 
-  public String getPhone() {
-    return phone;
+  public String getNumber() {
+    return number;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setNumber(String phone) {
+    this.number = phone;
   }
 
-  public boolean isPrimary() {
-    return isPrimary;
+  public boolean isPrimaryPhone() {
+    return primaryPhone;
   }
 
-  public void setPrimary(boolean primary) {
-    isPrimary = primary;
+  public void setPrimaryPhone(boolean primaryPhone) {
+    this.primaryPhone = primaryPhone;
   }
 
   public Person getPerson() {

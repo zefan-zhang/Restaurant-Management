@@ -35,6 +35,20 @@
                 </td>
             </tr>
             <tr>
+                <td>Vip</td>
+                <td>
+                    <select th:field="*{VIP}">
+                        <option value="true">
+                            Yes
+                        </option>
+                        <option value="false">
+                            Not
+                        </option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
                 <td>Gender</td>
                 <td>
                     <input type="text" th:field="*{gender}"/>
@@ -61,10 +75,14 @@
             <tr>
                 <td>User Agreement</td>
                 <td>
-                    <input type="checkbox" name="contractStatus1" value="signed" th:field="*{userAgreement}"/>
-                    <label for="contractStatus1">Signed</label><br>
-                    <input type="checkbox" name="contractStatus2" value="no_sign" th:field="*{userAgreement}"/>
-                    <label for="contractStatus2">Not Sign yet</label><br>
+                    <select th:field="*{userAgreement}">
+                        <option value="signed">
+                            Accept
+                        </option>
+                        <option value="no_sign">
+                            No Sign Yet
+                        </option>
+                    </select>
                 </td>
             </tr>
             <tr>

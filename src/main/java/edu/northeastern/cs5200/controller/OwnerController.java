@@ -20,6 +20,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Person;
+import edu.northeastern.cs5200.models.Phone;
 
 @Controller
 public class OwnerController {
@@ -129,8 +130,8 @@ public class OwnerController {
     return "user_address";
   }
 
-  @GetMapping("add_address/{PersonId}")
-  public String addAddress(@PathVariable(name = "PersonId") int id, Model model) {
+  @GetMapping("add_address/{personId}")
+  public String addAddress(@PathVariable(name = "personId") int id, Model model) {
     Person person = ownerDao.findPersonById(id);
     Address address = new Address();
     person.addAddress(address);
@@ -157,6 +158,43 @@ public class OwnerController {
     Address address = ownerDao.findAddressById(id);
     ownerDao.deleteAddressById(id);
     return "redirect:/address/" + address.getPerson().getId();
+  }
+
+  // phone
+  @GetMapping("phone/{personId}")
+  public String getPhoneByUserId(@PathVariable(name = "personId") int id, Model model){
+    List<Phone> phones = ownerDao.getPhoneByPersonId(id);
+    model.addAttribute("phones", phones);
+    return "user_phones";
+  }
+
+  @GetMapping("add_phone/{personId}")
+  public String addPhone(@PathVariable(name = "personId") int id, Model model) {
+    Person person = ownerDao.findPersonById(id);
+    Phone phone = new Phone();
+    phone.setPerson(person);
+    model.addAttribute("phone", phone);
+    return "new_phone";
+  }
+
+  @GetMapping("edit_phone/{id}")
+  public String goEditPhone(@PathVariable(name = "id") int id, Model model) {
+    Phone phone = ownerDao.findPhoneById(id);
+    model.addAttribute("phone", phone);
+    return "update_phone";
+  }
+
+  @PostMapping(value = "/save_phone")
+  public String savePhone(@ModelAttribute("phone") Phone phone) {
+    ownerDao.savePhone(phone);
+    return "redirect:/phone/" + phone.getPerson().getId();
+  }
+
+  @GetMapping(value = "/delete_phone/{id}")
+  public String deletePhone(@PathVariable(name = "id") int id) {
+    Phone phone = ownerDao.findPhoneById(id);
+    ownerDao.deletePhoneById(id);
+    return "redirect:/phone/" + phone.getPerson().getId();
   }
 
   // cooker

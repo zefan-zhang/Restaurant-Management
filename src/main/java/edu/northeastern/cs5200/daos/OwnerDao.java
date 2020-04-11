@@ -14,6 +14,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Person;
+import edu.northeastern.cs5200.models.Phone;
 import edu.northeastern.cs5200.repositories.AddressRepository;
 import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
@@ -21,6 +22,7 @@ import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
+import edu.northeastern.cs5200.repositories.PhoneRepository;
 
 @Service
 public class OwnerDao {
@@ -44,6 +46,9 @@ public class OwnerDao {
 
   @Autowired
   private PersonRepository personRepository;
+
+  @Autowired
+  private PhoneRepository phoneRepository;
 
   // menu
   public List<Menu> findAllMenus() {
@@ -91,6 +96,27 @@ public class OwnerDao {
     addressRepository.deleteById(id);
   }
 
+  // phone
+  public List<Phone> getPhoneByPersonId(int id) {
+    return (List<Phone>) phoneRepository.findPhoneByPersonId(id);
+  }
+
+  public Phone findPhoneById(int id) {
+    Optional<Phone> optional = phoneRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public void savePhone(Phone phone) {
+    phoneRepository.save(phone);
+  }
+
+  public void deletePhoneById(int id) {
+    phoneRepository.deleteById(id);
+  }
+
   // person
   public Person findPersonById(int id) {
     Optional<Person> optional = personRepository.findById(id);
@@ -99,10 +125,10 @@ public class OwnerDao {
     }
     return null;
   }
-
   public void savePerson(Person person){
     personRepository.save(person);
   }
+
   // cooker
   public List<Cooker> findAllCookers() {
     return (List<Cooker>) cookerRepository.findAll();

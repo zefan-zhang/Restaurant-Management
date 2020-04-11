@@ -130,6 +130,8 @@
             </td>
             <td>
                 <a th:href="@{'/phone/' + ${customer.id}}">Detail</a>
+                <br/><br/>
+                <a th:href="@{'/add_phone/' + ${customer.id}}">Add phone</a>
             </td>
             <td th:text="${customer.gender}">Gender</td>
             <td th:text="${customer.email}">Email</td>
