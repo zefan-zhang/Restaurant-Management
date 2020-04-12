@@ -2,23 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Restaurant Owner</title>
+    <title>Subordinates</title>
 </head>
 <body>
 <div align="center">
-    <h1>All Subordinates</h1>
-    <a href="add_cooker">Add a new Subordinates</a>
-    <br/><br/>
-    <a href="/create_food">Create New Food</a>
+    <h1>My Subordinates</h1>
+    <a href="/owner">Go Back</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
         <tr>
-            <th>Cooker ID</th>
+            <th>Subordinate ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Username</th>
-            <th>Password</th>
             <th>Gender</th>
             <th>Email</th>
             <th>Date Of Birth</th>
@@ -39,7 +36,7 @@
             <td th:text="${cooker.level}">Level</td>
             <td th:text="${cooker.responsibility}">Responsibility</td>
             <td>
-                <a th:href="@{'/delete_cooker/' + ${cooker.id}}">Remove</a>
+                <a th:href="@{'/remove_subordinate/' + ${cooker.id}}">Remove</a>
             </td>
 
         </tr>

@@ -255,7 +255,31 @@ public class OwnerController {
   @GetMapping(value = "/delete_cooker/{id}")
   public String deleteCooker(@PathVariable(name = "id") int id){
     ownerDao.deleteCookerById(id);
-    return "redirect:/cookers";
+    return "redirect:/owner";
+  }
+
+  @GetMapping("manager/{cookerId}")
+  public String getManagerByCookerId(@PathVariable(name = "cookerId") int id, Model model) {
+    Cooker manager = ownerDao.getManagerByCookerId(id);
+    model.addAttribute("manager", manager);
+    return "cooker_manager";
+  }
+
+  @GetMapping("/assign_manager/{cookerId}")
+  public ModelAndView assignToManagerPage(@PathVariable(name = "cookerId") int id) {
+    ModelAndView modelAndView = new ModelAndView("assign_to_manager");
+    Cooker cooker = ownerDao.findCookerById(id);
+    modelAndView.addObject("cooker", cooker);
+    return modelAndView;
+  }
+
+  @PostMapping(value = "/save_assigned_manager")
+  public String saveAssignedManager(@ModelAttribute("cooker") Cooker cooker) {
+    Cooker manager = cooker.getManager();
+    Cooker subordinate = ownerDao.findCookerById(cooker.getId());
+    subordinate.setManager(manager);
+    ownerDao.addCooker(subordinate);
+    return "redirect:/owner";
   }
 
   @GetMapping("/subordinates/{id}")
@@ -264,6 +288,16 @@ public class OwnerController {
     model.addAttribute("subordinates", subordinates);
     return "subordinates";
   }
+
+  @GetMapping(value = "/remove_subordinate/{subordinateId}")
+  public String removeRelationship(@PathVariable(name = "subordinateId") int id) {
+    Cooker cooker = ownerDao.findCookerById(id);
+    int managerId = cooker.getManager().getId();
+    cooker.setManager(null);
+    ownerDao.addCooker(cooker);
+    return "redirect:/subordinates/" + managerId;
+  }
+
 
 
   // foodItem

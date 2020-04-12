@@ -146,6 +146,12 @@ public class OwnerDao {
     return null;
   }
 
+  public Cooker getManagerByCookerId(int id){
+    Cooker cooker = this.findCookerById(id);
+    Cooker manager = cooker.getManager();
+    return manager;
+  }
+
   public void deleteUserPhoneAndAdd(int id) {
     List<Phone> phones = this.getPhoneByPersonId(id);
     for (Phone phone : phones) {
@@ -160,7 +166,16 @@ public class OwnerDao {
   public void deleteCookerById(int id) {
     Cooker cooker = this.findCookerById(id);
     this.deleteContractById(cooker.getContract().getId());
-    this.deleteContractById(id);
+    this.deleteUserPhoneAndAdd(id);
+    cooker.setManager(null);
+    cookerRepository.save(cooker);
+    List<Cooker> subordinates = (List<Cooker>) cooker.getSubordinates();
+    if (!subordinates.isEmpty()) {
+      for (Cooker s : subordinates) {
+        s.setManager(null);
+        cookerRepository.save(s);
+      }
+    }
     cookerRepository.deleteById(id);
   }
 

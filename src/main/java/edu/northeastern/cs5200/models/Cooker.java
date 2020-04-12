@@ -91,6 +91,10 @@ public class Cooker extends Person{
     return subordinates;
   }
 
+  public void addSubordinate(Cooker cooker) {
+    this.subordinates.add(cooker);
+  }
+
   public void setSubordinates(Collection<Cooker> subordinates) {
     this.subordinates = subordinates;
   }

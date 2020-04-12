@@ -84,7 +84,11 @@
             <td th:text="${cooker.dob}">Date Of Birth</td>
             <td th:text="${cooker.level}">Level</td>
             <td th:text="${cooker.responsibility}">Responsibility</td>
-            <td th:text="${cooker?.manager?.lastName}">Manager</td>
+            <td>
+                <a th:href="@{'/manager/' + ${cooker.id}}">Detail</a>
+                <br/><br/>
+                <a th:href="@{'/assign_manager/' + ${cooker.id}}">Assign Manager</a>
+            </td>
             <td>
                 <a th:href="@{'/subordinates/' + ${cooker.id}}">Detail</a>
             </td>
