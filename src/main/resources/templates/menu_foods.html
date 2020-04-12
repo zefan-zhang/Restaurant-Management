@@ -16,7 +16,11 @@
         <tr>
             <th>Food ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th>Category</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Reviews</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -25,14 +29,21 @@
         <tr th:each="fooditem : ${foodsOnMenu}">
             <td th:text="${fooditem.id}">Food ID</td>
             <td th:text="${fooditem.name}">Name</td>
+            <td th:text="${fooditem.description}">Description</td>
             <td th:text="${fooditem.category}">Category</td>
+            <td th:text="${fooditem.price}">price</td>
+            <td th:text="${fooditem.inventory}">Inventory</td>
+            <td>
+                <a th:href="@{'/food_reviews/' + ${fooditem.id}}">details</a>
+                <br/><br/>
+                <a th:href="@{'/write_food_reviews/' + ${fooditem.id}}">write review</a>
+            </td>
             <td>
                 <a th:href="@{'/edit_food/' + ${fooditem.id}}">Edit</a>
             </td>
             <td>
                 <a th:href="@{'/delete_food/' + ${fooditem.id}}">Delete</a>
             </td>
-
         </tr>
         </tbody>
     </table>

@@ -6,32 +6,42 @@
 </head>
 <body>
 <div align="center">
-    <h1>Restaurant Owner</h1>
+    <h1>All Food Items</h1>
     <a href="create_food">Create New Food</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
-            <tr>
-                <th>Food ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
+        <tr>
+            <th>Food ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Reviews</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="fooditem : ${foodItems}">
-                <td th:text="${fooditem.id}">Food ID</td>
-                <td th:text="${fooditem.name}">Name</td>
-                <td th:text="${fooditem.category}">Category</td>
-                <td>
-                    <a th:href="@{'/edit_food/' + ${fooditem.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_food/' + ${fooditem.id}}">Delete</a>
-                </td>
-
-            </tr>
+        <tr th:each="fooditem : ${foodItems}">
+            <td th:text="${fooditem.id}">Food ID</td>
+            <td th:text="${fooditem.name}">Name</td>
+            <td th:text="${fooditem.category}">Category</td>
+            <td th:text="${fooditem.price}">price</td>
+            <td th:text="${fooditem.inventory}">Inventory</td>
+            <td>
+                <a th:href="@{'/food_reviews/' + ${fooditem.id}}">details</a>
+                <br/><br/>
+                <a th:href="@{'/write_food_reviews/' + ${fooditem.id}}">details</a>
+            </td>
+            <td>
+                <a th:href="@{'/edit_food/' + ${fooditem.id}}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{'/delete_food/' + ${fooditem.id}}">Delete</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

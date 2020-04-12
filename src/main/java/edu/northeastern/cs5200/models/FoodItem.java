@@ -26,6 +26,8 @@ public class FoodItem {
   private FoodCategory category;
   private double price;
   private int inventory;
+  private String description;
+
 
   @ManyToOne()
   @JsonIgnore
@@ -102,5 +104,13 @@ public class FoodItem {
 
   public void setInventory(int inventory) {
     this.inventory = inventory;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 }

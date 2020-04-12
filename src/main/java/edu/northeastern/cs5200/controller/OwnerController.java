@@ -18,6 +18,7 @@ import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
+import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -332,6 +333,14 @@ public class OwnerController {
   public String deleteFood(@PathVariable(name = "id") int id){
     ownerDao.deleteFoodById(id);
     return "redirect:/owner";
+  }
+
+  // foodReviews
+  @GetMapping("/food_reviews/{foodId}")
+  public String getFoodReviews(@PathVariable(name = "foodId") int id, Model model) {
+    List<FoodReview> foodReviews = ownerDao.findReviewByFoodId(id);
+    model.addAttribute("foodReviews", foodReviews);
+    return "food_reviews";
   }
 
 }

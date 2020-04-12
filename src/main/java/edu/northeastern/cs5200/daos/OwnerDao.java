@@ -12,6 +12,7 @@ import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
+import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -20,6 +21,7 @@ import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
 import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
+import edu.northeastern.cs5200.repositories.FoodReviewRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
@@ -49,6 +51,9 @@ public class OwnerDao {
 
   @Autowired
   private PhoneRepository phoneRepository;
+
+  @Autowired
+  private FoodReviewRepository foodReviewRepository;
 
   // menu
   public List<Menu> findAllMenus() {
@@ -245,6 +250,15 @@ public class OwnerDao {
 
   public void deleteFoodById(int id) {
     foodItemRepository.deleteById(id);
+  }
+
+  // reviews
+  public void writeReview(FoodReview foodReview) {
+    foodReviewRepository.save(foodReview);
+  }
+
+  public List<FoodReview> findReviewByFoodId(int id) {
+    return (List<FoodReview>) foodReviewRepository.findReviewByFoodId(id);
   }
 
 }

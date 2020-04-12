@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Reviews</title>
+</head>
+<body>
+<div align="center">
+    <h1>Food Reviews</h1>
+    <a href="/foods">Go Back</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Review ID</th>
+            <th>Content</th>
+            <th>Reviewed Food Id</th>
+            <th>Wrote By</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="foodReview : ${foodReviews}">
+            <td th:text="${foodReview.id}">Review ID</td>
+            <td th:text="${foodReview.review}">Content</td>
+            <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
+            <td th:text="${foodReview.customer.id}">Wrote By</td>
+            <td>
+                <a th:href="@{'/delete_review/' + ${foodReview.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

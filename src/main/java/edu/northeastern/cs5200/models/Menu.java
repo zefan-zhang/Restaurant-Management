@@ -23,9 +23,6 @@ public class Menu {
   @OneToMany(mappedBy = "menu")
   private Collection<FoodItem> foodItems;
 
-//  @OneToMany(mappedBy = "menu")
-//  private Collection<Customer> customers;
-
   public Menu() {
   }
 
@@ -44,14 +41,6 @@ public class Menu {
   public void setId(int id) {
     this.id = id;
   }
-
-//  public Collection<Customer> getCustomers() {
-//    return customers;
-//  }
-//
-//  public void setCustomers(Collection<Customer> customers) {
-//    this.customers = customers;
-//  }
 
   public String getName() {
     return name;
