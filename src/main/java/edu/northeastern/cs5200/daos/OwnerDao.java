@@ -4,6 +4,7 @@ package edu.northeastern.cs5200.daos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,11 @@ public class OwnerDao {
   }
 
   public void deleteMenuById(int id) {
+    Menu menu = this.findMenuById(id);
+    List<FoodItem> foodItems = (List<FoodItem>) menu.getFoodItems();
+    for (FoodItem foodItem : foodItems) {
+      this.deleteFoodById(foodItem.getId());
+    }
     menuRepository.deleteById(id);
   }
 
@@ -207,6 +213,11 @@ public class OwnerDao {
 
   public void deleteCustomerById(int id) {
     this.deleteUserPhoneAndAdd(id);
+    Customer customer = this.findCustomerById(id);
+    List<FoodReview> foodReviews = (List<FoodReview>) this.findReviewByCustomerId(id);
+    for (FoodReview foodReview : foodReviews) {
+      this.deleteReviewById(foodReview.getId());
+    }
     customerRepository.deleteById(id);
   }
 
@@ -249,6 +260,11 @@ public class OwnerDao {
   }
 
   public void deleteFoodById(int id) {
+    FoodItem foodItem = this.findFoodById(id);
+    Collection<FoodReview> foodReviews = foodItem.getFoodReviews();
+    for (FoodReview review : foodReviews) {
+      this.deleteReviewById(review.getId());
+    }
     foodItemRepository.deleteById(id);
   }
 
@@ -259,6 +275,36 @@ public class OwnerDao {
 
   public List<FoodReview> findReviewByFoodId(int id) {
     return (List<FoodReview>) foodReviewRepository.findReviewByFoodId(id);
+  }
+
+  public FoodReview writeReviewForFood(FoodReview foodReview, int foodId) {
+    FoodItem foodItem = this.findFoodById(foodId);
+    foodReview.setFoodItem(foodItem);
+    return foodReview;
+  }
+
+  public void saveFoodReview(FoodReview foodReview) {
+    foodReviewRepository.save(foodReview);
+  }
+
+  public FoodReview findReviewById(int id) {
+    Optional<FoodReview> optional= foodReviewRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public Collection<FoodReview> findReviewByCustomerId(int id) {
+    return foodReviewRepository.findReviewByCustomerId(id);
+  }
+
+  public void deleteReviewById(int id) {
+    FoodReview foodReview = this.findReviewById(id);
+    foodReview.setFoodItem(null);
+    foodReview.setCustomer(null);
+    this.saveFoodReview(foodReview);
+    foodReviewRepository.delete(foodReview);
   }
 
 }

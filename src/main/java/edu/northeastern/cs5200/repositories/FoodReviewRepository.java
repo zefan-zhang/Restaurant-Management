@@ -11,4 +11,7 @@ import edu.northeastern.cs5200.models.FoodReview;
 public interface FoodReviewRepository extends CrudRepository<FoodReview, Integer> {
   @Query("SELECT f FROM FoodReview f WHERE f.foodItem.id =:id")
   Collection<FoodReview> findReviewByFoodId(@Param("id") int id);
+
+  @Query("SELECT f FROM FoodReview f WHERE f.customer.id =:id")
+  Collection<FoodReview> findReviewByCustomerId(@Param("id") int id);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
 import java.util.List;
 
 import edu.northeastern.cs5200.daos.OwnerDao;
@@ -65,11 +66,6 @@ public class OwnerController {
 
   @GetMapping(value = "/delete_menu/{id}")
   public String deleteMenu(@PathVariable(name = "id") int id){
-    Menu menu = ownerDao.findMenuById(id);
-    List<FoodItem> foodItems = (List<FoodItem>) menu.getFoodItems();
-    for (FoodItem foodItem : foodItems) {
-      ownerDao.deleteFoodById(foodItem.getId());
-    }
     ownerDao.deleteMenuById(id);
     return "redirect:/owner";
   }
@@ -318,7 +314,7 @@ public class OwnerController {
   @PostMapping(value = "/save_food")
   public String saveFood(@ModelAttribute("food") FoodItem food) {
     ownerDao.CreateFoodItem(food);
-    return "redirect:/owner";
+    return "redirect:/menu/" + food.getMenu().getId();
   }
 
   @GetMapping("/edit_food/{id}")
@@ -341,6 +337,41 @@ public class OwnerController {
     List<FoodReview> foodReviews = ownerDao.findReviewByFoodId(id);
     model.addAttribute("foodReviews", foodReviews);
     return "food_reviews";
+  }
+
+  @GetMapping("/write_food_review/{foodId}")
+  public String writeReviewForFood(@PathVariable(name = "foodId")int id, Model model) {
+    FoodReview foodReview = new FoodReview();
+    foodReview = ownerDao.writeReviewForFood(foodReview, id);
+    model.addAttribute("foodReview", foodReview);
+    return "new_food_review";
+  }
+
+  @PostMapping("/save_review")
+  public String saveFoodReview(@ModelAttribute("foodReview") FoodReview foodReview) {
+    ownerDao.saveFoodReview(foodReview);
+    return "redirect:/food_reviews/" + foodReview.getFoodItem().getId();
+  }
+
+  @GetMapping(value = "/delete_review/{id}")
+  public String deleteReview(@PathVariable(name = "id") int id){
+    ownerDao.deleteReviewById(id);
+    return "redirect:/foods";
+  }
+
+  @GetMapping("/customer_foodreview/{customerId}")
+  public String goCustomerFoodReviews(@PathVariable(name = "customerId") int id, Model model) {
+    Collection<FoodReview> foodReviews = ownerDao.findReviewByCustomerId(id);
+    model.addAttribute("foodReviews", foodReviews);
+    return "customer_food_reviews";
+  }
+
+  @GetMapping("/edit_review/{id}")
+  public ModelAndView goEditMyFoodReview(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("edit_my_foodreview");
+    FoodReview foodReview = ownerDao.findReviewById(id);
+    modelAndView.addObject("foodReview", foodReview);
+    return modelAndView;
   }
 
 }

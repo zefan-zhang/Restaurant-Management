@@ -127,6 +127,7 @@
             <th>Date Of Birth</th>
             <th>User Agreement</th>
             <th>Payment Method</th>
+            <th>My Review For Food</th>
             <th>Edit</th>
             <th>Remove</th>
         </tr>
@@ -154,6 +155,9 @@
             <td th:text="${customer.dob}">Date Of Birth</td>
             <td th:text="${customer.userAgreement}">User Agreement</td>
             <td th:text="${customer.paymentMethod}">Payment Method</td>
+            <td>
+                <a th:href="@{'/customer_foodreview/' + ${customer.id}}">Detail</a>
+            </td>
             <td>
                 <a th:href="@{'/edit_customer/' + ${customer.id}}">Edit</a>
             </td>
