@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +21,8 @@ public class Person {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+  @Enumerated(EnumType.STRING)
+  private RoleType role;
   private String fistName;
   private String lastName;
   private String username;
@@ -35,7 +39,8 @@ public class Person {
   public Person() {
   }
 
-  public Person(String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
+  public Person(RoleType role, String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
+    this.role = role;
     this.fistName = fistName;
     this.lastName = lastName;
     this.username = username;
@@ -129,4 +134,19 @@ public class Person {
     this.addresses.add(address);
   }
 
+  public RoleType getRole() {
+    return role;
+  }
+
+  public void setRole(RoleType role) {
+    this.role = role;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
 }

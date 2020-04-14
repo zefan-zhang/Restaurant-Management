@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Foods</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle" >Team 19</p>
+        </div>
+    </div>
+    <a href="/login"><button class="loginButton">Login</button></a>
+</header>
+
+<nav>
+    <a href="/"><button class="button">Home</button></a>
+    <a href="/menus"><button class="button">Menu</button></a>
+    <a href="/login"><button class="button">Shopping Cart</button></a>
+    <a href="/login"><button class="button">My Order</button></a>
+    <a href="/login"><button class="button">My Message</button></a>
+</nav>
+<main>
+    <br/><br/>
+    <div align="center">
+        <p class="heading1">Foods</p>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Food ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Inventory</th>
+                <th>Reviews</th>
+                <th>Add to Shopping Cart</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="fooditem : ${foodsOnMenu}">
+                <td th:text="${fooditem.id}">Food ID</td>
+                <td th:text="${fooditem.name}">Name</td>
+                <td th:text="${fooditem.description}">Description</td>
+                <td th:text="${fooditem.category}">Category</td>
+                <td th:text="${fooditem.price}">price</td>
+                <td th:text="${fooditem.inventory}">Inventory</td>
+                <td>
+                    <a th:href="@{'/public_food_reviews/' + ${fooditem.id}}"><button class="tableButton">Detail</button></a>
+                    <br/><br/>
+                    <a th:href="@{'/login'}"><button class="tableButton">Write Review</button></a>
+                </td>
+                <td>
+                    <a th:href="@{'/login'}"><button class="tableButton">Add</button></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

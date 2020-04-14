@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
@@ -21,17 +22,137 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
+import edu.northeastern.cs5200.models.RoleType;
 
 @Controller
 public class OwnerController {
+
   @Autowired
   private OwnerDao ownerDao;
 
-  // menu
-  @GetMapping("/owner")
+  // home page
+  @GetMapping("/")
   public String homePage(Model model) {
+    List<Menu> menus = ownerDao.findAllMenus();
+    model.addAttribute("menus", menus);
+    return "homepage";
+  }
+
+  // menu
+  @GetMapping("/menus")
+  public String goPublicMenuPage(Model model) {
+    List<Menu> menus = ownerDao.findAllMenus();
+    model.addAttribute("menus", menus);
+    return "public_menu";
+  }
+
+  @GetMapping("/menu/{id}")
+  public String goPublicMenuFoodPage(@PathVariable(name = "id") int id, Model model) {
+    List<FoodItem> foodItems = ownerDao.findFoodsByMenuId(id);
+    model.addAttribute("foodsOnMenu", foodItems);
+    return "public_menu_foods";
+  }
+
+  // foodReviews
+  @GetMapping("/public_food_reviews/{foodId}")
+  public String goPublicFoodReviews(@PathVariable(name = "foodId") int id, Model model) {
+    List<FoodReview> foodReviews = ownerDao.findReviewByFoodId(id);
+    model.addAttribute("foodReviews", foodReviews);
+    return "public_food_reviews";
+  }
+
+  // register
+  @RequestMapping("/register")
+  public String goRegisterPage(Model model) {
+    Person person = new Person();
+    model.addAttribute("person" , person);
+    return "register";
+  }
+
+  @PostMapping(value = "/save_user")
+  public String goUserPage(@ModelAttribute("person") Person person) {
+    RoleType userRole = person.getRole();
+    if (userRole.equals(RoleType.owner)) {
+      Owner owner = new Owner(person.getRole(), person.getFistName(), person.getLastName(),
+              person.getUserName(), person.getPassword(), person.getGender(), person.getEmail(),
+              person.getDob());
+      ownerDao.saveOwner(owner);
+    }
+    else if (userRole.equals(RoleType.cooker)) {
+      Cooker cooker = new Cooker(person.getRole(), person.getFistName(), person.getLastName(),
+              person.getUserName(), person.getPassword(), person.getGender(), person.getEmail(),
+              person.getDob());
+      ownerDao.addCooker(cooker);
+    }
+    else if (userRole.equals(RoleType.customer)) {
+      Customer customer = new Customer(person.getRole(), person.getFistName(), person.getLastName(),
+              person.getUserName(), person.getPassword(), person.getGender(), person.getEmail(),
+              person.getDob());
+      ownerDao.addCustomer(customer);
+    }
+    return "redirect:/" + userRole.toString() + "/" + person.getUserName();
+  }
+
+  //login
+  @RequestMapping("/login")
+  public String goLoginPage(Model model) {
+    Person person = new Person();
+    model.addAttribute("person", person);
+    return "go_login";
+  }
+
+  @GetMapping("/get_user")
+  public String gerUserPage(@ModelAttribute("person") Person person) {
+    String userName = person.getUserName();
+    String password = person.getPassword();
+    RoleType role = person.getRole();
+    if (role.equals(RoleType.owner)) {
+      Owner user = ownerDao.findOwnerByUnamePword(userName, password);
+      if (user != null) {
+        return "redirect:/owner/" + userName;
+      }
+    } else if (role.equals(RoleType.cooker)) {
+      Cooker user = ownerDao.findCookerByUnamePword(userName, password);
+      if (user != null) {
+        return "redirect:/cooker/" + userName;
+      }
+    } else if (role.equals(RoleType.customer)) {
+      Customer user = ownerDao.findCustomerByUnamePword(userName, password);
+      if (user != null) {
+        return "redirect:/customer/" + userName;
+      }
+    }
+
+    return "relogin";
+  }
+
+  @GetMapping("/{role}/{username}")
+  public String goRoleHomePage(@PathVariable(name = "role") RoleType roleType,
+                               @PathVariable(name = "username") String username, Model model) {
+    if (roleType.equals(RoleType.owner)) {
+      Owner owner = ownerDao.findOwnerByUname(username);
+      model.addAttribute("owner", owner);
+      return "";
+    } else if (roleType.equals(RoleType.cooker)) {
+      Cooker cooker = ownerDao.findCookerByUname(username);
+      model.addAttribute("cooker", cooker);
+      return "";
+    } else if (roleType.equals(RoleType.customer)) {
+      Customer customer = ownerDao.findCustomerByUname(username);
+      model.addAttribute("customer", customer);
+      return "customer_homepage";
+    }
+    return "redirect:/";
+  }
+
+
+
+  // owner
+  @GetMapping("/owner")
+  public String ownerPage(Model model) {
     List<Menu> menus = ownerDao.findAllMenus();
     model.addAttribute("menus", menus);
     List<FoodItem> foodItems = ownerDao.findAllFoodItem();
@@ -70,12 +191,7 @@ public class OwnerController {
     return "redirect:/owner";
   }
 
-  @GetMapping("/menu/{id}")
-  public String getFoodItemsByMenuId(@PathVariable(name = "id") int id, Model model) {
-    List<FoodItem> foodItems = ownerDao.findFoodsByMenuId(id);
-    model.addAttribute("foodsOnMenu", foodItems);
-    return "menu_foods";
-  }
+
 
   // contract
   @GetMapping("/contracts")
@@ -162,7 +278,8 @@ public class OwnerController {
   @PostMapping(value = "/save_address")
   public String saveAddress(@ModelAttribute("address") Address address) {
     ownerDao.saveAddress(address);
-    return "redirect:/address/" + address.getPerson().getId();
+    Person person = ownerDao.findPersonById(address.getPerson().getId());
+    return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
   @GetMapping(value = "/delete_address/{id}")
@@ -200,7 +317,8 @@ public class OwnerController {
   @PostMapping(value = "/save_phone")
   public String savePhone(@ModelAttribute("phone") Phone phone) {
     ownerDao.savePhone(phone);
-    return "redirect:/phone/" + phone.getPerson().getId();
+    Customer person = ownerDao.findCustomerById(phone.getPerson().getId());
+    return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
   @GetMapping(value = "/delete_phone/{id}")

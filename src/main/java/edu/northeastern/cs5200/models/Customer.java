@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import java.sql.Date;
 import java.util.Collection;
 
 @Entity
@@ -26,6 +27,11 @@ public class Customer extends Person {
   private Collection<FoodReview> foodReviews;
 
   public Customer() {
+    super();
+  }
+
+  public Customer(RoleType role, String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
+    super(role, fistName, lastName, username, password, gender, email, dob);
   }
 
   public Collection<Text> getTexts() {

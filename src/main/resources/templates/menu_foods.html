@@ -23,6 +23,7 @@
             <th>Reviews</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>Add to Shopping Cart</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,9 @@
             </td>
             <td>
                 <a th:href="@{'/delete_food/' + ${fooditem.id}}">Delete</a>
+            </td>
+            <td>
+                <a th:href="@{'/add_shopping_cart/' + ${fooditem.id}}">Add</a>
             </td>
         </tr>
         </tbody>

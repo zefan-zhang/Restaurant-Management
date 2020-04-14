@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/login">
+        <button class="loginButton">Login</button>
+    </a>
+</header>
+
+<nav>
+    <a href="/">
+        <button class="button">Home</button>
+    </a>
+    <a href="/menus">
+        <button class="button">Menu</button>
+    </a>
+    <a href="/login">
+        <button class="button">Shopping Cart</button>
+    </a>
+    <a href="/login">
+        <button class="button">My Order</button>
+    </a>
+    <a href="/login">
+        <button class="button">My Message</button>
+    </a>
+</nav>
+<main>
+    <br/><br/>
+    <div align="center">
+        <p class="heading1">Food Reviews</p>
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Review ID</th>
+                <th>Content</th>
+                <th>Reviewed Food Id</th>
+                <th>Wrote By</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="foodReview : ${foodReviews}">
+                <td th:text="${foodReview.id}">Review ID</td>
+                <td th:text="${foodReview.review}">Content</td>
+                <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
+                <td th:text="${foodReview.customer.userName}">Wrote By</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

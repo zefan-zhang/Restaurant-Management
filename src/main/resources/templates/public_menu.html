@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle" >Team 19</p>
+        </div>
+    </div>
+    <a href="/login"><button class="loginButton">Login</button></a>
+</header>
+
+<nav>
+    <a href="/"><button class="button">Home</button></a>
+    <a href="/menus"><button class="button">Menu</button></a>
+    <a href="/login"><button class="button">Shopping Cart</button></a>
+    <a href="/login"><button class="button">My Order</button></a>
+    <a href="/login"><button class="button">My Message</button></a>
+</nav>
+
+<main>
+    <br/><br/>
+    <div align="center">
+        <p class="heading1">Menus</p>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Menu ID</th>
+                <th>Name</th>
+                <th>Foods</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="menu : ${menus}">
+                <td th:text="${menu.id}">Menu ID</td>
+                <td th:text="${menu.name}">Name</td>
+                <td>
+                    <a th:href="@{'/menu/' + ${menu.id}}"><button class="tableButton">Detail</button></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

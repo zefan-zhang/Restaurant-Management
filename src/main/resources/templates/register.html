@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/login">
+        <button class="loginButton">Login</button>
+    </a>
+</header>
+
+<nav>
+    <a href="/">
+        <button class="button">Home</button>
+    </a>
+    <a href="/menus">
+        <button class="button">Menu</button>
+    </a>
+    <a href="/login" >
+        <button class="button">Shopping Cart</button>
+    </a>
+    <a href="/login">
+        <button class="button">My Order</button>
+    </a>
+    <a href="/login">
+        <button class="button">My Message</button>
+    </a>
+</nav>
+<main>
+    <br/><br/>
+    <div align="center">
+        <p class="heading1">Welcome to Use Our System<br/>Please fill the follow required information</p>
+        <br/><br/>
+        <form action="#" th:action="@{/save_user}" th:object="${person}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>User Role</td>
+                    <td>
+                        <select th:field="*{role}">
+                            <option value="owner">
+                                Owner
+                            </option>
+                            <option value="cooker">
+                                Cooker
+                            </option>
+                            <option value="customer">
+                                Customer
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Username</td>
+                    <td>
+                        <input type="text" th:field="*{userName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <input type="text" th:field="*{password}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td>
+                        <input type="text" th:field="*{fistName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td>
+                        <input type="text" th:field="*{fistName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>
+                        <input type="text" th:field="*{lastName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                        <input type="text" th:field="*{gender}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <input type="email" th:field="*{email}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date Of Birth</td>
+                    <td>
+                        <input type="date" th:field="*{dob}"/>
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Register</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br/><br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

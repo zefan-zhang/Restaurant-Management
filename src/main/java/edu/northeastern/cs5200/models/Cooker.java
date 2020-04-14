@@ -37,6 +37,11 @@ public class Cooker extends Person{
   private Contract contract;
 
   public Cooker() {
+    super();
+  }
+
+  public Cooker(RoleType role, String fistName, String lastName, String username, String password, String gender, String email, Date dob) {
+    super(role, fistName, lastName, username, password, gender, email, dob);
   }
 
   public String getResponsibility() {

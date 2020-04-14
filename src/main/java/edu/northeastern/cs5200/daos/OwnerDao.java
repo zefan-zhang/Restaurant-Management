@@ -15,6 +15,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
 import edu.northeastern.cs5200.repositories.AddressRepository;
@@ -24,6 +25,7 @@ import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.FoodReviewRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
+import edu.northeastern.cs5200.repositories.OwnerRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
 
@@ -55,6 +57,35 @@ public class OwnerDao {
 
   @Autowired
   private FoodReviewRepository foodReviewRepository;
+
+  @Autowired
+  private OwnerRepository ownerRepository;
+
+  // login
+  public Person findUserByUnameAndPword(String username, String password) {
+    return personRepository.findPersonByUnamePword(username, password);
+  }
+
+  // owner
+  public Owner findOwnerById(int id) {
+    Optional<Owner> optional = ownerRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public void saveOwner(Owner owner) {
+    ownerRepository.save(owner);
+  }
+
+  public Owner findOwnerByUnamePword(String username, String password) {
+    return ownerRepository.findOwnerByUnamePword(username, password);
+  }
+
+  public Owner findOwnerByUname(String username) {
+    return ownerRepository.findOwnerByUname(username);
+  }
 
   // menu
   public List<Menu> findAllMenus() {
@@ -136,6 +167,7 @@ public class OwnerDao {
     }
     return null;
   }
+
   public void savePerson(Person person){
     personRepository.save(person);
   }
@@ -194,6 +226,14 @@ public class OwnerDao {
     return (List<Cooker>) cookerRepository.findSubordinateByMId(id);
   }
 
+  public Cooker findCookerByUnamePword(String username, String password) {
+    return cookerRepository.findCookerByUnamePword(username, password);
+  }
+
+  public Cooker findCookerByUname(String username) {
+    return cookerRepository.findCookerByUname(username);
+  }
+
   // customer
   public List<Customer> findAllCustomer() {
     return (List<Customer>) customerRepository.findAll();
@@ -219,6 +259,14 @@ public class OwnerDao {
       this.deleteReviewById(foodReview.getId());
     }
     customerRepository.deleteById(id);
+  }
+
+  public Customer findCustomerByUnamePword(String username, String password) {
+    return customerRepository.findCustomerByUnamePword(username, password);
+  }
+
+  public Customer findCustomerByUname(String username) {
+    return customerRepository.findCustomerByUname(username);
   }
 
 

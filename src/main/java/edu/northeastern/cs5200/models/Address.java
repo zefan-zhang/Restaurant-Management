@@ -19,7 +19,7 @@ public class Address {
   private String street2;
   private String city;
   private String state;
-  private int zip;
+  private String zip;
   private boolean primaryAddress;
   @ManyToOne
   @JsonIgnore
@@ -68,11 +68,11 @@ public class Address {
     this.state = state;
   }
 
-  public int getZip() {
+  public String getZip() {
     return zip;
   }
 
-  public void setZip(int zip) {
+  public void setZip(String zip) {
     this.zip = zip;
   }
 
