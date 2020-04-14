@@ -26,6 +26,7 @@ import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
 import edu.northeastern.cs5200.models.RoleType;
+import edu.northeastern.cs5200.models.WishList;
 
 @Controller
 public class OwnerController {
@@ -47,6 +48,23 @@ public class OwnerController {
     List<Menu> menus = ownerDao.findAllMenus();
     model.addAttribute("menus", menus);
     return "public_menu";
+  }
+
+  @GetMapping("/{role}/menus/{userId}")
+  public String goLoginUserMenu(@PathVariable(name = "role") RoleType roleType,
+                                @PathVariable(name = "userId") int id, Model model) {
+    List<Menu> menus = ownerDao.findAllMenus();
+    model.addAttribute("menus", menus);
+    if (roleType.equals(RoleType.owner)) {
+      Owner owner = ownerDao.findOwnerById(id);
+      model.addAttribute("owner", owner);
+      return "owner_menu";
+    } else if (roleType.equals(RoleType.customer)) {
+      Customer customer = ownerDao.findCustomerById(id);
+      model.addAttribute("customer", customer);
+      return "customer_menu";
+    }
+    return "/";
   }
 
   @GetMapping("/menu/{id}")
@@ -135,7 +153,7 @@ public class OwnerController {
     if (roleType.equals(RoleType.owner)) {
       Owner owner = ownerDao.findOwnerByUname(username);
       model.addAttribute("owner", owner);
-      return "";
+      return "owner_homepage";
     } else if (roleType.equals(RoleType.cooker)) {
       Cooker cooker = ownerDao.findCookerByUname(username);
       model.addAttribute("cooker", cooker);
@@ -174,7 +192,8 @@ public class OwnerController {
   @PostMapping(value = "/save_menu")
   public String saveMenu(@ModelAttribute("menu") Menu menu) {
     ownerDao.saveMenu(menu);
-    return "redirect:/owner";
+    Owner owner = ownerDao.findOwnerById(menu.getCreatorId());
+    return "redirect:/owner/" + owner.getUserName();
   }
 
   @GetMapping("edit_menu/{id}")
@@ -232,7 +251,7 @@ public class OwnerController {
   @PostMapping(value = "/save_customer")
   public String saveCustomer(@ModelAttribute("customer") Customer customer) {
     ownerDao.addCustomer(customer);
-    return "redirect:/owner";
+    return "redirect:/customer/" + customer.getUserName();
   }
 
   @GetMapping("edit_customer/{id}")
@@ -282,11 +301,12 @@ public class OwnerController {
     return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
-  @GetMapping(value = "/delete_address/{id}")
+  @RequestMapping(value = "/delete_address/{id}")
   public String deleteAddress(@PathVariable(name = "id") int id){
     Address address = ownerDao.findAddressById(id);
+    Person person = ownerDao.findPersonById(address.getPerson().getId());
     ownerDao.deleteAddressById(id);
-    return "redirect:/address/" + address.getPerson().getId();
+    return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
   // phone
@@ -317,15 +337,16 @@ public class OwnerController {
   @PostMapping(value = "/save_phone")
   public String savePhone(@ModelAttribute("phone") Phone phone) {
     ownerDao.savePhone(phone);
-    Customer person = ownerDao.findCustomerById(phone.getPerson().getId());
+    Person person = ownerDao.findCustomerById(phone.getPerson().getId());
     return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
   @GetMapping(value = "/delete_phone/{id}")
   public String deletePhone(@PathVariable(name = "id") int id) {
     Phone phone = ownerDao.findPhoneById(id);
+    Person person = ownerDao.findCustomerById(phone.getPerson().getId());
     ownerDao.deletePhoneById(id);
-    return "redirect:/phone/" + phone.getPerson().getId();
+    return "redirect:/" + person.getRole().toString() + "/" + person.getUserName();
   }
 
   // cooker
@@ -468,19 +489,21 @@ public class OwnerController {
   @PostMapping("/save_review")
   public String saveFoodReview(@ModelAttribute("foodReview") FoodReview foodReview) {
     ownerDao.saveFoodReview(foodReview);
-    return "redirect:/food_reviews/" + foodReview.getFoodItem().getId();
+    return "redirect:/customer_foodreview/" + foodReview.getCustomer().getId();
   }
 
-  @GetMapping(value = "/delete_review/{id}")
-  public String deleteReview(@PathVariable(name = "id") int id){
-    ownerDao.deleteReviewById(id);
-    return "redirect:/foods";
+  @GetMapping(value = "/delete_review/{customerId}/{reviewId}")
+  public String deleteReview(@PathVariable(name = "customerId") int customerId, @PathVariable(name = "reviewId") int reviewId){
+    ownerDao.deleteReviewById(reviewId);
+    return "redirect:/customer_foodreview/" + customerId;
   }
 
   @GetMapping("/customer_foodreview/{customerId}")
   public String goCustomerFoodReviews(@PathVariable(name = "customerId") int id, Model model) {
     Collection<FoodReview> foodReviews = ownerDao.findReviewByCustomerId(id);
     model.addAttribute("foodReviews", foodReviews);
+    Customer customer = ownerDao.findCustomerById(id);
+    model.addAttribute("customer", customer);
     return "customer_food_reviews";
   }
 
@@ -492,4 +515,12 @@ public class OwnerController {
     return modelAndView;
   }
 
+  @GetMapping("/wish_list/{customerId}")
+  public String goWishList(@PathVariable(name = "customerId") int id, Model model) {
+    List<WishList> wishLists = ownerDao.findWishListByCustomerId(id);
+    Customer customer = ownerDao.findCustomerById(id);
+    model.addAttribute("wishLists", wishLists);
+    model.addAttribute("customer", customer);
+    return "wish_list";
+  }
 }

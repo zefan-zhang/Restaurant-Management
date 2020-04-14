@@ -28,6 +28,10 @@ public class ShoppingCart {
   @JsonIgnore
   private Order order;
 
+  @ManyToOne()
+  @JsonIgnore
+  private Customer customer;
+
   public ShoppingCart() {
   }
 

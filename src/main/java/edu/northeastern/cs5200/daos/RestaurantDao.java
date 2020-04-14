@@ -18,6 +18,7 @@ import edu.northeastern.cs5200.models.Menu;
 import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
+import edu.northeastern.cs5200.models.WishList;
 import edu.northeastern.cs5200.repositories.AddressRepository;
 import edu.northeastern.cs5200.repositories.ContractRepository;
 import edu.northeastern.cs5200.repositories.CookerRepository;
@@ -28,6 +29,7 @@ import edu.northeastern.cs5200.repositories.MenuRepository;
 import edu.northeastern.cs5200.repositories.OwnerRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
+import edu.northeastern.cs5200.repositories.WishListRepository;
 
 @Service
 public class OwnerDao {
@@ -60,6 +62,9 @@ public class OwnerDao {
 
   @Autowired
   private OwnerRepository ownerRepository;
+
+  @Autowired
+  private WishListRepository wishListRepository;
 
   // login
   public Person findUserByUnameAndPword(String username, String password) {
@@ -353,6 +358,11 @@ public class OwnerDao {
     foodReview.setCustomer(null);
     this.saveFoodReview(foodReview);
     foodReviewRepository.delete(foodReview);
+  }
+
+  // shopping cart
+  public List<WishList> findWishListByCustomerId(int id){
+    return wishListRepository.findWishListByCustomerId(id);
   }
 
 }
