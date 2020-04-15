@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +28,7 @@ public class Order {
   private OrderStatus orderStatus;
 
   @OneToMany(mappedBy = "order")
-  private Collection<ShoppingCart> shoppingCarts;
+  private Collection<WishList> wishLists;
 
   @ManyToOne()
   @JsonIgnore
@@ -50,12 +49,12 @@ public class Order {
     this.orderStatus = orderStatus;
   }
 
-  public Collection<ShoppingCart> getShoppingCarts() {
-    return shoppingCarts;
+  public Collection<WishList> getWishLists() {
+    return wishLists;
   }
 
-  public void setShoppingCarts(Collection<ShoppingCart> shoppingCarts) {
-    this.shoppingCarts = shoppingCarts;
+  public void setWishLists(Collection<WishList> wishLists) {
+    this.wishLists = wishLists;
   }
 
   public int getId() {

@@ -1,11 +1,7 @@
 package edu.northeastern.cs5200.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -25,6 +21,9 @@ public class Customer extends Person {
 
   @OneToMany(mappedBy = "customer")
   private Collection<FoodReview> foodReviews;
+
+  @OneToMany(mappedBy = "customer")
+  private Collection<WishList> wishLists;
 
   public Customer() {
     super();
@@ -80,5 +79,13 @@ public class Customer extends Person {
 
   public void setFoodReviews(Collection<FoodReview> foodReviews) {
     this.foodReviews = foodReviews;
+  }
+
+  public Collection<WishList> getWishLists() {
+    return wishLists;
+  }
+
+  public void setWishLists(Collection<WishList> wishLists) {
+    this.wishLists = wishLists;
   }
 }

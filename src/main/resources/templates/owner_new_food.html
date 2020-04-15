@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Foods</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
+</header>
+<main>
+    <div align="center">
+        <br/>
+        <br/>
+        <p class="heading1">Create New Food</p>
+        <br/>
+        <form action="#" th:action="@{/save_food}" th:object="${food}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Menu ID</td>
+                    <td>
+                        <input type="number" th:field="*{menu.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Food Name</td>
+                    <td>
+                        <input type="text" th:field="*{name}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <input type="text" th:field="*{description}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Food Category</td>
+                    <td>
+                        <select th:field="*{category}">
+                            <option value="appetizer">Appetizer</option>
+                            <option value="mainDish">Main Dish</option>
+                            <option value="salad">Salad</option>
+                            <option value="meat">Meat</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="beverage">Beverage</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>
+                        <input type="number" th:field="*{price}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Inventory</td>
+                    <td>
+                        <input type="number" th:field="*{inventory}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Save</button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <footer>
+        <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+    </footer>
+</body>
+</html>

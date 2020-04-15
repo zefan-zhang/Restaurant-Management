@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Address</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
 </head>
 <body>
+<main>
 <div align="center">
-    <h1>Update Address</h1>
+    <p class="heading1">Update Address</p>
     <br/>
     <form action="#" th:action="@{/save_address}" th:object="${address}" method="post">
         <table border="0" cellpadding="10">
@@ -73,6 +75,9 @@
         </table>
     </form>
 </div>
-
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
 </body>
 </html>

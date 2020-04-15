@@ -19,40 +19,18 @@
 <nav>
         <a href="/"><button class="button">Home</button></a>
         <a href="/menus"><button class="button">Menu</button></a>
-        <a href="/login"><button class="button">Shopping Cart</button></a>
+        <a href="/login"><button class="button">Wish List</button></a>
         <a href="/login"><button class="button">My Order</button></a>
         <a href="/login"><button class="button">My Message</button></a>
 </nav>
 
 <main>
     <div align="center">
-        <P class="heading1">Menus</P>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>Menu ID</th>
-                <th>Name</th>
-                <th>Foods</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="menu : ${menus}">
-                <td th:text="${menu.id}">Menu ID</td>
-                <td th:text="${menu.name}">Name</td>
-                <td>
-                    <a th:href="@{'/menu/' + ${menu.id}}">Detail</a>
-                </td>
-                <td>
-                    <a th:href="@{'/edit_menu/' + ${menu.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_menu/' + ${menu.id}}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <br/>
+        <br/>
+        <P class="heading1">Welcome To Team 19 Restaurant</P>
+        <br/>
+        <br/>
     </div>
 </main>
 <footer>

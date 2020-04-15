@@ -17,6 +17,7 @@ public class Menu {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String name;
+  private int CreatorId;
 
 
   @OneToMany(mappedBy = "menu")
@@ -47,5 +48,13 @@ public class Menu {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getCreatorId() {
+    return CreatorId;
+  }
+
+  public void setCreatorId(int createrId) {
+    CreatorId = createrId;
   }
 }

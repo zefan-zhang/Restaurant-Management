@@ -32,7 +32,7 @@ import edu.northeastern.cs5200.repositories.PhoneRepository;
 import edu.northeastern.cs5200.repositories.WishListRepository;
 
 @Service
-public class OwnerDao {
+public class RestaurantDao {
   @Autowired
   private FoodItemRepository foodItemRepository;
 
@@ -69,6 +69,10 @@ public class OwnerDao {
   // login
   public Person findUserByUnameAndPword(String username, String password) {
     return personRepository.findPersonByUnamePword(username, password);
+  }
+
+  public Person findUserByUsername(String username) {
+    return personRepository.findPersonByUname(username);
   }
 
   // owner

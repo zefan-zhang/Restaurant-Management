@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-import edu.northeastern.cs5200.models.ShoppingCart;
+import edu.northeastern.cs5200.models.WishList;
 
-public interface ShoppingCartRepository extends CrudRepository<ShoppingCart, Integer> {
+public interface WishListRepository extends CrudRepository<WishList, Integer> {
 
-  @Query("SELECT s FROM ShoppingCart s WHERE s.customer.id =:id")
-  List<ShoppingCart> findShoppingCartByCustomerId(@Param("id") int id);
+  @Query("SELECT s FROM WishList s WHERE s.customer.id =:id")
+  List<WishList> findWishListByCustomerId(@Param("id") int id);
 }

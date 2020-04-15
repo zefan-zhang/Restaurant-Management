@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "shopping_carts")
-public class ShoppingCart {
+@Table(name = "wish_list")
+public class WishList {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -32,7 +32,7 @@ public class ShoppingCart {
   @JsonIgnore
   private Customer customer;
 
-  public ShoppingCart() {
+  public WishList() {
   }
 
 
@@ -66,5 +66,13 @@ public class ShoppingCart {
 
   public void setFoodItem(FoodItem foodItem) {
     this.foodItem = foodItem;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 }

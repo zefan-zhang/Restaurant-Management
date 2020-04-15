@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Address</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
+</header>
+
+<nav>
+    <a th:href="@{'/owner/' + ${owner.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/all_customers/' + ${owner.username}}">
+        <button class="button">Customers</button>
+    </a>
+    <a th:href="@{'/all_cookers/' + ${owner.username}}">
+        <button class="button">Cookers</button>
+    </a>
+    <a th:href="@{'/owner/menus/' + ${owner.id}}">
+        <button class="button">Menus</button>
+    </a>
+    <a th:href="@{'/all_orders/' + ${owner.username}}">
+        <button class="button">Orders</button>
+    </a>
+</nav>
+
+<main>
+    <div align="center">
+        <p class="heading1">Update Address</p>
+        <br/>
+        <form action="#" th:action="@{/owner_save_address}" th:object="${address}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Address ID</td>
+                    <td>
+                        <input type="number" th:field="*{id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>User ID</td>
+                    <td>
+                        <input type="number" th:field="*{person.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Primary Address</td>
+                    <td>
+                        <select th:field="*{primaryAddress}">
+                            <option value="true">
+                                Yes
+                            </option>
+                            <option value="false">
+                                No
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Street 1</td>
+                    <td>
+                        <input type="text" th:field="*{street1}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Street 2</td>
+                    <td>
+                        <input type="text" th:field="*{street2}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>
+                        <input type="text" th:field="*{city}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>
+                        <input type="text" th:field="*{state}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Zip</td>
+                    <td>
+                        <input type="text" th:field="*{zip}"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

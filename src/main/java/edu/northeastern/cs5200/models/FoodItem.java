@@ -37,7 +37,7 @@ public class FoodItem {
   private Collection<FoodReview> foodReviews;
 
   @OneToMany(mappedBy = "foodItem")
-  private Collection<ShoppingCart> shoppingCarts;
+  private Collection<WishList> wishLists;
 
   public FoodItem() {
   }
@@ -74,12 +74,12 @@ public class FoodItem {
     return menu;
   }
 
-  public Collection<ShoppingCart> getShoppingCarts() {
-    return shoppingCarts;
+  public Collection<WishList> getWishLists() {
+    return wishLists;
   }
 
-  public void setShoppingCarts(Collection<ShoppingCart> shoppingCarts) {
-    this.shoppingCarts = shoppingCarts;
+  public void setWishLists(Collection<WishList> wishLists) {
+    this.wishLists = wishLists;
   }
 
   public Collection<FoodReview> getFoodReviews() {

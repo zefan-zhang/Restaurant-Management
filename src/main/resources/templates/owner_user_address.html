@@ -2,18 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Menus</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+    <title>Address</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle" >Team 19</p>
+            <p class="subtitle">Team 19</p>
         </div>
     </div>
-    <a href="/"><button class="loginButton">Logout</button></a>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
 </header>
 
 <nav>
@@ -38,34 +40,37 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Menus</p>
-        <br/>
-        <br/>
-        <a href="/add_menu"><button class="button">Add Menu</button></a>
+        <p class="heading1">User Addresses</p>
         <br/>
         <br/>
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Menu ID</th>
-                <th>Name</th>
-                <th>Foods</th>
+                <th>Address ID</th>
+                <th>Primary</th>
+                <th>Street 1</th>
+                <th>Street 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="menu : ${menus}">
-                <td th:text="${menu.id}">Menu ID</td>
-                <td th:text="${menu.name}">Name</td>
+            <tr th:each="address : ${addresses}">
+                <td th:text="${address.id}">Address ID</td>
+                <td th:text="${address.primaryAddress}">Primary</td>
+                <td th:text="${address.street1}">Street 1</td>
+                <td th:text="${address.street2}">Street 2</td>
+                <td th:text="${address.city}">City</td>
+                <td th:text="${address.state}">State</td>
+                <td th:text="${address.zip}">Zip</td>
                 <td>
-                    <a th:href="@{'/owner/menu/' + ${menu.id} + '/' + ${owner.id}}">Detail</a>
+                    <a th:href="@{'/owner_edit_address/' + ${address.id} + '/' + ${owner.username}}">Edit</a>
                 </td>
                 <td>
-                    <a th:href="@{'/edit_menu/' + ${menu.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_menu/' + ${menu.id} + '/' + ${owner.id}}">Delete</a>
+                    <a th:href="@{'/owner_delete_address/' + ${address.id}}">Delete</a>
                 </td>
             </tr>
             </tbody>

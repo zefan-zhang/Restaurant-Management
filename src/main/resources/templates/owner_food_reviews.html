@@ -2,36 +2,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Food Reviews</title>
+    <title>Reviews</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
 </head>
 <body>
-<div align="center">
-    <h1>Food Reviews</h1>
-    <a href="/foods">Go Back</a>
-    <br/><br/>
-    <table border="1" cellpadding="10">
-        <thead>
-        <tr>
-            <th>Review ID</th>
-            <th>Content</th>
-            <th>Reviewed Food Id</th>
-            <th>Wrote By</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="foodReview : ${foodReviews}">
-            <td th:text="${foodReview.id}">Review ID</td>
-            <td th:text="${foodReview.review}">Content</td>
-            <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
-            <td th:text="${foodReview.customer.userName}">Wrote By</td>
-            <td>
-                <a th:href="@{'/delete_review/' + ${foodReview.id}}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
+</header>
 
+<nav>
+    <a th:href="@{'/owner/' + ${owner.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/all_customers/' + ${owner.username}}">
+        <button class="button">Customers</button>
+    </a>
+    <a th:href="@{'/all_cookers/' + ${owner.username}}">
+        <button class="button">Cookers</button>
+    </a>
+    <a th:href="@{'/owner/menus/' + ${owner.id}}">
+        <button class="button">Menus</button>
+    </a>
+    <a th:href="@{'/all_orders/' + ${owner.username}}">
+        <button class="button">Orders</button>
+    </a>
+</nav>
+
+<main>
+    <div align="center">
+        <br/>
+        <br/>
+        <p class="heading1">Reviews</p>
+        <br/>
+        <br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Review ID</th>
+                <th>Content</th>
+                <th>Reviewed Food Id</th>
+                <th>Wrote By</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="foodReview : ${foodReviews}">
+                <td th:text="${foodReview.id}">Review ID</td>
+                <td th:text="${foodReview.review}">Content</td>
+                <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
+                <td th:text="${foodReview.customer.userName}">Wrote By</td>
+                <td>
+                    <a th:href="@{'/delete_review/' + ${foodReview.id} + '/' + ${menu.id} + '/' + ${owner.id}}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
 </body>
 </html>

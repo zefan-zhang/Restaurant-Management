@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Phone Number</title>
+    <title>Add Phone</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
 </head>
 <body>
+<main>
 <div align="center">
-    <h1>Add Phone Number</h1>
+    <br/>
+    <br/>
+    <p class="heading1">New Number</p>
     <br/>
     <form action="#" th:action="@{/save_phone}" th:object="${phone}" method="post">
         <table border="0" cellpadding="10">
@@ -42,6 +46,9 @@
         </table>
     </form>
 </div>
-
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
 </body>
 </html>

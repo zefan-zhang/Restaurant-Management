@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
 </head>
 <body>
-$END$
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle" >Team 19</p>
+        </div>
+    </div>
+    <a href="/"><button class="loginButton">Logout</button></a>
+</header>
+
+<nav>
+    <a th:href="@{'/owner/' + ${owner.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/all_customers/' + ${owner.username}}">
+        <button class="button">Customers</button>
+    </a>
+    <a th:href="@{'/all_cookers/' + ${owner.username}}">
+        <button class="button">Cookers</button>
+    </a>
+    <a th:href="@{'/owner/menus/' + ${owner.id}}">
+        <button class="button">Menus</button>
+    </a>
+    <a th:href="@{'/all_orders/' + ${owner.username}}">
+        <button class="button">Orders</button>
+    </a>
+</nav>
+
+<main>
+<!--    <div align="center">-->
+<!--        <br/><br/>-->
+<!--        <P class="heading1">My Profile</P>-->
+<!--        <br/>-->
+<!--        <a th:href="@{'/edit_customer/' + ${owner.id}}"><button>Edit</button></a>-->
+<!--        <br/>-->
+<!--        <br/>-->
+<!--        <table border="1" cellpadding="15">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>Your ID</th>-->
+<!--                <th>VIP</th>-->
+<!--                <th>First Name</th>-->
+<!--                <th>Last Name</th>-->
+<!--                <th>Username</th>-->
+<!--                <th>Password</th>-->
+<!--                <th>Gender</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Date Of Birth</th>-->
+<!--                <th>User Agreement</th>-->
+<!--                <th>Payment Method</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <td th:text="${customer.id}">Cooker ID</td>-->
+<!--            <td th:text="${customer?.VIP}">VIP</td>-->
+<!--            <td th:text="${customer.fistName}">First Name</td>-->
+<!--            <td th:text="${customer.lastName}">Last Name</td>-->
+<!--            <td th:text="${customer.userName}">Username</td>-->
+<!--            <td th:text="${customer.password}">Password</td>-->
+<!--            <td th:text="${customer.gender}">Gender</td>-->
+<!--            <td th:text="${customer.email}">Email</td>-->
+<!--            <td th:text="${customer.dob}">Date Of Birth</td>-->
+<!--            <td th:text="${customer?.userAgreement}">User Agreement</td>-->
+<!--            <td th:text="${customer?.paymentMethod}">Payment Method</td>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        <br/><br/>-->
+
+<!--        <div align="center">-->
+<!--            <P class="heading1">My address</P>-->
+<!--            <br/>-->
+<!--            <a th:href="@{'/add_address/' + ${customer.id}}"><button>Add address</button></a>-->
+<!--            <br/>-->
+<!--            <br/>-->
+<!--            <table border="1" cellpadding="10">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Address ID</th>-->
+<!--                    <th>Primary</th>-->
+<!--                    <th>Street 1</th>-->
+<!--                    <th>Street 2</th>-->
+<!--                    <th>City</th>-->
+<!--                    <th>State</th>-->
+<!--                    <th>Zip</th>-->
+<!--                    <th>Edit</th>-->
+<!--                    <th>Delete</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="address : ${customer.addresses}">-->
+<!--                    <td th:text="${address.id}">Address ID</td>-->
+<!--                    <td th:text="${address.primaryAddress}">Primary</td>-->
+<!--                    <td th:text="${address.street1}">Street 1</td>-->
+<!--                    <td th:text="${address.street2}">Street 2</td>-->
+<!--                    <td th:text="${address.city}">City</td>-->
+<!--                    <td th:text="${address.state}">State</td>-->
+<!--                    <td th:text="${address.zip}">Zip</td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{'/edit_address/' + ${address.id}}">Edit</a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{'/delete_address/' + ${address.id}}">Delete</a>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <br/>-->
+<!--        </div>-->
+
+<!--        <div align="center">-->
+<!--            <p class="heading1">My Phone Number</p>-->
+<!--            <br/>-->
+<!--            <a th:href="@{'/add_phone/' + ${customer.id}}"><button>Add Phone</button></a>-->
+<!--            <br/>-->
+<!--            <br/>-->
+<!--            <table border="1" cellpadding="10">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Phone ID</th>-->
+<!--                    <th>Phone Number</th>-->
+<!--                    <th>Primary</th>-->
+<!--                    <th>Edit</th>-->
+<!--                    <th>Delete</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="phone : ${customer.phones}">-->
+<!--                    <td th:text="${phone.id}">Phone ID</td>-->
+<!--                    <td th:text="${phone.number}">Phone Number</td>-->
+<!--                    <td th:text="${phone.primaryPhone}">Primary</td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{'/edit_phone/' + ${phone.id}}">Edit</a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{'/delete_phone/' + ${phone.id}}">Delete</a>-->
+<!--                    </td>\-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <br/><br/>-->
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
 </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookers</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
+</header>
+
+<nav>
+    <a th:href="@{'/owner/' + ${owner.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/all_customers/' + ${owner.username}}">
+        <button class="button">Customers</button>
+    </a>
+    <a th:href="@{'/all_cookers/' + ${owner.username}}">
+        <button class="button">Cookers</button>
+    </a>
+    <a th:href="@{'/owner/menus/' + ${owner.id}}">
+        <button class="button">Menus</button>
+    </a>
+    <a th:href="@{'/all_orders/' + ${owner.username}}">
+        <button class="button">Orders</button>
+    </a>
+</nav>
+
+<main>
+    <div align="center">
+        <br/>
+        <br/>
+        <p class="heading1">All Cookers</p>
+        <br/>
+        <br/>
+        <a th:href="@{'/add_cooker/' + ${owner.id}}">
+            <button>Add New Cooker</button>
+        </a>
+        <br/>
+        <br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Cooker ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Date Of Birth</th>
+                <th>Level</th>
+                <th>Responsibility</th>
+                <th>Manager</th>
+                <th>Subordinates</th>
+                <th>Contract ID</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cooker : ${cookers}">
+                <td th:text="${cooker.id}">Cooker ID</td>
+                <td th:text="${cooker.fistName}">First Name</td>
+                <td th:text="${cooker.lastName}">Last Name</td>
+                <td th:text="${cooker.userName}">Username</td>
+                <td th:text="${cooker.password}">Password</td>
+                <td>
+                    <a th:href="@{'/address/' + ${cooker.id} + '/' + ${owner.username}}">Details</a>
+                    <br/><br/>
+                    <a th:href="@{'/add_address/' + ${cooker.id} + '/' + ${owner.username}}">Add address</a>
+                </td>
+                <td>
+                    <a th:href="@{'/phone/' + ${cooker.id} + '/' + ${owner.username}}">Detail</a>
+                    <br/><br/>
+                    <a th:href="@{'/add_phone/' + ${cooker.id} + '/' + ${owner.username}}">Add
+                        phone</a>
+                </td>
+                <td th:text="${cooker.gender}">Gender</td>
+                <td th:text="${cooker.email}">Email</td>
+                <td th:text="${cooker.dob}">Date Of Birth</td>
+                <td th:text="${cooker.level}">Level</td>
+                <td th:text="${cooker.responsibility}">Responsibility</td>
+                <td>
+                    <a th:href="@{'/manager/' + ${cooker.id} + '/' + ${owner.username}}">Detail</a>
+                    <br/><br/>
+                    <a th:href="@{'/assign_manager/' + ${cooker.id} + '/' + ${owner.username}}">Assign Manager</a>
+                </td>
+                <td>
+                    <a th:href="@{'/subordinates/' + ${cooker.id} + '/' + ${owner.username}}">Detail</a>
+                </td>
+                <td>
+                    <a th:href="@{'/contract/' + ${cooker.contract.id} + '/' + ${owner.username}}">Detail</a>
+                </td>
+                <td>
+                    <a th:href="@{'/owner_edit_cooker/' + ${cooker.id} + '/' + ${owner.username}}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{'/delete_cooker/' + ${cooker.id}}">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+    </div>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</body>
+</html>

@@ -2,18 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Menus</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+    <title>Assign</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle" >Team 19</p>
+            <p class="subtitle">Team 19</p>
         </div>
     </div>
-    <a href="/"><button class="loginButton">Logout</button></a>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
 </header>
 
 <nav>
@@ -38,41 +40,29 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Menus</p>
-        <br/>
-        <br/>
-        <a href="/add_menu"><button class="button">Add Menu</button></a>
-        <br/>
-        <br/>
-        <table border="1" cellpadding="10">
-            <thead>
+    <p class="heading1">Assign to Manager</p>
+    <br/>
+    <form action="#" th:action="@{/save_assigned_manager}" th:object="${cooker}" method="post">
+        <table border="0" cellpadding="10">
             <tr>
-                <th>Menu ID</th>
-                <th>Name</th>
-                <th>Foods</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="menu : ${menus}">
-                <td th:text="${menu.id}">Menu ID</td>
-                <td th:text="${menu.name}">Name</td>
+                <td>Cooker ID</td>
                 <td>
-                    <a th:href="@{'/owner/menu/' + ${menu.id} + '/' + ${owner.id}}">Detail</a>
-                </td>
-                <td>
-                    <a th:href="@{'/edit_menu/' + ${menu.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_menu/' + ${menu.id} + '/' + ${owner.id}}">Delete</a>
+                    <input type="number" th:field="*{id}" readonly="readonly"/>
                 </td>
             </tr>
-            </tbody>
+            <tr>
+                <td>Manager Id</td>
+                <td>
+                    <input type="number" th:field="*{manager.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+
         </table>
-        <br/>
-        <br/>
-    </div>
+    </form>
+</div>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
