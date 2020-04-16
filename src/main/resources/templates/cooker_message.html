@@ -19,7 +19,7 @@
 </header>
 
 <nav>
-    <a th:href="@{'/cooker/' + ${cooker.username}}">
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
         <button class="button">Home</button>
     </a>
     <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
@@ -34,7 +34,7 @@
     <a th:href="@{'/cooker_order/' + ${cooker.id}}">
         <button class="button">Order</button>
     </a>
-    <a th:href="@{'/cooker/message/' + ${cooker.userName}}">
+    <a th:href="@{'/cooker/message/' + ${cooker.id}}">
         <button class="button">My Message</button>
     </a>
 </nav>
@@ -43,38 +43,39 @@
     <div align="center">
         <br/>
         <br/>
-        <P class="heading1">My Message</P>
+        <P class="heading1">Message</P>
         <br/>
-        <a th:href="@{'/send_message/' + ${cooker.id}}">
+        <a th:href="@{'/message/' + ${cooker.id}}">
             <button>Send Message</button>
         </a>
         <br/>
         <br/>
+        <P class="heading1">Message Sent</P>
+        <br/>
         <table border="1" cellpadding="15">
             <thead>
             <tr>
+                <th>Sent To</th>
                 <th>Message</th>
-                <th>Sent By</th>
-                <th>Received Time</th>
-                <th>Remove</th>
+                <th>Sent Time</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="text : ${texts}">
-                <td th:text="${text.message}">Message</td>
-                <td th:text="${text.senderUsername}">Sent By</td>
-                <td th:text="${text.receivedTime}">Received Time</td>
+            <tr th:each="stext : ${sentTexts}">
+                <td th:text="${stext.customer.username}">Sent To</td>
+                <td th:text="${stext.message}">Message</td>
+                <td th:text="${stext.createdTime}">Sent Time</td>
                 <td>
-                    <a th:href="@{'/delete_message/' + ${text.id}}">Delete</a>
+                    <a th:href="@{'/cooker/delete_message/' + ${stext.id}}">Delete</a>
                 </td>
 
             </tr>
             </tbody>
         </table>
-        <br/>
-        <br/>
     </div>
-    <br/><br/>
+    <br/>
+    <br/>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>

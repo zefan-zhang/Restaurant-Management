@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle" >Team 19</p>
+            <p class="subtitle">Team 19</p>
         </div>
     </div>
-    <a href="/"><button class="loginButton">Logout</button></a>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}"><button class="button">Home</button></a>
-    <a th:href="@{'/cooker_manager/' + ${cooker.id}}"><button class="button">My Manager</button></a>
-    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}"><button class="button">My Subordinate</button></a>
-    <a th:href="@{'/cooker_contract/' + ${cooker.id}}"><button class="button">My Contract</button></a>
-    <a th:href="@{'/cooker_order/' + ${cooker.id}}"><button class="button">Order</button></a>
-    <a th:href="@{'/cooker/message/' + ${cooker.userName}}"><button class="button">My Message</button></a>
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
+        <button class="button">My Manager</button>
+    </a>
+    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}">
+        <button class="button">My Subordinate</button>
+    </a>
+    <a th:href="@{'/cooker_contract/' + ${cooker.id}}">
+        <button class="button">My Contract</button>
+    </a>
+    <a th:href="@{'/cooker_order/' + ${cooker.id}}">
+        <button class="button">Order</button>
+    </a>
+    <a th:href="@{'/cooker/message/' + ${cooker.id}}">
+        <button class="button">My Message</button>
+    </a>
 </nav>
 
 <main>
@@ -31,7 +45,9 @@
         <br/>
         <P class="heading1">My Profile</P>
         <br/>
-        <a th:href="@{'/edit_cooker/' + ${cooker.id}}"><button>Edit</button></a>
+        <a th:href="@{'/edit_cooker/' + ${cooker.id}}">
+            <button>Edit</button>
+        </a>
         <br/>
         <br/>
         <table border="1" cellpadding="15">
@@ -51,17 +67,17 @@
             </tr>
             </thead>
             <tbody>
-                <td th:text="${cooker.id}">ID</td>
-                <td th:text="${cooker.role}">Your Role</td>
-                <td th:text="${cooker.fistName}">First Name</td>
-                <td th:text="${cooker.lastName}">Last Name</td>
-                <td th:text="${cooker.userName}">Username</td>
-                <td th:text="${cooker.password}">Password</td>
-                <td th:text="${cooker.gender}">Gender</td>
-                <td th:text="${cooker.email}">Email</td>
-                <td th:text="${cooker.dob}">Date Of Birth</td>
-                <td th:text="${cooker.level}">Level</td>
-                <td th:text="${cooker.responsibility}">Responsibility</td>
+            <td th:text="${cooker.id}">ID</td>
+            <td th:text="${cooker.role}">Your Role</td>
+            <td th:text="${cooker.fistName}">First Name</td>
+            <td th:text="${cooker.lastName}">Last Name</td>
+            <td th:text="${cooker.userName}">Username</td>
+            <td th:text="${cooker.password}">Password</td>
+            <td th:text="${cooker.gender}">Gender</td>
+            <td th:text="${cooker.email}">Email</td>
+            <td th:text="${cooker.dob}">Date Of Birth</td>
+            <td th:text="${cooker.level}">Level</td>
+            <td th:text="${cooker.responsibility}">Responsibility</td>
             </tr>
             </tbody>
         </table>
@@ -70,7 +86,9 @@
         <div align="center">
             <P class="heading1">My address</P>
             <br/>
-            <a th:href="@{'/add_address/' + ${cooker.id}}"><button>Add address</button></a>
+            <a th:href="@{'/add_address/' + ${cooker.id}}">
+                <button>Add address</button>
+            </a>
             <br/>
             <br/>
             <table border="1" cellpadding="10">
@@ -112,7 +130,9 @@
         <div align="center">
             <p class="heading1">My Phone Number</p>
             <br/>
-            <a th:href="@{'/add_phone/' + ${cooker.id}}"><button>Add Phone</button></a>
+            <a th:href="@{'/add_phone/' + ${cooker.id}}">
+                <button>Add Phone</button>
+            </a>
             <br/>
             <br/>
             <table border="1" cellpadding="10">

@@ -237,13 +237,6 @@ public class RestaurantController {
 
 
   // contract
-  @GetMapping("/create_contract")
-  public String CreateContract(Model model) {
-    Contract contract = new Contract();
-    model.addAttribute("contract", contract);
-    return "new_contract";
-  }
-
   @PostMapping(value = "/save_contract/{cookerId}")
   public String saveContract(@PathVariable(name = "cookerId") int cookerId,
                              @ModelAttribute("contract") Contract contract) {

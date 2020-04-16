@@ -19,7 +19,7 @@
 </header>
 
 <nav>
-    <a th:href="@{'/cooker/' + ${cooker.username}}">
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
         <button class="button">Home</button>
     </a>
     <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
@@ -34,7 +34,7 @@
     <a th:href="@{'/cooker_order/' + ${cooker.id}}">
         <button class="button">Order</button>
     </a>
-    <a th:href="@{'/my_message/' + ${cooker.id}}">
+    <a th:href="@{'/cooker/message/' + ${cooker.id}}">
         <button class="button">My Message</button>
     </a>
 </nav>

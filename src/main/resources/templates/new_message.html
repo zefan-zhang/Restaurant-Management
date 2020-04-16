@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manager</title>
+    <title>Foods</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -17,9 +17,8 @@
         <button class="loginButton">Logout</button>
     </a>
 </header>
-
 <nav>
-    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
+    <a th:href="@{'/cooker/' + ${cooker.username}}">
         <button class="button">Home</button>
     </a>
     <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
@@ -35,41 +34,41 @@
         <button class="button">Order</button>
     </a>
     <a th:href="@{'/cooker/message/' + ${cooker.id}}">
-        <button class="button">My Message</button>
+        <button class="button">Message</button>
     </a>
 </nav>
-
 <main>
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">My manager</p>
-        <br/>
-        <br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>Manager ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Level</th>
-                <th>Responsibility</th>
-            </tr>
-            </thead>
-            <tbody>
-            <td th:text="${manager?.id}">Manager ID</td>
-            <td th:text="${manager?.fistName}">First Name</td>
-            <td th:text="${manager?.lastName}">Last Name</td>
-            <td th:text="${manager?.userName}">Username</td>
-            <td th:text="${manager?.email}">Email</td>
-            <td th:text="${manager?.level}">Level</td>
-            <td th:text="${manager?.responsibility}">Responsibility</td>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
+        <form action="#" th:action="@{/send_message}" th:object="${text}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Receiver Username</td>
+                    <td>
+                        <input type="text" th:field="*{customer.userName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                    <td>
+                        <input type="text" th:field="*{message}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Your Id</td>
+                    <td>
+                        <input type="text" th:field="*{cooker.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Send</button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
     </div>
 </main>
 <footer>

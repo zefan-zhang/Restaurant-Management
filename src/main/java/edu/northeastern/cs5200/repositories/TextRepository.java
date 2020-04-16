@@ -11,6 +11,9 @@ import edu.northeastern.cs5200.models.Text;
 
 public interface TextRepository extends CrudRepository<Text, Integer> {
 
-  @Query("SELECT t FROM Text t WHERE t.receiverUsername=:receiverUsername")
-  List<Text> findTextsByReceiverUsername(@Param("receiverUsername") String receiverUsername);
+  @Query("SELECT t FROM Text t WHERE t.sender.id=:id")
+  List<Text> findSentTextsByCookerId(@Param("id") int id);
+
+  @Query("SELECT t FROM Text t WHERE t.receiver.id =:id")
+  List<Text> findReceivedTextsByCustomerId(@Param("id") int id);
 }

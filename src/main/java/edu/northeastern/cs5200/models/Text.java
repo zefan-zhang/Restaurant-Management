@@ -20,15 +20,13 @@ public class Text {
   private String message;
   @ManyToOne
   @JsonIgnore
-  private Cooker cooker;
+  private Cooker sender;
 
   @ManyToOne
   @JsonIgnore
-  private Customer customer;
+  private Customer receiver;
 
-  private String receiverUsername;
-  private String senderUsername;
-  private Timestamp receivedTime;
+  private Timestamp createdTime;
 
   public Text() {
   }
@@ -50,43 +48,27 @@ public class Text {
   }
 
   public Cooker getCooker() {
-    return cooker;
+    return sender;
   }
 
   public void setCooker(Cooker cooker) {
-    this.cooker = cooker;
-  }
-
-  public String getSenderUsername() {
-    return senderUsername;
-  }
-
-  public void setSenderUsername(String senderUsername) {
-    this.senderUsername = senderUsername;
+    this.sender = cooker;
   }
 
   public Customer getCustomer() {
-    return customer;
+    return receiver;
   }
 
   public void setCustomer(Customer customer) {
-    this.customer = customer;
+    this.receiver = customer;
   }
 
-  public String getReceiverUsername() {
-    return receiverUsername;
+  public Timestamp getCreatedTime() {
+    return createdTime;
   }
 
-  public void setReceiverUsername(String receiverUsername) {
-    this.receiverUsername = receiverUsername;
-  }
-
-  public Timestamp getReceivedTime() {
-    return receivedTime;
-  }
-
-  public void setReceivedTime(Timestamp receivedTime) {
-    this.receivedTime = receivedTime;
+  public void setCreatedTime(Timestamp receivedTime) {
+    this.createdTime = receivedTime;
   }
 }
 

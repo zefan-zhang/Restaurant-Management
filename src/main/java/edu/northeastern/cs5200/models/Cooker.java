@@ -21,7 +21,7 @@ import java.util.Collection;
 public class Cooker extends Person{
   private int level;
   private String responsibility;
-  @OneToMany(mappedBy = "cooker")
+  @OneToMany(mappedBy = "sender")
   private Collection<Text> texts;
   @OneToMany(mappedBy = "cooker")
   private Collection<Order> orders;

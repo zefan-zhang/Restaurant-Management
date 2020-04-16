@@ -16,7 +16,7 @@ public class Customer extends Person {
   @OneToMany(mappedBy = "customer")
   private Collection<Order> orders;
 
-  @OneToMany(mappedBy = "customer")
+  @OneToMany(mappedBy = "receiver")
   private Collection<Text> texts;
 
   @OneToMany(mappedBy = "customer")
