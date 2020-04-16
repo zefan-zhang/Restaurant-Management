@@ -38,7 +38,7 @@ public class RestaurantController {
   public String homePage(Model model) {
     List<Menu> menus = restaurantDao.findAllMenus();
     model.addAttribute("menus", menus);
-    return "homepage";
+    return "public_homepage";
   }
 
   // menu
@@ -107,7 +107,7 @@ public class RestaurantController {
   public String goRegisterPage(Model model) {
     Person person = new Person();
     model.addAttribute("person", person);
-    return "register";
+    return "public_register";
   }
 
   @PostMapping(value = "/save_user")
@@ -137,7 +137,7 @@ public class RestaurantController {
   public String goLoginPage(Model model) {
     Person person = new Person();
     model.addAttribute("person", person);
-    return "go_login";
+    return "public_go_login";
   }
 
   @GetMapping("/get_user")
@@ -162,7 +162,7 @@ public class RestaurantController {
       }
     }
 
-    return "relogin";
+    return "public_relogin";
   }
 
   @GetMapping("/{role}/{username}")
@@ -307,7 +307,7 @@ public class RestaurantController {
 
   @GetMapping("edit_customer/{id}")
   public ModelAndView editCustomerByUser(@PathVariable(name = "id") int id) {
-    ModelAndView modelAndView = new ModelAndView("update_customer");
+    ModelAndView modelAndView = new ModelAndView("customer_update_profile");
     Customer customer = restaurantDao.findCustomerById(id);
     modelAndView.addObject("customer", customer);
     return modelAndView;
@@ -552,7 +552,7 @@ public class RestaurantController {
 
   @GetMapping("/edit_cooker/{id}")
   public ModelAndView editCookerByUser(@PathVariable(name = "id") int id) {
-    ModelAndView modelAndView = new ModelAndView("update_cooker");
+    ModelAndView modelAndView = new ModelAndView("cooker_update_profile");
     Cooker cooker = restaurantDao.findCookerById(id);
     modelAndView.addObject("cooker", cooker);
     return modelAndView;
@@ -645,12 +645,6 @@ public class RestaurantController {
   }
 
   // foodItem
-  @GetMapping("/foods")
-  public String goFoodItemPage(Model model) {
-    List<FoodItem> foodItems = restaurantDao.findAllFoodItem();
-    model.addAttribute("foodItems", foodItems);
-    return "foods";
-  }
 
   @GetMapping("/create_food/{menuId}")
   public String goCreateFoodPage(@PathVariable(name = "menuId") int menuId, Model model) {
@@ -774,7 +768,7 @@ public class RestaurantController {
 
   @GetMapping("/edit_review/{id}")
   public ModelAndView goEditMyFoodReview(@PathVariable(name = "id") int id) {
-    ModelAndView modelAndView = new ModelAndView("edit_my_foodreview");
+    ModelAndView modelAndView = new ModelAndView("customer_edit_foodreview");
     FoodReview foodReview = restaurantDao.findReviewById(id);
     modelAndView.addObject("foodReview", foodReview);
     return modelAndView;
@@ -786,6 +780,6 @@ public class RestaurantController {
     Customer customer = restaurantDao.findCustomerById(id);
     model.addAttribute("wishLists", wishLists);
     model.addAttribute("customer", customer);
-    return "wish_list";
+    return "customer_wish_list";
   }
 }

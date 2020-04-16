@@ -19,22 +19,22 @@
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
+    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
         <button class="button">Home</button>
     </a>
-    <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
-        <button class="button">My Manager</button>
+    <a th:href="@{'/customer_menu/' + ${customer.username}}">
+        <button class="button">Menu</button>
     </a>
-    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}">
-        <button class="button">My Subordinate</button>
+    <a th:href="@{'/customer_foodreview/' + ${customer.id}}">
+        <button class="button">My Foodreviews</button>
     </a>
-    <a th:href="@{'/cooker_contract/' + ${cooker.id}}">
-        <button class="button">My Contract</button>
+    <a th:href="@{'/wish_list/' + ${customer.id}}">
+        <button class="button">Wish List</button>
     </a>
-    <a th:href="@{'/cooker_order/' + ${cooker.id}}">
-        <button class="button">Order</button>
+    <a th:href="@{'/my_order/' + ${customer.id}}">
+        <button class="button">My Order</button>
     </a>
-    <a th:href="@{'/cooker/message/' + ${cooker.id}}">
+    <a th:href="@{'/customer/message/' + ${customer.id}}">
         <button class="button">My Message</button>
     </a>
 </nav>
@@ -43,31 +43,25 @@
     <div align="center">
         <br/>
         <br/>
-        <P class="heading1">Message</P>
+        <P class="heading1">My Message</P>
         <br/>
-        <a th:href="@{'/message/' + ${cooker.id}}">
-            <button>Send Message</button>
-        </a>
-        <br/>
-        <br/>
-        <P class="heading1">Message Sent</P>
         <br/>
         <table border="1" cellpadding="15">
             <thead>
             <tr>
-                <th>Sent To</th>
                 <th>Message</th>
-                <th>Sent Time</th>
+                <th>Sent By</th>
+                <th>Received Time</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="stext : ${sentTexts}">
-                <td th:text="${stext?.customer?.username}">Sent To</td>
-                <td th:text="${stext.message}">Message</td>
-                <td th:text="${stext.createdTime}">Sent Time</td>
+            <tr th:each="text : ${receivedTexts}">
+                <td th:text="${text.message}">Message</td>
+                <td th:text="${text.cooker.userName}">Sent By</td>
+                <td th:text="${text.createdTime}">Received Time</td>
                 <td>
-                    <a th:href="@{'/cooker/delete_message/' + ${stext.id}}">Delete</a>
+                    <a th:href="@{'/customer/delete_message/' + ${text.id}}">Delete</a>
                 </td>
 
             </tr>

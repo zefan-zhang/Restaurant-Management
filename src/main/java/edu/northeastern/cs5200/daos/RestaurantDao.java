@@ -30,6 +30,7 @@ import edu.northeastern.cs5200.repositories.MenuRepository;
 import edu.northeastern.cs5200.repositories.OwnerRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
+import edu.northeastern.cs5200.repositories.TextRepository;
 import edu.northeastern.cs5200.repositories.WishListRepository;
 
 @Service
@@ -66,6 +67,10 @@ public class RestaurantDao {
 
   @Autowired
   private WishListRepository wishListRepository;
+
+  @Autowired
+  TextRepository textRepository;
+
 
   // login
   public Person findUserByUnameAndPword(String username, String password) {
@@ -241,6 +246,7 @@ public class RestaurantDao {
     this.deleteUserPhoneAndAdd(id);
     cooker.setManager(null);
     cookerRepository.save(cooker);
+    textRepository.deleteByCookerId(id);
     List<Cooker> subordinates = (List<Cooker>) cooker.getSubordinates();
     if (!subordinates.isEmpty()) {
       for (Cooker s : subordinates) {
@@ -282,7 +288,7 @@ public class RestaurantDao {
 
   public void deleteCustomerById(int id) {
     this.deleteUserPhoneAndAdd(id);
-    Customer customer = this.findCustomerById(id);
+    textRepository.deleteByCustomerId(id);
     List<FoodReview> foodReviews = (List<FoodReview>) this.findReviewByCustomerId(id);
     for (FoodReview foodReview : foodReviews) {
       this.deleteReviewById(foodReview.getId());

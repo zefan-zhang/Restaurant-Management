@@ -37,6 +37,10 @@ public class TextDao {
     return null;
   }
 
+  public List<Text> findAllTexts() {
+    return (List<Text>) textRepository.findAll();
+  }
+
   public void saveText(Text text) {
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     text.setCreatedTime(timestamp);
@@ -44,4 +48,17 @@ public class TextDao {
     text.setCustomer(customer);
     textRepository.save(text);
   }
+
+  public void saveRemoveCustomerText(Text text) {
+    textRepository.save(text);
+  }
+
+  public void deleteMessageById(int id) {
+    textRepository.deleteById(id);
+  }
+
+  public void truncateMessage() {
+    textRepository.deleteAll();
+  }
+
 }
