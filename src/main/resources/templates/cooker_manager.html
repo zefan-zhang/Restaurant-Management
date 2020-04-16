@@ -2,26 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cooker Manager</title>
+    <title>Manager</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
-<div align="center">
-    <h1>My manager</h1>
-    <a href="/owner">Go Back</a>
-    <br/><br/>
-    <table border="1" cellpadding="10">
-        <thead>
-        <tr>
-            <th>Manager ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Level</th>
-            <th>Responsibility</th>
-        </tr>
-        </thead>
-        <tbody>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle">Team 19</p>
+        </div>
+    </div>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
+</header>
+
+<nav>
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
+        <button class="button">My Manager</button>
+    </a>
+    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}">
+        <button class="button">My Subordinate</button>
+    </a>
+    <a th:href="@{'/cooker_contract/' + ${cooker.id}}">
+        <button class="button">My Contract</button>
+    </a>
+    <a th:href="@{'/cooker_order/' + ${cooker.id}}">
+        <button class="button">Order</button>
+    </a>
+    <a th:href="@{'/my_message/' + ${cooker.id}}">
+        <button class="button">My Message</button>
+    </a>
+</nav>
+
+<main>
+    <div align="center">
+        <br/>
+        <br/>
+        <p class="heading1">My manager</p>
+        <br/>
+        <br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Manager ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Level</th>
+                <th>Responsibility</th>
+            </tr>
+            </thead>
+            <tbody>
             <td th:text="${manager?.id}">Manager ID</td>
             <td th:text="${manager?.fistName}">First Name</td>
             <td th:text="${manager?.lastName}">Last Name</td>
@@ -29,9 +66,14 @@
             <td th:text="${manager?.email}">Email</td>
             <td th:text="${manager?.level}">Level</td>
             <td th:text="${manager?.responsibility}">Responsibility</td>
-        </tbody>
-    </table>
-</div>
-
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+    </div>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
 </body>
 </html>

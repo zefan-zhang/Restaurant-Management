@@ -2,6 +2,8 @@ package edu.northeastern.cs5200.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,9 @@ public class Text {
   @JsonIgnore
   private Customer customer;
 
+  private String receiverUsername;
   private String senderUsername;
+  private Timestamp receivedTime;
 
   public Text() {
   }
@@ -59,6 +63,30 @@ public class Text {
 
   public void setSenderUsername(String senderUsername) {
     this.senderUsername = senderUsername;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
+
+  public String getReceiverUsername() {
+    return receiverUsername;
+  }
+
+  public void setReceiverUsername(String receiverUsername) {
+    this.receiverUsername = receiverUsername;
+  }
+
+  public Timestamp getReceivedTime() {
+    return receivedTime;
+  }
+
+  public void setReceivedTime(Timestamp receivedTime) {
+    this.receivedTime = receivedTime;
   }
 }
 

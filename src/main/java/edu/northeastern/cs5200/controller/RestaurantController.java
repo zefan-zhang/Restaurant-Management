@@ -16,7 +16,6 @@ import java.util.List;
 import edu.northeastern.cs5200.daos.RestaurantDao;
 import edu.northeastern.cs5200.models.Address;
 import edu.northeastern.cs5200.models.Contract;
-import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
@@ -176,7 +175,7 @@ public class RestaurantController {
     } else if (roleType.equals(RoleType.cooker)) {
       Cooker cooker = restaurantDao.findCookerByUname(username);
       model.addAttribute("cooker", cooker);
-      return "";
+      return "cooker_homepage";
     } else if (roleType.equals(RoleType.customer)) {
       Customer customer = restaurantDao.findCustomerByUname(username);
       model.addAttribute("customer", customer);
@@ -238,13 +237,6 @@ public class RestaurantController {
 
 
   // contract
-  @GetMapping("/contracts")
-  public String listAllCookerContracts(Model model) {
-    List<Contract> contracts = restaurantDao.findAllContract();
-    model.addAttribute("contracts", contracts);
-    return "contracts";
-  }
-
   @GetMapping("/create_contract")
   public String CreateContract(Model model) {
     Contract contract = new Contract();
@@ -252,10 +244,11 @@ public class RestaurantController {
     return "new_contract";
   }
 
-  @PostMapping(value = "/save_contract")
-  public String saveContract(@ModelAttribute("contract") Contract contract) {
+  @PostMapping(value = "/save_contract/{cookerId}")
+  public String saveContract(@PathVariable(name = "cookerId") int cookerId,
+                             @ModelAttribute("contract") Contract contract) {
     restaurantDao.saveContract(contract);
-    return "redirect:/contract/" + contract.getId();
+    return "redirect:/cooker_contract/" + cookerId;
   }
 
   @PostMapping(value = "/owner_save_contract")
@@ -275,11 +268,13 @@ public class RestaurantController {
     return modelAndView;
   }
 
-  @GetMapping("edit_contract/{id}")
-  public ModelAndView goEditContractPage(@PathVariable(name = "id") int id) {
-    ModelAndView modelAndView = new ModelAndView("update_contract");
-    Contract contract = restaurantDao.findContractById(id);
+  @GetMapping("edit_contract/{contractId}")
+  public ModelAndView goEditContractPage(@PathVariable(name = "contractId") int contractId) {
+    ModelAndView modelAndView = new ModelAndView("cooker_update_contract");
+    Contract contract = restaurantDao.findContractById(contractId);
+    Cooker cooker = restaurantDao.findCookerByContract(contract);
     modelAndView.addObject("contract", contract);
+    modelAndView.addObject("cooker", cooker);
     return modelAndView;
   }
 
@@ -518,11 +513,14 @@ public class RestaurantController {
     return "owner_new_cooker";
   }
 
-  @PostMapping(value = "/owner_save_cooker")
+  @PostMapping(value = "/save_cooker")
   public String saveCooker(@ModelAttribute("cooker") Cooker cooker) {
-    Contract contract = new Contract();
-    contract.setContractStatus(ContractStatus.no_sign);
-    cooker.setContract(contract);
+    restaurantDao.addCooker(cooker);
+    return "redirect:/cooker/" + cooker.getUserName();
+  }
+
+  @PostMapping(value = "/owner_save_cooker")
+  public String saveCookerByOwner(@ModelAttribute("cooker") Cooker cooker) {
     restaurantDao.addCooker(cooker);
     return "redirect:/all_cookers/admin";
   }
@@ -538,10 +536,12 @@ public class RestaurantController {
     return "owner_cooker_contract";
   }
 
-  @GetMapping("contract/{id}")
+  @GetMapping("cooker_contract/{id}")
   public String getCookerContract(@PathVariable(name = "id") int id, Model model) {
-    Contract contract = restaurantDao.findContractById(id);
+    Cooker cooker = restaurantDao.findCookerById(id);
+    Contract contract = cooker.getContract();
     model.addAttribute("contract", contract);
+    model.addAttribute("cooker", cooker);
     return "cooker_contract";
   }
 
@@ -582,10 +582,12 @@ public class RestaurantController {
     return "owner_cooker_manager";
   }
 
-  @GetMapping("manager/{cookerId}")
+  @GetMapping("cooker_manager/{cookerId}")
   public String getManagerByCookerId(@PathVariable(name = "cookerId") int id, Model model) {
     Cooker manager = restaurantDao.getManagerByCookerId(id);
+    Cooker cooker = restaurantDao.findCookerById(id);
     model.addAttribute("manager", manager);
+    model.addAttribute("cooker", cooker);
     return "cooker_manager";
   }
 
@@ -620,11 +622,22 @@ public class RestaurantController {
     return "owner_subordinates";
   }
 
-  @GetMapping("/subordinates/{id}")
+  @GetMapping("/cooker_subordinate/{id}")
   public String goSubordinatesPage(@PathVariable(name = "id") int id, Model model) {
     List<Cooker> subordinates = restaurantDao.findSubordinateByMId(id);
+    Cooker cooker = restaurantDao.findCookerById(id);
     model.addAttribute("subordinates", subordinates);
-    return "subordinates";
+    model.addAttribute("cooker", cooker);
+    return "cooker_subordinates";
+  }
+
+  @GetMapping(value = "/remove_subordinate/{subordinateId}")
+  public String removeSubordinateByCooker(@PathVariable(name = "subordinateId") int id) {
+    Cooker subordinate = restaurantDao.findCookerById(id);
+    int managerId = subordinate.getManager().getId();
+    subordinate.setManager(null);
+    restaurantDao.addCooker(subordinate);
+    return "redirect:/cooker_subordinate/" + managerId;
   }
 
   @GetMapping(value = "/remove_subordinate/{subordinateId}/{username}")
@@ -635,7 +648,7 @@ public class RestaurantController {
     cooker.setManager(null);
     restaurantDao.addCooker(cooker);
     Person person = restaurantDao.findUserByUsername(username);
-    return "redirect:/subordinates/" + managerId + "/"  + person.getUserName();
+    return "redirect:/subordinates/" + managerId + "/" + person.getUserName();
   }
 
   // foodItem

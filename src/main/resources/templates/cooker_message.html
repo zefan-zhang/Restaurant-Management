@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Contract</title>
+    <title>Message</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -34,7 +34,7 @@
     <a th:href="@{'/cooker_order/' + ${cooker.id}}">
         <button class="button">Order</button>
     </a>
-    <a th:href="@{'/my_message/' + ${cooker.id}}">
+    <a th:href="@{'/cooker/message/' + ${cooker.userName}}">
         <button class="button">My Message</button>
     </a>
 </nav>
@@ -43,35 +43,38 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">My Contract</p>
+        <P class="heading1">My Message</P>
+        <br/>
+        <a th:href="@{'/send_message/' + ${cooker.id}}">
+            <button>Send Message</button>
+        </a>
         <br/>
         <br/>
-        <table border="1" cellpadding="10">
+        <table border="1" cellpadding="15">
             <thead>
             <tr>
-                <th>Contract ID</th>
-                <th>My ID</th>
-                <th>Hired Date</th>
-                <th>Salary</th>
-                <th>Contract Status</th>
-                <th>Edit</th>
+                <th>Message</th>
+                <th>Sent By</th>
+                <th>Received Time</th>
+                <th>Remove</th>
             </tr>
             </thead>
             <tbody>
-            <td th:text="${contract.id}">Contract ID</td>
-            <td th:text="${contract.cooker?.id}">Cooker ID</td>
-            <td th:text="${contract.hiredDate}">Hired Date</td>
-            <td th:text="${contract.salary}">Salary</td>
-            <td th:text="${contract.getContractStatus()}">Contract Status</td>
-            <td>
-                <a th:href="@{'/edit_contract/' + ${contract.id}}">Edit</a>
-            </td>
+            <tr th:each="text : ${texts}">
+                <td th:text="${text.message}">Message</td>
+                <td th:text="${text.senderUsername}">Sent By</td>
+                <td th:text="${text.receivedTime}">Received Time</td>
+                <td>
+                    <a th:href="@{'/delete_message/' + ${text.id}}">Delete</a>
+                </td>
 
+            </tr>
             </tbody>
         </table>
         <br/>
         <br/>
     </div>
+    <br/><br/>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>

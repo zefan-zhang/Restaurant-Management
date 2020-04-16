@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import edu.northeastern.cs5200.models.Address;
 import edu.northeastern.cs5200.models.Contract;
+import edu.northeastern.cs5200.models.ContractStatus;
 import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
@@ -187,6 +188,21 @@ public class RestaurantDao {
   }
 
   public void addCooker(Cooker cooker) {
+    Collection<Cooker> subordinates = cookerRepository.findSubordinateByMId(cooker.getId());
+    cooker.setSubordinates(subordinates);
+    if (cooker.getManager() != null) {
+      Cooker manager = this.findCookerById(cooker.getManager().getId());
+      cooker.setManager(manager);
+    }
+    if (cooker.getContract() == null) {
+      Contract contract = new Contract();
+      contract.setContractStatus(ContractStatus.no_sign);
+      contractRepository.save(contract);
+      cooker.setContract(contract);
+    } else {
+      Contract contract = this.findContractById(cooker.getContract().getId());
+      cooker.setContract(contract);
+    }
     cookerRepository.save(cooker);
   }
 
@@ -196,6 +212,10 @@ public class RestaurantDao {
       return optional.get();
     }
     return null;
+  }
+
+  public Cooker findCookerByContract(Contract contract) {
+    return cookerRepository.findCookerByContract(contract);
   }
 
   public Cooker getManagerByCookerId(int id){

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
 </head>
 <body>
 <header>
@@ -41,7 +41,7 @@
                 <td th:text="${menu.id}">Menu ID</td>
                 <td th:text="${menu.name}">Name</td>
                 <td>
-                    <a th:href="@{'/menu/' + ${menu.id}}"><button class="tableButton">Detail</button></a>
+                    <a th:href="@{'/menu/' + ${menu.id}}">Detail</a>
                 </td>
             </tr>
             </tbody>

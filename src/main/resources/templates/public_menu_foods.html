@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Foods</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
 </head>
 <body>
 <header>
@@ -49,12 +49,12 @@
                 <td th:text="${fooditem.price}">price</td>
                 <td th:text="${fooditem.inventory}">Inventory</td>
                 <td>
-                    <a th:href="@{'/public_food_reviews/' + ${fooditem.id}}"><button class="tableButton">Detail</button></a>
+                    <a th:href="@{'/public_food_reviews/' + ${fooditem.id}}">Detail</a>
                     <br/><br/>
-                    <a th:href="@{'/login'}"><button class="tableButton">Write Review</button></a>
+                    <a th:href="@{'/login'}">Write Review</a>
                 </td>
                 <td>
-                    <a th:href="@{'/login'}"><button class="tableButton">Add</button></a>
+                    <a th:href="@{'/login'}">Add</a>
                 </td>
             </tr>
             </tbody>

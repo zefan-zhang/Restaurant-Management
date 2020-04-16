@@ -19,20 +19,23 @@
 </header>
 
 <nav>
-    <a th:href="@{'/owner/' + ${owner.username}}">
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
         <button class="button">Home</button>
     </a>
-    <a th:href="@{'/all_customers/' + ${owner.username}}">
-        <button class="button">Customers</button>
+    <a th:href="@{'/cooker_manager/' + ${cooker.id}}">
+        <button class="button">My Manager</button>
     </a>
-    <a th:href="@{'/all_cookers/' + ${owner.username}}">
-        <button class="button">Cookers</button>
+    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}">
+        <button class="button">My Subordinate</button>
     </a>
-    <a th:href="@{'/owner/menus/' + ${owner.id}}">
-        <button class="button">Menus</button>
+    <a th:href="@{'/cooker_contract/' + ${cooker.id}}">
+        <button class="button">My Contract</button>
     </a>
-    <a th:href="@{'/all_orders/' + ${owner.username}}">
-        <button class="button">Orders</button>
+    <a th:href="@{'/cooker_order/' + ${cooker.id}}">
+        <button class="button">Order</button>
+    </a>
+    <a th:href="@{'/my_message/' + ${cooker.id}}">
+        <button class="button">My Message</button>
     </a>
 </nav>
 
@@ -40,7 +43,7 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Subordinates</p>
+        <p class="heading1">My Subordinates</p>
         <br/>
         <br/>
         <table border="1" cellpadding="10">
@@ -70,9 +73,8 @@
                 <td th:text="${cooker.level}">Level</td>
                 <td th:text="${cooker.responsibility}">Responsibility</td>
                 <td>
-                    <a th:href="@{'/remove_subordinate/' + ${cooker.id} + '/' + ${owner.username}}">Remove</a>
+                    <a th:href="@{'/remove_subordinate/' + ${cooker.id}}">Remove</a>
                 </td>
-
             </tr>
             </tbody>
         </table>

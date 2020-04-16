@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Cooker</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
 <header>
@@ -48,6 +48,22 @@
                     <td>Cooker ID</td>
                     <td>
                         <input type="number" th:field="*{id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>User Role</td>
+                    <td>
+                        <select th:field="*{role}">
+                            <option value="owner">
+                                Owner
+                            </option>
+                            <option value="cooker">
+                                Cooker
+                            </option>
+                            <option value="customer">
+                                Customer
+                            </option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -96,6 +112,18 @@
                     <td>Responsibility</td>
                     <td>
                         <input type="text" th:field="*{responsibility}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Manager ID</td>
+                    <td>
+                        <input type="number" th:field="*{manager.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contract ID</td>
+                    <td>
+                        <input type="number" th:field="*{contract.id}" readonly="readonly"/>
                     </td>
                 </tr>
                 <tr>

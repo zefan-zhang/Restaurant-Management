@@ -17,28 +17,28 @@
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}"><button class="button">Home</button></a>
-    <a th:href="@{'/customer_menu/' + ${customer.username}}"><button class="button">Menu</button></a>
-    <a th:href="@{'/customer_foodreview/' + ${customer.id}}"><button class="button">My Foodreviews</button></a>
-    <a th:href="@{'/wish_list/' + ${customer.id}}"><button class="button">Wish List</button></a>
-    <a th:href="@{'/my_order/' + ${customer.id}}"><button class="button">My Order</button></a>
-    <a th:href="@{'/my_message/' + ${customer.id}}"><button class="button">My Message</button></a>
+    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}"><button class="button">Home</button></a>
+    <a th:href="@{'/cooker_manager/' + ${cooker.id}}"><button class="button">My Manager</button></a>
+    <a th:href="@{'/cooker_subordinate/' + ${cooker.id}}"><button class="button">My Subordinate</button></a>
+    <a th:href="@{'/cooker_contract/' + ${cooker.id}}"><button class="button">My Contract</button></a>
+    <a th:href="@{'/cooker_order/' + ${cooker.id}}"><button class="button">Order</button></a>
+    <a th:href="@{'/cooker/message/' + ${cooker.userName}}"><button class="button">My Message</button></a>
 </nav>
 
 <main>
     <div align="center">
-        <br/><br/>
+        <br/>
+        <br/>
         <P class="heading1">My Profile</P>
         <br/>
-        <a th:href="@{'/edit_customer/' + ${customer.id}}"><button>Edit</button></a>
+        <a th:href="@{'/edit_cooker/' + ${cooker.id}}"><button>Edit</button></a>
         <br/>
         <br/>
         <table border="1" cellpadding="15">
             <thead>
             <tr>
-                <th>Your ID</th>
-                <th>Role</th>
-                <th>VIP</th>
+                <th>Cooker ID</th>
+                <th>Your Role</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
@@ -46,23 +46,23 @@
                 <th>Gender</th>
                 <th>Email</th>
                 <th>Date Of Birth</th>
-                <th>User Agreement</th>
-                <th>Payment Method</th>
+                <th>Level</th>
+                <th>Responsibility</th>
             </tr>
             </thead>
             <tbody>
-                <td th:text="${customer.id}">Cusomter ID</td>
-                <td th:text="${customer.role}">Role</td>
-                <td th:text="${customer?.VIP}">VIP</td>
-                <td th:text="${customer.fistName}">First Name</td>
-                <td th:text="${customer.lastName}">Last Name</td>
-                <td th:text="${customer.userName}">Username</td>
-                <td th:text="${customer.password}">Password</td>
-                <td th:text="${customer.gender}">Gender</td>
-                <td th:text="${customer.email}">Email</td>
-                <td th:text="${customer.dob}">Date Of Birth</td>
-                <td th:text="${customer?.userAgreement}">User Agreement</td>
-                <td th:text="${customer?.paymentMethod}">Payment Method</td>
+                <td th:text="${cooker.id}">ID</td>
+                <td th:text="${cooker.role}">Your Role</td>
+                <td th:text="${cooker.fistName}">First Name</td>
+                <td th:text="${cooker.lastName}">Last Name</td>
+                <td th:text="${cooker.userName}">Username</td>
+                <td th:text="${cooker.password}">Password</td>
+                <td th:text="${cooker.gender}">Gender</td>
+                <td th:text="${cooker.email}">Email</td>
+                <td th:text="${cooker.dob}">Date Of Birth</td>
+                <td th:text="${cooker.level}">Level</td>
+                <td th:text="${cooker.responsibility}">Responsibility</td>
+            </tr>
             </tbody>
         </table>
         <br/><br/>
@@ -70,7 +70,7 @@
         <div align="center">
             <P class="heading1">My address</P>
             <br/>
-            <a th:href="@{'/add_address/' + ${customer.id}}"><button>Add address</button></a>
+            <a th:href="@{'/add_address/' + ${cooker.id}}"><button>Add address</button></a>
             <br/>
             <br/>
             <table border="1" cellpadding="10">
@@ -88,7 +88,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="address : ${customer.addresses}">
+                <tr th:each="address : ${cooker.addresses}">
                     <td th:text="${address.id}">Address ID</td>
                     <td th:text="${address.primaryAddress}">Primary</td>
                     <td th:text="${address.street1}">Street 1</td>
@@ -112,7 +112,7 @@
         <div align="center">
             <p class="heading1">My Phone Number</p>
             <br/>
-            <a th:href="@{'/add_phone/' + ${customer.id}}"><button>Add Phone</button></a>
+            <a th:href="@{'/add_phone/' + ${cooker.id}}"><button>Add Phone</button></a>
             <br/>
             <br/>
             <table border="1" cellpadding="10">
@@ -126,7 +126,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="phone : ${customer.phones}">
+                <tr th:each="phone : ${cooker.phones}">
                     <td th:text="${phone.id}">Phone ID</td>
                     <td th:text="${phone.number}">Phone Number</td>
                     <td th:text="${phone.primaryPhone}">Primary</td>
@@ -135,7 +135,7 @@
                     </td>
                     <td>
                         <a th:href="@{'/delete_phone/' + ${phone.id}}">Delete</a>
-                    </td>\
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customers</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
 <header>
@@ -52,6 +52,7 @@
             <thead>
             <tr>
                 <th>Customer ID</th>
+                <th>Customer Role</th>
                 <th>VIP</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -71,7 +72,8 @@
             </thead>
             <tbody>
             <tr th:each="customer : ${customers}">
-                <td th:text="${customer.id}">Cooker ID</td>
+                <td th:text="${customer.id}">Customer ID</td>
+                <td th:text="${customer.role}">Customer Role</td>
                 <td th:text="${customer.VIP}">VIP</td>
                 <td th:text="${customer.fistName}">First Name</td>
                 <td th:text="${customer.lastName}">Last Name</td>

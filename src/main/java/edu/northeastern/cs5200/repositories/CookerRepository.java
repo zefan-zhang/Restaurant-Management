@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 
+import edu.northeastern.cs5200.models.Contract;
 import edu.northeastern.cs5200.models.Cooker;
 
 public interface CookerRepository extends CrudRepository<Cooker, Integer> {
@@ -18,4 +19,7 @@ public interface CookerRepository extends CrudRepository<Cooker, Integer> {
 
   @Query("SELECT p FROM Cooker p WHERE p.username =:userName")
   Cooker findCookerByUname(@Param("userName") String userName);
+
+  @Query("SELECT c FROM Cooker c WHERE c.contract =:contract")
+  Cooker findCookerByContract(@Param("contract") Contract contract);
 }

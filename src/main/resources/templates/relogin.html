@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Reviews</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
 <header>
@@ -42,6 +42,22 @@
         <br/><br/>
         <form action="#" th:action="@{/get_user}" th:object="${person}">
             <table border="0" cellpadding="10">
+                <tr>
+                    <td>Your Role</td>
+                    <td>
+                        <select th:field="*{role}">
+                            <option value="owner">
+                                Owner
+                            </option>
+                            <option value="cooker">
+                                Cooker
+                            </option>
+                            <option value="customer">
+                                Customer
+                            </option>
+                        </select>
+                    </td>
+                </tr>
                 <tr>
                     <td>User Name</td>
                     <td>
