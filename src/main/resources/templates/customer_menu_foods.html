@@ -2,20 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Message</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
+    <title>Foods</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle">Team 19</p>
+            <p class="subtitle" >Team 19</p>
         </div>
     </div>
-    <a href="/">
-        <button class="loginButton">Logout</button>
-    </a>
+    <a href="/"><button class="loginButton">Logout</button></a>
 </header>
 
 <nav>
@@ -43,33 +41,38 @@
     <div align="center">
         <br/>
         <br/>
-        <P class="heading1">My Message</P>
+        <p class="heading1">Foods</p>
         <br/>
         <br/>
-        <table border="1" cellpadding="15">
+        <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Message</th>
-                <th>Sent By</th>
-                <th>Received Time</th>
-                <th>Delete</th>
+                <th>Food ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Inventory</th>
+                <th>Reviews</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="text : ${receivedTexts}">
-                <td th:text="${text.message}">Message</td>
-                <td th:text="${text.cooker.userName}">Sent By</td>
-                <td th:text="${text.createdTime}">Received Time</td>
+            <tr th:each="fooditem : ${foodsOnMenu}">
+                <td th:text="${fooditem.id}">Food ID</td>
+                <td th:text="${fooditem.name}">Name</td>
+                <td th:text="${fooditem.description}">Description</td>
+                <td th:text="${fooditem.category}">Category</td>
+                <td th:text="${fooditem.price}">price</td>
+                <td th:text="${fooditem.inventory}">Inventory</td>
                 <td>
-                    <a th:href="@{'/customer/delete_message/' + ${text.id}}">Delete</a>
+                    <a th:href="@{'/customer/food_reviews/' + ${fooditem.id} + '/' + ${customer.username}}">Details</a>
                 </td>
-
             </tr>
             </tbody>
         </table>
+        <br/>
+        <br/>
     </div>
-    <br/>
-    <br/>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>

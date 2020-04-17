@@ -2,50 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle">Team 19</p>
+            <p class="subtitle" >Team 19</p>
         </div>
     </div>
-    <a href="/">
-        <button class="loginButton">Logout</button>
-    </a>
+    <a href="/"><button class="loginButton">Logout</button></a>
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
+    <a th:href="@{'/owner/' + ${owner.username}}">
         <button class="button">Home</button>
     </a>
-    <a th:href="@{'/customer/menus/' + ${customer.username}}">
-        <button class="button">Menu</button>
+    <a th:href="@{'/all_customers/' + ${owner.username}}">
+        <button class="button">Customers</button>
     </a>
-    <a th:href="@{'/customer_foodreview/' + ${customer.id}}">
-        <button class="button">My Foodreviews</button>
+    <a th:href="@{'/all_cookers/' + ${owner.username}}">
+        <button class="button">Cookers</button>
     </a>
-    <a th:href="@{'/wish_list/' + ${customer.id}}">
-        <button class="button">Wish List</button>
+    <a th:href="@{'/owner/menus/' + ${owner.id}}">
+        <button class="button">Menus</button>
     </a>
-    <a th:href="@{'/my_order/' + ${customer.id}}">
-        <button class="button">My Order</button>
+    <a th:href="@{'/all_orders/' + ${owner.username}}">
+        <button class="button">Orders</button>
     </a>
-    <a th:href="@{'/customer/message/' + ${customer.id}}">
-        <button class="button">My Message</button>
+    <a th:href="@{'/owner/message/' + ${owner.username}}">
+        <button class="button">Message</button>
     </a>
 </nav>
-
 <main>
     <div align="center">
         <br/>
         <br/>
         <p class="heading1">Update Profile</p>
         <br/>
-        <form action="#" th:action="@{/save_customer}" th:object="${customer}" method="post">
+        <form action="#" th:action="@{/save_owner}" th:object="${owner}" method="post">
             <table border="0" cellpadding="10">
                 <tr>
                     <td>Customer ID</td>
@@ -56,17 +53,7 @@
                 <tr>
                     <td>User Role</td>
                     <td>
-                        <select th:field="*{role}">
-                            <option value="owner">
-                                Owner
-                            </option>
-                            <option value="cooker">
-                                Cooker
-                            </option>
-                            <option value="customer">
-                                Customer
-                            </option>
-                        </select>
+                        <input type="text" th:field="*{role}" readonly="readonly"/>
                     </td>
                 </tr>
                 <tr>
@@ -93,19 +80,6 @@
                         <input type="text" th:field="*{password}"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>Vip</td>
-                    <td>
-                        <select th:field="*{VIP}">
-                            <option value="true">
-                                Yes
-                            </option>
-                            <option value="false">
-                                Not
-                            </option>
-                        </select>
-                    </td>
-                </tr>
 
                 <tr>
                     <td>Gender</td>
@@ -123,25 +97,6 @@
                     <td>Date Of Birth</td>
                     <td>
                         <input type="date" th:field="*{dob}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Payment Method</td>
-                    <td>
-                        <input type="text" th:field="*{paymentMethod}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>User Agreement</td>
-                    <td>
-                        <select th:field="*{userAgreement}">
-                            <option value="signed">
-                                Accept
-                            </option>
-                            <option value="no_sign">
-                                No Sign Yet
-                            </option>
-                        </select>
                     </td>
                 </tr>
                 <tr>

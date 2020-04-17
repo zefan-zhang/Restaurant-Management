@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Message</title>
+    <title>Home</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
 </head>
 <body>
@@ -20,7 +20,7 @@
     <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
         <button class="button">Home</button>
     </a>
-    <a th:href="@{'/customer_menu/' + ${customer.username}}">
+    <a th:href="@{'/customer/menus/' + ${customer.username}}">
         <button class="button">Menu</button>
     </a>
     <a th:href="@{'/customer_foodreview/' + ${customer.id}}">

@@ -94,6 +94,16 @@ public class RestaurantController {
 
   }
 
+  @GetMapping("/customer/food_reviews/{foodId}/{username}")
+  public String seeFoodReviews(@PathVariable(name = "foodId") int foodId,
+                             @PathVariable(name = "username") String username, Model model) {
+    List<FoodReview> reviews = restaurantDao.findReviewByFoodId(foodId);
+    Customer customer = restaurantDao.findCustomerByUname(username);
+    model.addAttribute("reviews", reviews);
+    model.addAttribute("customer", customer);
+    return "customer_see_reviews";
+  }
+
   // foodReviews
   @GetMapping("/public_food_reviews/{foodId}")
   public String goPublicFoodReviews(@PathVariable(name = "foodId") int id, Model model) {
@@ -235,6 +245,28 @@ public class RestaurantController {
     return "redirect:/owner/menus/" + ownerId;
   }
 
+  @GetMapping("/customer/menus/{username}")
+  public String goCustomerMenus(@PathVariable(name = "username") String username, Model model) {
+    List<Menu> menus = restaurantDao.findAllMenus();
+    Customer customer = restaurantDao.findCustomerByUname(username);
+    model.addAttribute("menus", menus);
+    model.addAttribute("customer", customer);
+    return "customer_menus";
+  }
+
+  @GetMapping("/customer/menu/{menuId}/{username}")
+  public String goCustomerFoods(@PathVariable(name = "menuId")int id,
+                                @PathVariable(name = "username")String username,
+                                Model model){
+    List<FoodItem> foodsOnMenu = restaurantDao.findFoodsByMenuId(id);
+    Customer customer = restaurantDao.findCustomerByUname(username);
+    Menu menu = restaurantDao.findMenuById(id);
+    model.addAttribute("foodsOnMenu", foodsOnMenu);
+    model.addAttribute("customer", customer);
+    model.addAttribute("menu", menu);
+    return "customer_menu_foods";
+
+  }
 
   // contract
   @PostMapping(value = "/save_contract/{cookerId}")
@@ -518,6 +550,12 @@ public class RestaurantController {
     return "redirect:/all_cookers/admin";
   }
 
+  @PostMapping(value = "/save_owner")
+  public String saveOwner(@ModelAttribute("owner") Owner owner) {
+    restaurantDao.saveOwner(owner);
+    return "redirect:/owner/admin";
+  }
+
   @GetMapping("contract/{id}/{ownerUsername}")
   public String getCookerContract(@PathVariable(name = "id") int id,
                                   @PathVariable(name = "ownerUsername") String ownerUsername,
@@ -549,6 +587,13 @@ public class RestaurantController {
     return modelAndView;
   }
 
+  @GetMapping("/edit_owner_profile/{id}")
+  public ModelAndView editOwnerProfile(@PathVariable(name = "id") int id) {
+    ModelAndView modelAndView = new ModelAndView("owner_update_profile");
+    Owner owner = restaurantDao.findOwnerById(id);
+    modelAndView.addObject("owner", owner);
+    return modelAndView;
+  }
 
   @GetMapping("/edit_cooker/{id}")
   public ModelAndView editCookerByUser(@PathVariable(name = "id") int id) {
@@ -645,7 +690,6 @@ public class RestaurantController {
   }
 
   // foodItem
-
   @GetMapping("/create_food/{menuId}")
   public String goCreateFoodPage(@PathVariable(name = "menuId") int menuId, Model model) {
     FoodItem food = new FoodItem();
