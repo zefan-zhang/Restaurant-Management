@@ -29,7 +29,10 @@
     <a th:href="@{'/owner/menus/' + ${owner.id}}">
         <button class="button">Menus</button>
     </a>
-    <a th:href="@{'/all_orders/' + ${owner.username}}">
+    <a th:href="@{'/owner/wishlist/' + ${owner.username}}">
+        <button class="button">Wish List</button>
+    </a>
+    <a th:href="@{'/owner/orders/' + ${owner.username}}">
         <button class="button">Orders</button>
     </a>
     <a th:href="@{'/owner/message/' + ${owner.username}}">
@@ -59,6 +62,7 @@
             <th>Reviews</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>Add to Wish List</th>
         </tr>
         </thead>
         <tbody>
@@ -79,6 +83,9 @@
             </td>
             <td>
                 <a th:href="@{'/delete_food/' + ${fooditem.id} + '/' + ${menu.id} + '/' + ${owner.id}}">Delete</a>
+            </td>
+            <td>
+                <a th:href="@{'/owner/wishlist/' + ${fooditem.id} + '/' + ${owner.id}}">Add</a>
             </td>
         </tr>
         </tbody>

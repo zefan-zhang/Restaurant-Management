@@ -88,4 +88,8 @@ public class Customer extends Person {
   public void setWishLists(Collection<WishList> wishLists) {
     this.wishLists = wishLists;
   }
+
+  public void addWishList(WishList wishList) {
+    this.wishLists.add(wishList);
+  }
 }

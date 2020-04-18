@@ -19,6 +19,7 @@ public class WishList {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private int quantity;
+  private double totalPrice;
 
   @ManyToOne
   @JsonIgnore
@@ -74,5 +75,13 @@ public class WishList {
 
   public void setCustomer(Customer customer) {
     this.customer = customer;
+  }
+
+  public double getTotalPrice() {
+    return totalPrice;
+  }
+
+  public void setTotalPrice(double totalPrice) {
+    this.totalPrice = totalPrice;
   }
 }

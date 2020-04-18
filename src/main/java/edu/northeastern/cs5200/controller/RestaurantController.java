@@ -818,12 +818,5 @@ public class RestaurantController {
     return modelAndView;
   }
 
-  @GetMapping("/wish_list/{customerId}")
-  public String goWishList(@PathVariable(name = "customerId") int id, Model model) {
-    List<WishList> wishLists = restaurantDao.findWishListByCustomerId(id);
-    Customer customer = restaurantDao.findCustomerById(id);
-    model.addAttribute("wishLists", wishLists);
-    model.addAttribute("customer", customer);
-    return "customer_wish_list";
-  }
+
 }

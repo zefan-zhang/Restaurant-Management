@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Write Review</title>
+    <title>Wish Lists</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -46,34 +46,42 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Write Food Review</p>
+        <p class="heading1">Wish Lists</p>
         <br/>
-        <form action="#" th:action="@{/save_review_owner}" th:object="${foodReview}" method="post">
-            <table border="0" cellpadding="10">
-                <tr>
-                    <td>Content</td>
-                    <td>
-                        <input type="text" th:field="*{review}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Reviewed Food Id</td>
-                    <td>
-                        <input type="text" th:field="*{foodItem.id}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Wrote By(User ID)</td>
-                    <td>
-                        <input type="text" th:field="*{customer.id}"/>
-                    </td>
-                </tr>
-                <td colspan="2">
-                    <button type="submit">Save</button>
+        <br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Wish List ID</th>
+                <th>Food Name</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Customer</th>
+                <th>Order ID</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list : ${wishLists}">
+                <td th:text="${list.id}">Menu ID</td>
+                <td th:text="${list?.foodItem?.name}">Food Name</td>
+                <td th:text="${list?.quantity}">Quantity</td>
+                <td th:text="${list?.totalPrice}">Total Price</td>
+                <td th:text="${list?.customer?.userName}">Customer</td>
+                <td th:text="${list?.order?.id}">Order ID</td>
+
+                <td>
+                    <a th:href="@{'/edit_wishlist/' + ${list.id} + '/' + ${owner.username}}">Edit</a>
                 </td>
-                </tr>
-            </table>
-        </form>
+                <td>
+                    <a th:href="@{'/delete_wishlist/' + ${list.id}}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
     </div>
 </main>
 <footer>

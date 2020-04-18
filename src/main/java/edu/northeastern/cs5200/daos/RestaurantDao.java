@@ -16,6 +16,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Order;
 import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -27,6 +28,7 @@ import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.FoodReviewRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
+import edu.northeastern.cs5200.repositories.OrderRepository;
 import edu.northeastern.cs5200.repositories.OwnerRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
@@ -70,6 +72,9 @@ public class RestaurantDao {
 
   @Autowired
   TextRepository textRepository;
+
+  @Autowired
+  OrderDao orderDao;
 
 
   // login
@@ -183,7 +188,7 @@ public class RestaurantDao {
     return null;
   }
 
-  public void savePerson(Person person){
+  public void savePerson(Person person) {
     personRepository.save(person);
   }
 
@@ -223,7 +228,7 @@ public class RestaurantDao {
     return cookerRepository.findCookerByContract(contract);
   }
 
-  public Cooker getManagerByCookerId(int id){
+  public Cooker getManagerByCookerId(int id) {
     Cooker cooker = this.findCookerById(id);
     Cooker manager = cooker.getManager();
     return manager;
@@ -247,11 +252,18 @@ public class RestaurantDao {
     cooker.setManager(null);
     cookerRepository.save(cooker);
     textRepository.deleteByCookerId(id);
-    List<Cooker> subordinates = (List<Cooker>) cooker.getSubordinates();
+    Collection<Cooker> subordinates = cooker.getSubordinates();
     if (!subordinates.isEmpty()) {
       for (Cooker s : subordinates) {
         s.setManager(null);
         cookerRepository.save(s);
+      }
+    }
+    Collection<Order> orders = cooker.getOrders();
+    if (!orders.isEmpty()) {
+      for (Order order : orders) {
+        order.setCooker(null);
+        orderDao.saveOrder(order);
       }
     }
     cookerRepository.deleteById(id);
@@ -293,6 +305,17 @@ public class RestaurantDao {
     for (FoodReview foodReview : foodReviews) {
       this.deleteReviewById(foodReview.getId());
     }
+    Collection<WishList> wishLists = wishListRepository.findWishListByCustomerId(id);
+    for (WishList wishList : wishLists) {
+      this.deleteWishListById(wishList.getId());
+    }
+    Collection<Order> orders = orderDao.findOrdersByCustomerId(id);
+    if (!orders.isEmpty()) {
+      for (Order order : orders) {
+        order.setCooker(null);
+        orderDao.saveOrder(order);
+      }
+    }
     customerRepository.deleteById(id);
   }
 
@@ -312,8 +335,7 @@ public class RestaurantDao {
 
   public Contract findContractById(int id) {
     Optional<Contract> optional = contractRepository.findById(id);
-    if (optional.isPresent())
-    {
+    if (optional.isPresent()) {
       return optional.get();
     }
     return null;
@@ -326,15 +348,17 @@ public class RestaurantDao {
   public void deleteContractById(int id) {
     contractRepository.deleteById(id);
   }
+
   // foodItem
   public void CreateFoodItem(FoodItem foodItem) {
     foodItemRepository.save(foodItem);
   }
+
   public List<FoodItem> findAllFoodItem() {
     return (List<FoodItem>) foodItemRepository.findAll();
   }
 
-  public FoodItem findFoodById(int id){
+  public FoodItem findFoodById(int id) {
     Optional<FoodItem> optional = foodItemRepository.findById(id);
     if (optional.isPresent()) {
       return optional.get();
@@ -347,6 +371,10 @@ public class RestaurantDao {
     Collection<FoodReview> foodReviews = foodItem.getFoodReviews();
     for (FoodReview review : foodReviews) {
       this.deleteReviewById(review.getId());
+    }
+    Collection<WishList> wishLists = foodItem.getWishLists();
+    for (WishList wishList : wishLists) {
+      this.deleteWishListById(wishList.getId());
     }
     foodItemRepository.deleteById(id);
   }
@@ -371,7 +399,7 @@ public class RestaurantDao {
   }
 
   public FoodReview findReviewById(int id) {
-    Optional<FoodReview> optional= foodReviewRepository.findById(id);
+    Optional<FoodReview> optional = foodReviewRepository.findById(id);
     if (optional.isPresent()) {
       return optional.get();
     }
@@ -390,9 +418,67 @@ public class RestaurantDao {
     foodReviewRepository.delete(foodReview);
   }
 
-  // shopping cart
-  public List<WishList> findWishListByCustomerId(int id){
+  // Wish List
+  public List<WishList> findAllWishList() {
+    return (List<WishList>) wishListRepository.findAll();
+  }
+
+  public List<WishList> findWishListByFoodId(int id) {
+    return wishListRepository.findWishListByFoodId(id);
+
+  }
+
+  public List<WishList> findWishListByCustomerId(int id) {
     return wishListRepository.findWishListByCustomerId(id);
+  }
+
+  public List<WishList> findWishListByOrderId(int id) {
+    return wishListRepository.findWishListByOrderId(id);
+  }
+
+  public WishList findWishListById(int id) {
+    Optional<WishList> optional = wishListRepository.findById(id);
+    if (optional.isPresent()) {
+      return optional.get();
+    }
+    return null;
+  }
+
+  public WishList saveWishList(WishList wishList) {
+    int customerId = wishList.getCustomer().getId();
+    Customer customer = this.findCustomerById(customerId);
+    wishList.setCustomer(customer);
+    int foodId = wishList.getFoodItem().getId();
+    FoodItem foodItem = this.findFoodById(foodId);
+    double price = foodItem.getPrice() * wishList.getQuantity();
+    wishList.setTotalPrice(price);
+    wishList.setFoodItem(foodItem);
+    int orderId = wishList.getOrder().getId();
+    Order order = orderDao.findOrderById(orderId);
+    order.setTotalPrice(order.getTotalPrice() + price);
+    wishList.setOrder(order);
+    return wishListRepository.save(wishList);
+  }
+
+//  public WishList createWishListForCustomerByOwner(int foodId, int customerId, int foodQuantity) {
+//    FoodItem foodItem = this.findFoodById(foodId);
+//    Customer customer = this.findCustomerById(customerId);
+//    WishList wishList = new WishList();
+//    wishList.setCustomer(customer);
+//    wishList.setFoodItem(foodItem);
+//    wishList.setQuantity(foodQuantity);
+//    return wishListRepository.save(wishList);
+//  }
+
+  public WishList createWishListForFoodOwner(int foodId) {
+    FoodItem foodItem = this.findFoodById(foodId);
+    WishList wishList = new WishList();
+    wishList.setFoodItem(foodItem);
+    return wishListRepository.save(wishList);
+  }
+
+  public void deleteWishListById(int id) {
+    wishListRepository.deleteById(id);
   }
 
 }

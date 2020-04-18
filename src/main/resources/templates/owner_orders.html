@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Address</title>
+    <title>Orders</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -46,37 +46,59 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">User Addresses</p>
+        <p class="heading1">Orders</p>
+        <br/>
+        <br/>
+        <a th:href="@{'/owner/create_order/' + ${owner.username}}">
+            <button>Create Order</button>
+        </a>
         <br/>
         <br/>
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Address ID</th>
-                <th>Primary</th>
-                <th>Street 1</th>
-                <th>Street 2</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip</th>
+                <th>Order ID</th>
+                <th>Food List</th>
+                <th>Order Status</th>
+                <th>Time Modified</th>
+                <th>Total Price</th>
+                <th>Customer</th>
+                <th>Cooker</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="address : ${addresses}">
-                <td th:text="${address.id}">Address ID</td>
-                <td th:text="${address.primaryAddress}">Primary</td>
-                <td th:text="${address.street1}">Street 1</td>
-                <td th:text="${address.street2}">Street 2</td>
-                <td th:text="${address.city}">City</td>
-                <td th:text="${address.state}">State</td>
-                <td th:text="${address.zip}">Zip</td>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">Order ID</td>
                 <td>
-                    <a th:href="@{'/owner_edit_address/' + ${address.id} + '/' + ${owner.username}}">Edit</a>
+                    <table border="1" cellpadding="10">
+                        <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="food : ${order?.getWishLists()}">
+                            <td th:text="${food.foodItem.name}">Food Name</td>
+                            <td th:text="${food.foodItem.price}">Quantity</td>
+                            <td th:text="${food.quantity}">Food Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td th:text="${order.status}">Order Status</td>
+                <td th:text="${order.timeModified}">Time Modified</td>
+                <td th:text="${order.totalPrice}">Total Price</td>
+                <td th:text="${order?.customer?.userName}">Customer</td>
+                <td th:text="${order?.cooker?.userName}">Cooker</td>
+                <td>
+                    <a th:href="@{'/edit_order/' + ${order.id} + '/' + ${owner.username}}">Edit</a>
                 </td>
                 <td>
-                    <a th:href="@{'/owner_delete_address/' + ${address.id}}">Delete</a>
+                    <a th:href="@{'/delete_order/' + ${order.id}}">Delete</a>
                 </td>
             </tr>
             </tbody>

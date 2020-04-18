@@ -21,7 +21,7 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private Timestamp timePlaced;
+  private Timestamp timeModified;
   private double totalPrice;
 
   @Enumerated(EnumType.STRING)
@@ -65,12 +65,12 @@ public class Order {
     this.id = id;
   }
 
-  public Timestamp getTimePlaced() {
-    return timePlaced;
+  public Timestamp getTimeModified() {
+    return timeModified;
   }
 
-  public void setTimePlaced(Timestamp timePlaced) {
-    this.timePlaced = timePlaced;
+  public void setTimeModified(Timestamp timePlaced) {
+    this.timeModified = timePlaced;
   }
 
   public double getTotalPrice() {
