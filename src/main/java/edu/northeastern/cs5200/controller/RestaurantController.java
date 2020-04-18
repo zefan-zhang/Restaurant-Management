@@ -21,6 +21,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Order;
 import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -782,4 +783,23 @@ public class RestaurantController {
     model.addAttribute("customer", customer);
     return "customer_wish_list";
   }
+
+  @GetMapping("/my_order/{customerId}")
+  public String customerOrder(@PathVariable(name = "customerId") int id, Model model){
+    Collection<Order> orders = restaurantDao.findAllOrdersByCustomerId(id);
+    Customer customer = restaurantDao.findCustomerById(id);
+    model.addAttribute("orders", orders);
+    model.addAttribute("customer", customer);
+    return "customer_order";
+  }
+
+  @GetMapping("/customer_addOrder/{customerId}")
+  public String customerAddOrder(@PathVariable(name = "customerId") int id, Model model){
+    Order order = new Order();
+    model.addAttribute("order", order);
+    Customer customer = restaurantDao.findCustomerById(id);
+    model.addAttribute("customer", customer);
+    return "customer_add_Order";
+  }
+
 }

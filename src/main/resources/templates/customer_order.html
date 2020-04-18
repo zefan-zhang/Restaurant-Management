@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Message</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="column left">
+            <p class="maintitle">Restaurant Management System</p>
+            <p class="subtitle" >Team 19</p>
+        </div>
+    </div>
+    <a href="/"><button class="loginButton">Logout</button></a>
+</header>
+<nav>
+    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
+        <button class="button">Home</button>
+    </a>
+    <a th:href="@{'/customer_menu/' + ${customer.username}}">
+        <button class="button">Menu</button>
+    </a>
+    <a th:href="@{'/customer_foodreview/' + ${customer.id}}">
+        <button class="button">My Foodreviews</button>
+    </a>
+    <a th:href="@{'/wish_list/' + ${customer.id}}">
+        <button class="button">Wish List</button>
+    </a>
+    <a th:href="@{'/my_order/' + ${customer.id}}">
+        <button class="button">My Order</button>
+    </a>
+    <a th:href="@{'/customer/message/' + ${customer.id}}">
+        <button class="button">My Message</button>
+    </a>
+</nav>
+<main>
+    <div align="center">
+        <br/><br/>
+        <P class="heading1">My Orders</P>
+        <br/>
+        <a th:href="@{'/customer_addOrder/' + ${customer.id}}"><button>Add New Order</button></a>
+        <br/>
+        <br/>
+        <table border="1" cellpadding="15">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Time Placed</th>
+                <th>Total Price</th>
+                <th>Order Status</th>
+                <th>Details</th>>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${orders}">
+            <td th:text="${order.id}">Order ID</td>
+            <td th:text="${order.timePlaced}">timePlaced</td>
+            <td th:text="${order.totalPrice}">totalPrice</td>
+                <td th:text="${order.status}">OrderStatus</td>
+                <td>
+                    <a th:href="@{'/order_details/' + ${customer.id}}">Details</a>
+                </td>
+                <td>
+                    <a th:href="@{'/edit_order/' + ${customer.id}}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{'/delete_order/' + ${customer.id}}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <br/>
+</main>
+<footer>
+    <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
+</footer>
+</body>
+</html>

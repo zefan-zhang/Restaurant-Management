@@ -16,6 +16,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Order;
 import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -27,6 +28,7 @@ import edu.northeastern.cs5200.repositories.CustomerRepository;
 import edu.northeastern.cs5200.repositories.FoodItemRepository;
 import edu.northeastern.cs5200.repositories.FoodReviewRepository;
 import edu.northeastern.cs5200.repositories.MenuRepository;
+import edu.northeastern.cs5200.repositories.OrderRepository;
 import edu.northeastern.cs5200.repositories.OwnerRepository;
 import edu.northeastern.cs5200.repositories.PersonRepository;
 import edu.northeastern.cs5200.repositories.PhoneRepository;
@@ -71,6 +73,27 @@ public class RestaurantDao {
   @Autowired
   TextRepository textRepository;
 
+  @Autowired
+  OrderRepository orderRepository;
+
+  //truncate
+  public void truncate(){
+    /*foodItemRepository.deleteAll();
+    cookerRepository.deleteAll();
+    customerRepository.deleteAll();
+    contractRepository.deleteAll();
+    menuRepository.deleteAll();
+    addressRepository.deleteAll();
+    personRepository.deleteAll();
+    phoneRepository.deleteAll();
+    foodReviewRepository.deleteAll();*/
+    cookerRepository.deleteAll();
+    ownerRepository.deleteAll();
+    customerRepository.deleteAll();
+    /*wishListRepository.deleteAll();
+    textRepository.deleteAll();
+    orderRepository.deleteAll();*/
+  }
 
   // login
   public Person findUserByUnameAndPword(String username, String password) {
@@ -393,6 +416,11 @@ public class RestaurantDao {
   // shopping cart
   public List<WishList> findWishListByCustomerId(int id){
     return wishListRepository.findWishListByCustomerId(id);
+  }
+
+  //order
+  public List<Order> findAllOrdersByCustomerId(int id){
+    return orderRepository.findOrdersByCustomerId(id);
   }
 
 }
