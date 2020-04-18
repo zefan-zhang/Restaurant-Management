@@ -19,7 +19,7 @@ import edu.northeastern.cs5200.models.WishList;
 public class WishListController {
 
   @Autowired
-  RestaurantDao restaurantDao;
+  private RestaurantDao restaurantDao;
 
   @GetMapping("/wish_list/{customerId}")
   public String goWishList(@PathVariable(name = "customerId") int id, Model model) {
