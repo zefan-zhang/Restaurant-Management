@@ -1,5 +1,7 @@
 package edu.northeastern.cs5200.models;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
+@Transactional
 public class Cooker extends Person{
   private int level;
   private String responsibility;

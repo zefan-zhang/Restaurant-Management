@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.daos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -81,12 +82,13 @@ public class RestaurantDao {
     /*foodItemRepository.deleteAll();
     cookerRepository.deleteAll();
     customerRepository.deleteAll();
-    contractRepository.deleteAll();
     menuRepository.deleteAll();
     addressRepository.deleteAll();
     personRepository.deleteAll();
     phoneRepository.deleteAll();
     foodReviewRepository.deleteAll();*/
+    contractRepository.deleteAll();
+    textRepository.deleteAll();
     cookerRepository.deleteAll();
     ownerRepository.deleteAll();
     customerRepository.deleteAll();
@@ -215,6 +217,7 @@ public class RestaurantDao {
     return (List<Cooker>) cookerRepository.findAll();
   }
 
+  @Transactional
   public void addCooker(Cooker cooker) {
     Collection<Cooker> subordinates = cookerRepository.findSubordinateByMId(cooker.getId());
     cooker.setSubordinates(subordinates);
@@ -349,6 +352,7 @@ public class RestaurantDao {
   public void deleteContractById(int id) {
     contractRepository.deleteById(id);
   }
+
   // foodItem
   public void CreateFoodItem(FoodItem foodItem) {
     foodItemRepository.save(foodItem);
