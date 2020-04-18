@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.daos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -71,11 +72,31 @@ public class RestaurantDao {
   private WishListRepository wishListRepository;
 
   @Autowired
-  TextRepository textRepository;
+  private TextRepository textRepository;
 
   @Autowired
-  OrderDao orderDao;
+  private OrderDao orderDao;
 
+
+  //truncate
+  public void truncate(){
+    /*foodItemRepository.deleteAll();
+    cookerRepository.deleteAll();
+    customerRepository.deleteAll();
+    menuRepository.deleteAll();
+    addressRepository.deleteAll();
+    personRepository.deleteAll();
+    phoneRepository.deleteAll();
+    foodReviewRepository.deleteAll();*/
+    contractRepository.deleteAll();
+    textRepository.deleteAll();
+    cookerRepository.deleteAll();
+    ownerRepository.deleteAll();
+    customerRepository.deleteAll();
+    /*wishListRepository.deleteAll();
+    textRepository.deleteAll();
+    orderRepository.deleteAll();*/
+  }
 
   // login
   public Person findUserByUnameAndPword(String username, String password) {
@@ -197,6 +218,7 @@ public class RestaurantDao {
     return (List<Cooker>) cookerRepository.findAll();
   }
 
+  @Transactional
   public void addCooker(Cooker cooker) {
     Collection<Cooker> subordinates = cookerRepository.findSubordinateByMId(cooker.getId());
     cooker.setSubordinates(subordinates);
@@ -480,5 +502,4 @@ public class RestaurantDao {
   public void deleteWishListById(int id) {
     wishListRepository.deleteById(id);
   }
-
 }

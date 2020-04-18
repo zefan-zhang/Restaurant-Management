@@ -1,5 +1,7 @@
 package edu.northeastern.cs5200.models;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "contracts")
+@Transactional
 public class Contract {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

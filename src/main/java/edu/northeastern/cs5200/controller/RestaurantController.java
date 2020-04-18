@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Collection;
 import java.util.List;
 
+import edu.northeastern.cs5200.daos.OrderDao;
 import edu.northeastern.cs5200.daos.RestaurantDao;
 import edu.northeastern.cs5200.models.Address;
 import edu.northeastern.cs5200.models.Contract;
@@ -21,6 +22,7 @@ import edu.northeastern.cs5200.models.Customer;
 import edu.northeastern.cs5200.models.FoodItem;
 import edu.northeastern.cs5200.models.FoodReview;
 import edu.northeastern.cs5200.models.Menu;
+import edu.northeastern.cs5200.models.Order;
 import edu.northeastern.cs5200.models.Owner;
 import edu.northeastern.cs5200.models.Person;
 import edu.northeastern.cs5200.models.Phone;
@@ -32,6 +34,9 @@ public class RestaurantController {
 
   @Autowired
   private RestaurantDao restaurantDao;
+
+  @Autowired
+  private OrderDao orderDao;
 
   // home page
   @GetMapping("/")
@@ -818,5 +823,31 @@ public class RestaurantController {
     return modelAndView;
   }
 
+  @GetMapping("/wish_list/{customerId}")
+  public String goWishList(@PathVariable(name = "customerId") int id, Model model) {
+    List<WishList> wishLists = restaurantDao.findWishListByCustomerId(id);
+    Customer customer = restaurantDao.findCustomerById(id);
+    model.addAttribute("wishLists", wishLists);
+    model.addAttribute("customer", customer);
+    return "customer_wish_list";
+  }
+
+  @GetMapping("/my_order/{customerId}")
+  public String customerOrder(@PathVariable(name = "customerId") int id, Model model){
+    Collection<Order> orders = orderDao.findOrdersByCustomerId(id); 
+    Customer customer = restaurantDao.findCustomerById(id);
+    model.addAttribute("orders", orders);
+    model.addAttribute("customer", customer);
+    return "customer_order";
+  }
+
+  @GetMapping("/customer_addOrder/{customerId}")
+  public String customerAddOrder(@PathVariable(name = "customerId") int id, Model model){
+    Order order = new Order();
+    model.addAttribute("order", order);
+    Customer customer = restaurantDao.findCustomerById(id);
+    model.addAttribute("customer", customer);
+    return "customer_add_Order";
+  }
 
 }
