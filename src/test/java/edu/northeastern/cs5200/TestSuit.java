@@ -36,6 +36,7 @@ public class TestSuit {
 
   @Test
   public void testOwnerCreateCustomer(){
+    assertEquals(restaurantDao.findOwnerByUname("admin").getRole(), RoleType.owner);
     Customer customer = new Customer(RoleType.customer, "Bob", "Hope", "bob", "bob", "male", "bob@neu.edu", new Date(2020,02,02));
     restaurantDao.addCustomer(customer);
   }
@@ -43,12 +44,14 @@ public class TestSuit {
 
   @Test
   public void testOwnerFindAllCustomer() {
+    assertEquals(restaurantDao.findOwnerByUname("admin").getRole(), RoleType.owner);
     List<Customer> customers = restaurantDao.findAllCustomer();
     assertEquals(customers.size(),1);
   }
 
   @Test
   public void testOwnerEditCustomer(){
+    assertEquals(restaurantDao.findOwnerByUname("admin").getRole(), RoleType.owner);
     List<Customer> customers = restaurantDao.findAllCustomer();
     for (int i = 0; i < customers.size(); i++){
       Customer c = customers.get(i);
@@ -67,6 +70,7 @@ public class TestSuit {
 
   @Test
   public void testOwnerRemoveCustomer(){
+    assertEquals(restaurantDao.findOwnerByUname("admin").getRole(), RoleType.owner);
     List<Customer> customers = restaurantDao.findAllCustomer();
     for (int i = 0; i < customers.size(); i++){
       Customer c = customers.get(i);
