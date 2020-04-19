@@ -227,10 +227,13 @@ public class RestaurantController {
     return "owner_all_customers";
   }
 
-  @GetMapping("add_menu")
-  public String createMenu(Model model) {
+  @GetMapping("add_menu/{id}")
+  public String createMenu(@PathVariable(name = "id") int id, Model model) {
     Menu menu = new Menu();
+    menu.setCreatorId(id);
+    Owner owner = restaurantDao.findOwnerById(id);
     model.addAttribute("menu", menu);
+    model.addAttribute("owner", owner);
     return "owner_new_menu";
   }
 

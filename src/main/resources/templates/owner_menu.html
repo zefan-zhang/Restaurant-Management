@@ -47,7 +47,7 @@
         <p class="heading1">Menus</p>
         <br/>
         <br/>
-        <a href="/add_menu"><button class="button">Add Menu</button></a>
+        <a th:href="@{'/add_menu/' + ${owner.id}}"><button class="button">Add Menu</button></a>
         <br/>
         <br/>
         <table border="1" cellpadding="10">

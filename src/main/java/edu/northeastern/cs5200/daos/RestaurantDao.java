@@ -334,7 +334,7 @@ public class RestaurantDao {
     Collection<Order> orders = orderDao.findOrdersByCustomerId(id);
     if (!orders.isEmpty()) {
       for (Order order : orders) {
-        order.setCooker(null);
+        order.setCustomer(null);
         orderDao.saveOrder(order);
       }
     }
@@ -483,21 +483,11 @@ public class RestaurantDao {
     return wishListRepository.save(wishList);
   }
 
-//  public WishList createWishListForCustomerByOwner(int foodId, int customerId, int foodQuantity) {
-//    FoodItem foodItem = this.findFoodById(foodId);
-//    Customer customer = this.findCustomerById(customerId);
-//    WishList wishList = new WishList();
-//    wishList.setCustomer(customer);
-//    wishList.setFoodItem(foodItem);
-//    wishList.setQuantity(foodQuantity);
-//    return wishListRepository.save(wishList);
-//  }
-
   public WishList createWishListForFood(int foodId) {
     FoodItem foodItem = this.findFoodById(foodId);
     WishList wishList = new WishList();
     wishList.setFoodItem(foodItem);
-    return wishListRepository.save(wishList);
+    return wishList;
   }
 
   public void deleteWishListById(int id) {
