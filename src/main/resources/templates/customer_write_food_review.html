@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Message</title>
+    <title>Writer Review</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -43,33 +43,35 @@
     <div align="center">
         <br/>
         <br/>
-        <P class="heading1">My Message</P>
+        <p class="heading1">Write Food Review</p>
         <br/>
-        <br/>
-        <table border="1" cellpadding="15">
-            <thead>
-            <tr>
-                <th>Message</th>
-                <th>Sent By</th>
-                <th>Received Time</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="text : ${receivedTexts}">
-                <td th:text="${text.message}">Message</td>
-                <td th:text="${text?.cooker?.userName}">Sent By</td>
-                <td th:text="${text.createdTime}">Received Time</td>
-                <td>
-                    <a th:href="@{'/customer/delete_message/' + ${text.id}}">Delete</a>
+        <form action="#" th:action="@{/order/save_review}" th:object="${foodReview}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Your ID</td>
+                    <td>
+                        <input type="text" th:field="*{customer.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Food Id</td>
+                    <td>
+                        <input type="text" th:field="*{foodItem.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Content</td>
+                    <td>
+                        <input type="text" th:field="*{review}"/>
+                    </td>
+                </tr>
+                <td colspan="2">
+                    <button type="submit">Save</button>
                 </td>
-
-            </tr>
-            </tbody>
-        </table>
+                </tr>
+            </table>
+        </form>
     </div>
-    <br/>
-    <br/>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>

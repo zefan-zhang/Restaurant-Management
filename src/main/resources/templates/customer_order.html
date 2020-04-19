@@ -74,6 +74,7 @@
                             <th>Food Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Write Review</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -81,6 +82,10 @@
                             <td th:text="${food.foodItem.name}">Food Name</td>
                             <td th:text="${food.foodItem.price}">Quantity</td>
                             <td th:text="${food.quantity}">Food Name</td>
+                            <td>
+                                <a th:href="@{'/write_food_review/' + ${food.foodItem.id} + '/'  + ${customer.userName}}">Write Review</a>
+                            </td>
+
                         </tr>
                         </tbody>
                     </table>

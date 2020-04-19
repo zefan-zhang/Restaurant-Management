@@ -144,10 +144,17 @@ public class RestaurantController {
               person.getDob());
       restaurantDao.addCustomer(customer);
     }
-    return "redirect:/" + userRole.toString() + "/" + person.getUserName();
+    return "redirect:/register/login";
   }
 
   //login
+  @RequestMapping("/register/login")
+  public String loginAfterRegister(Model model) {
+    Person person = new Person();
+    model.addAttribute("person", person);
+    return "login_after_register";
+  }
+
   @RequestMapping("/login")
   public String goLoginPage(Model model) {
     Person person = new Person();
@@ -761,6 +768,18 @@ public class RestaurantController {
     return "owner_new_food_review";
   }
 
+  @GetMapping("/write_food_review/{foodId}/{username}")
+    public String writeReviewForFoodByCustomer(@PathVariable(name = "username") String username,
+                                          @PathVariable(name = "foodId") int foodId, Model model) {
+    FoodReview foodReview = new FoodReview();
+    foodReview = restaurantDao.writeReviewForFood(foodReview, foodId);
+    Customer customer = restaurantDao.findCustomerByUname(username);
+    foodReview.setCustomer(customer);
+    model.addAttribute("foodReview", foodReview);
+    model.addAttribute("customer", customer);
+    return "customer_write_food_review";
+  }
+
   @PostMapping("/save_review_owner")
   public String saveFoodReviewByOwner(@ModelAttribute("foodReview") FoodReview foodReview) {
     restaurantDao.saveFoodReview(foodReview);
@@ -769,6 +788,12 @@ public class RestaurantController {
     int menuId = foodItem.getMenu().getId();
     int ownerId = foodItem.getMenu().getCreatorId();
     return "redirect:/food_reviews/" + foodId + "/" + menuId + "/" + ownerId;
+  }
+
+  @PostMapping("/order/save_review")
+  public String saveFoodReviewInOrder(@ModelAttribute("foodReview") FoodReview foodReview) {
+    restaurantDao.saveFoodReview(foodReview);
+    return "redirect:/customer/orders/" + foodReview.getCustomer().getId();
   }
 
   @PostMapping("/save_review")
