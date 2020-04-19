@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Reviews</title>
+    <title>Wish List</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -43,35 +43,32 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Food Reviews</p>
+        <p class="heading1">Create Order</p>
         <br/>
-        <br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>Review ID</th>
-                <th>Reviewed Food Id</th>
-                <th>Content</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="foodReview : ${foodReviews}">
-                <td th:text="${foodReview.id}">Review ID</td>
-                <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
-                <td th:text="${foodReview.review}">Content</td>
-                <td>
-                    <a th:href="@{'/edit_review/' + ${foodReview.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_review/' + ${foodReview.customer.id} + '/' + ${foodReview.id}}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
+        <form action="#" th:action="@{/customer/save_order}"
+              th:object="${order}" method="post">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Your Id</td>
+                    <td>
+                        <input type="text" th:field="*{customer.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Order Status</td>
+                    <td>
+                        <select th:field="*{status}">
+                            <option value="holding">Holding</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </main>
 <footer>

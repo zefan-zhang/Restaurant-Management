@@ -53,10 +53,19 @@ public class OrderDao {
     order.setTimeModified(timestamp);
     List<WishList> wishLists = wishListRepository.findWishListByOrderId(order.getId());
     order.setWishLists(wishLists);
+    if (order.getTotalPrice() == 0) {
+      double totalPrice = 0;
+      for (WishList wishList : wishLists) {
+        totalPrice += wishList.getTotalPrice();
+      }
+      order.setTotalPrice(totalPrice);
+    }
     Customer customer = restaurantDao.findCustomerById(order.getCustomer().getId());
     order.setCustomer(customer);
-    Cooker cooker = restaurantDao.findCookerById(order.getCooker().getId());
-    order.setCooker(cooker);
+    if (order.getCooker() != null) {
+      Cooker cooker = restaurantDao.findCookerById(order.getCooker().getId());
+      order.setCooker(cooker);
+    }
     return orderRepository.save(order);
   }
 

@@ -19,7 +19,7 @@
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
+    <a th:href="@{'/customer/' + ${customer.username}}">
         <button class="button">Home</button>
     </a>
     <a th:href="@{'/customer/menus/' + ${customer.username}}">
@@ -28,11 +28,11 @@
     <a th:href="@{'/customer_foodreview/' + ${customer.id}}">
         <button class="button">My Foodreviews</button>
     </a>
-    <a th:href="@{'/wish_list/' + ${customer.id}}">
+    <a th:href="@{'/customer/wishlist/' + ${customer.id}}">
         <button class="button">Wish List</button>
     </a>
-    <a th:href="@{'/my_order/' + ${customer.id}}">
-        <button class="button">My Order</button>
+    <a th:href="@{'/customer/orders/' + ${customer.id}}">
+        <button class="button">Orders</button>
     </a>
     <a th:href="@{'/customer/message/' + ${customer.id}}">
         <button class="button">My Message</button>

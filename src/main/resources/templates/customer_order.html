@@ -2,80 +2,105 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Orders</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}" />
+    <title>Wish List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
 <header>
     <div class="row">
         <div class="column left">
             <p class="maintitle">Restaurant Management System</p>
-            <p class="subtitle" >Team 19</p>
+            <p class="subtitle">Team 19</p>
         </div>
     </div>
-    <a href="/"><button class="loginButton">Logout</button></a>
+    <a href="/">
+        <button class="loginButton">Logout</button>
+    </a>
 </header>
+
 <nav>
-    <a th:href="@{'/' + ${customer.role} + '/' + ${customer.username}}">
+    <a th:href="@{'/customer/' + ${customer.username}}">
         <button class="button">Home</button>
     </a>
-    <a th:href="@{'/customer_menu/' + ${customer.username}}">
+    <a th:href="@{'/customer/menus/' + ${customer.username}}">
         <button class="button">Menu</button>
     </a>
     <a th:href="@{'/customer_foodreview/' + ${customer.id}}">
         <button class="button">My Foodreviews</button>
     </a>
-    <a th:href="@{'/wish_list/' + ${customer.id}}">
+    <a th:href="@{'/customer/wishlist/' + ${customer.id}}">
         <button class="button">Wish List</button>
     </a>
-    <a th:href="@{'/my_order/' + ${customer.id}}">
-        <button class="button">My Order</button>
+    <a th:href="@{'/customer/orders/' + ${customer.id}}">
+        <button class="button">Orders</button>
     </a>
     <a th:href="@{'/customer/message/' + ${customer.id}}">
         <button class="button">My Message</button>
     </a>
 </nav>
+
 <main>
     <div align="center">
-        <br/><br/>
-        <P class="heading1">My Orders</P>
-        <br/>
-        <a th:href="@{'/customer_addOrder/' + ${customer.id}}"><button>Add New Order</button></a>
         <br/>
         <br/>
-        <table border="1" cellpadding="15">
+        <p class="heading1">Orders</p>
+        <br/>
+        <br/>
+        <a th:href="@{'/customer/create_order/' + ${customer.id}}">
+            <button>Create Order</button>
+        </a>
+        <br/>
+        <br/>
+        <table border="1" cellpadding="10">
             <thead>
             <tr>
                 <th>Order ID</th>
-                <th>Time Placed</th>
-                <th>Total Price</th>
+                <th>Food List</th>
                 <th>Order Status</th>
-                <th>Details</th>>
+                <th>Time Modified</th>
+                <th>Total Price</th>
+                <th>Cooker</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order: ${orders}">
-            <td th:text="${order.id}">Order ID</td>
-            <td th:text="${order.timeModified}">timePlaced</td>
-            <td th:text="${order.totalPrice}">totalPrice</td>
-                <td th:text="${order.status}">OrderStatus</td>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">Order ID</td>
                 <td>
-                    <a th:href="@{'/order_details/' + ${customer.id}}">Details</a>
+                    <table border="1" cellpadding="10">
+                        <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="food : ${order?.getWishLists()}">
+                            <td th:text="${food.foodItem.name}">Food Name</td>
+                            <td th:text="${food.foodItem.price}">Quantity</td>
+                            <td th:text="${food.quantity}">Food Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td th:text="${order.status}">Order Status</td>
+                <td th:text="${order.timeModified}">Time Modified</td>
+                <td th:text="${order.totalPrice}">Total Price</td>
+                <td th:text="${order?.cooker?.userName}">Cooker</td>
+                <td>
+                    <a th:href="@{'/customer/edit_order/' + ${order.id}}">Edit</a>
                 </td>
                 <td>
-                    <a th:href="@{'/edit_order/' + ${customer.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_order/' + ${customer.id}}">Delete</a>
+                <a th:href="@{'/delete_order/' + ${order.id} + '/' + ${customer.id}}">Delete</a>
                 </td>
             </tr>
             </tbody>
         </table>
+        <br/>
+        <br/>
     </div>
-    <br/>
-    <br/>
 </main>
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>

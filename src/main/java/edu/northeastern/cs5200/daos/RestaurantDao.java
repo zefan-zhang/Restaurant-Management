@@ -475,10 +475,11 @@ public class RestaurantDao {
     double price = foodItem.getPrice() * wishList.getQuantity();
     wishList.setTotalPrice(price);
     wishList.setFoodItem(foodItem);
-    int orderId = wishList.getOrder().getId();
-    Order order = orderDao.findOrderById(orderId);
-    order.setTotalPrice(order.getTotalPrice() + price);
-    wishList.setOrder(order);
+    if (wishList.getOrder() != null) {
+      int orderId = wishList.getOrder().getId();
+      Order order = orderDao.findOrderById(orderId);
+      wishList.setOrder(order);
+    }
     return wishListRepository.save(wishList);
   }
 
@@ -492,7 +493,7 @@ public class RestaurantDao {
 //    return wishListRepository.save(wishList);
 //  }
 
-  public WishList createWishListForFoodOwner(int foodId) {
+  public WishList createWishListForFood(int foodId) {
     FoodItem foodItem = this.findFoodById(foodId);
     WishList wishList = new WishList();
     wishList.setFoodItem(foodItem);

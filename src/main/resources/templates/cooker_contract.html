@@ -19,7 +19,7 @@
 </header>
 
 <nav>
-    <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
+    <a th:href="@{'/cooker/' + ${cooker.username}}">
         <button class="button">Home</button>
     </a>
     <a th:href="@{'/cooker_manager/' + ${cooker.id}}">

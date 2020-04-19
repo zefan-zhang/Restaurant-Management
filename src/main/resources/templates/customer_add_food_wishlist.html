@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Reviews</title>
+    <title>Wish List</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -43,35 +43,43 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">Food Reviews</p>
+        <p class="heading1">Add Food to Wish List</p>
         <br/>
-        <br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>Review ID</th>
-                <th>Reviewed Food Id</th>
-                <th>Content</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="foodReview : ${foodReviews}">
-                <td th:text="${foodReview.id}">Review ID</td>
-                <td th:text="${foodReview.foodItem.id}">Reviewed Food Id</td>
-                <td th:text="${foodReview.review}">Content</td>
-                <td>
-                    <a th:href="@{'/edit_review/' + ${foodReview.id}}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{'/delete_review/' + ${foodReview.customer.id} + '/' + ${foodReview.id}}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
+        <form action="#" th:action="@{'/customer/save_wishlist/' + ${customer.id}}"
+              th:object="${wishList}" method="post">
+
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Your ID</td>
+                    <td>
+                        <input type="text" th:field="*{customer.id}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Food ID</td>
+                    <td>
+                        <input type="text" th:field="*{foodItem.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Food Name</td>
+                    <td>
+                        <input type="text" th:field="*{foodItem.name}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td>
+                        <input type="number" th:field="*{quantity}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </main>
 <footer>

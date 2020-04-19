@@ -823,22 +823,4 @@ public class RestaurantController {
     return modelAndView;
   }
 
-  @GetMapping("/my_order/{customerId}")
-  public String customerOrder(@PathVariable(name = "customerId") int id, Model model){
-    Collection<Order> orders = orderDao.findOrdersByCustomerId(id);
-    Customer customer = restaurantDao.findCustomerById(id);
-    model.addAttribute("orders", orders);
-    model.addAttribute("customer", customer);
-    return "customer_order";
-  }
-
-  @GetMapping("/customer_addOrder/{customerId}")
-  public String customerAddOrder(@PathVariable(name = "customerId") int id, Model model){
-    Order order = new Order();
-    model.addAttribute("order", order);
-    Customer customer = restaurantDao.findCustomerById(id);
-    model.addAttribute("customer", customer);
-    return "customer_add_Order";
-  }
-
 }

@@ -21,17 +21,17 @@ public class WishListController {
   @Autowired
   private RestaurantDao restaurantDao;
 
-  @GetMapping("/wish_list/{customerId}")
+  @GetMapping("/customer/wishlist/{customerId}")
   public String goWishList(@PathVariable(name = "customerId") int id, Model model) {
     List<WishList> wishLists = restaurantDao.findWishListByCustomerId(id);
     Customer customer = restaurantDao.findCustomerById(id);
     model.addAttribute("wishLists", wishLists);
     model.addAttribute("customer", customer);
-    return "customer_wish_list";
+    return "customer_wishlist";
   }
 
   @GetMapping("/owner/wishlist/{username}")
-  public String goWishList(@PathVariable(name = "username")String username, Model model) {
+  public String goWishList(@PathVariable(name = "username") String username, Model model) {
     Owner owner = restaurantDao.findOwnerByUname(username);
     List<WishList> wishLists = restaurantDao.findAllWishList();
     model.addAttribute("owner", owner);
@@ -40,8 +40,8 @@ public class WishListController {
   }
 
   @GetMapping("/wishlist/{orderId}/{username}")
-  public String getWishListByOrderId(@PathVariable(name = "orderId")int id,
-                                     @PathVariable(name = "username")String username, Model model) {
+  public String getWishListByOrderId(@PathVariable(name = "orderId") int id,
+                                     @PathVariable(name = "username") String username, Model model) {
     Owner owner = restaurantDao.findOwnerByUname(username);
     List<WishList> wishLists = restaurantDao.findWishListByOrderId(id);
     model.addAttribute("owner", owner);
@@ -54,15 +54,27 @@ public class WishListController {
                                            @PathVariable(name = "ownerId") int ownerId,
                                            Model model) {
     Owner owner = restaurantDao.findOwnerById(ownerId);
-    WishList wishList = restaurantDao.createWishListForFoodOwner(foodId);
-    model.addAttribute(owner);
-    model.addAttribute(wishList);
+    WishList wishList = restaurantDao.createWishListForFood(foodId);
+    model.addAttribute("wishList", wishList);
+    model.addAttribute("owner", owner);
     return "owner_add_food_wishlist";
   }
 
+  @GetMapping("/customer/wishlist/{foodId}/{customerId}")
+  public String addFoodToWishListByCustomer(@PathVariable(name = "foodId") int foodId,
+                                            @PathVariable(name = "customerId") int customerId,
+                                            Model model) {
+    Customer customer = restaurantDao.findCustomerById(customerId);
+    WishList wishList = restaurantDao.createWishListForFood(foodId);
+    wishList.setCustomer(customer);
+    model.addAttribute("customer", customer);
+    model.addAttribute("wishList", wishList);
+    return "customer_add_food_wishlist";
+  }
+
   @GetMapping("/edit_wishlist/{wishlistId}/{username}")
-  public String editWishListByOwner(@PathVariable(name = "wishlistId")int id,
-                                    @PathVariable(name = "username")String username,
+  public String editWishListByOwner(@PathVariable(name = "wishlistId") int id,
+                                    @PathVariable(name = "username") String username,
                                     Model model) {
     WishList wishList = restaurantDao.findWishListById(id);
     Owner owner = restaurantDao.findOwnerByUname(username);
@@ -71,15 +83,41 @@ public class WishListController {
     return "owner_update_wishlist";
   }
 
+  @GetMapping("/edit_wishlist/{listId}")
+  public String editWishListByCustomer(@PathVariable(name = "listId") int listId,
+                                       Model model) {
+    WishList wishList = restaurantDao.findWishListById(listId);
+    Customer customer = restaurantDao.findCustomerById(wishList.getCustomer().getId());
+    model.addAttribute("wishList", wishList);
+    model.addAttribute("customer", customer);
+    return "customer_update_wishlist";
+  }
+
   @PostMapping(value = "/owner/save_wishlist")
   public String saveWishListByOwner(@ModelAttribute("wishList") WishList wishList) {
     restaurantDao.saveWishList(wishList);
     return "redirect:/owner/wishlist/admin";
   }
 
+
+  @PostMapping(value = "/customer/save_wishlist/{userId}")
+  public String saveWishListByCustomer(@PathVariable(name = "userId") int userId,
+                                       @ModelAttribute("wishList") WishList wishList) {
+
+    restaurantDao.saveWishList(wishList);
+    return "redirect:/customer/wishlist/" + userId;
+  }
+
   @GetMapping(value = "/delete_wishlist/{listId}")
-  public String deleteWishListByOwner(@PathVariable(name = "listId")int id) {
+  public String deleteWishListByOwner(@PathVariable(name = "listId") int id) {
     restaurantDao.deleteWishListById(id);
     return "redirect:/owner/wishlist/admin";
+  }
+
+  @GetMapping(value = "/delete_wishlist/{listId}/{userId}")
+  public String deleteWishListByCustomer(@PathVariable(name = "listId") int listId,
+                                         @PathVariable(name = "userId") int userId) {
+    restaurantDao.deleteWishListById(listId);
+    return "redirect:/customer/wishlist/" + userId;
   }
 }
