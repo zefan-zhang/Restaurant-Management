@@ -12,6 +12,7 @@ import java.util.List;
 
 import edu.northeastern.cs5200.daos.OrderDao;
 import edu.northeastern.cs5200.daos.RestaurantDao;
+import edu.northeastern.cs5200.models.Cooker;
 import edu.northeastern.cs5200.models.Order;
 import edu.northeastern.cs5200.models.Owner;
 
@@ -32,6 +33,16 @@ public class OrderController {
     model.addAttribute("owner", owner);
     model.addAttribute("orders", orders);
     return "owner_orders";
+  }
+
+  @GetMapping("/cooker/orders/{username}")
+  public String getAllOrdersByCooker(@PathVariable(name = "username") String username,
+                             Model model) {
+    Cooker cooker = restaurantDao.findCookerByUname(username);
+    List<Order> orders = orderDao.findAllOrders();
+    model.addAttribute("cooker", cooker);
+    model.addAttribute("orders", orders);
+    return "cooker_orders";
   }
 
   @GetMapping("/owner/create_order/{username}")
@@ -56,6 +67,13 @@ public class OrderController {
     return "redirect:/owner/orders/admin";
   }
 
+  @PostMapping(value = "/cooker/save_update_order/{username}")
+  public String saveUpdateOrderByOwner(@PathVariable(name = "username") String username,
+                                       @ModelAttribute("order") Order order) {
+    orderDao.updateOrder(order);
+    return "redirect:/cooker/orders/" + username;
+  }
+
   @GetMapping("/edit_order/{orderId}/{username}")
   public String editOrderByOwner(@PathVariable(name = "orderId") int orderId,
                                  @PathVariable(name = "username") String username,
@@ -65,6 +83,17 @@ public class OrderController {
     model.addAttribute("order", order);
     model.addAttribute("owner", owner);
     return "onwer_update_order";
+  }
+
+  @GetMapping("/cooker/edit_order/{orderId}/{username}")
+  public String editOrderByCooker(@PathVariable(name = "orderId") int orderId,
+                                 @PathVariable(name = "username") String username,
+                                 Model model){
+    Order order = orderDao.findOrderById(orderId);
+    Cooker cooker = restaurantDao.findCookerByUname(username);
+    model.addAttribute("order", order);
+    model.addAttribute("cooker", cooker);
+    return "cooker_update_order";
   }
 
   @GetMapping(value = "delete_order/{orderId}")

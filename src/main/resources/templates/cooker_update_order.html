@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Message</title>
+    <title>Order</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -17,6 +17,7 @@
         <button class="loginButton">Logout</button>
     </a>
 </header>
+
 <nav>
     <a th:href="@{'/' + ${cooker.role} + '/' + ${cooker.username}}">
         <button class="button">Home</button>
@@ -37,40 +38,62 @@
         <button class="button">My Message</button>
     </a>
 </nav>
+
 <main>
     <div align="center">
         <br/>
         <br/>
-        <form action="#" th:action="@{/send_message}" th:object="${text}" method="post">
+        <p class="heading1">Edit Order</p>
+        <br/>
+        <form action="#" th:action="@{'/cooker/save_update_order/' + ${cooker.username}}"
+              th:object="${order}" method="post">
             <table border="0" cellpadding="10">
                 <tr>
-                    <td>Receiver Username</td>
+                    <td>Order ID</td>
                     <td>
-                        <input type="text" th:field="*{customer.userName}"/>
+                        <input type="text" th:field="*{id}" readonly="readonly"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>Message</td>
+                    <td>Order Status</td>
                     <td>
-                        <input type="text" th:field="*{message}"/>
+                        <select th:field="*{status}">
+                            <option value="holding">Holding</option>
+                            <option value="payed">Payed</option>
+                            <option value="cookingProcessing">Cooking Processing</option>
+                            <option value="finished">Finished</option>
+                            <option value="canceled">Canceled</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <td>Your Id</td>
+                    <td>Total Price</td>
                     <td>
-                        <input type="text" th:field="*{cooker.id}" readonly="readonly"/>
+                        <input type="number" th:field="*{totalPrice}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Customer ID</td>
+                    <td>
+                        <input type="number" th:field="*{customer.id}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cooker Id</td>
+                    <td>
+                        <input type="number" th:field="*{cooker.id}"/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit">Send</button>
+                        <button type="submit">Save</button>
                     </td>
                 </tr>
-
             </table>
         </form>
     </div>
 </main>
+
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
 </footer>

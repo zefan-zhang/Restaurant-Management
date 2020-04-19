@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Subordinates</title>
+    <title>Orders</title>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
 </head>
 <body>
@@ -43,37 +43,50 @@
     <div align="center">
         <br/>
         <br/>
-        <p class="heading1">My Subordinates</p>
+        <p class="heading1">Orders</p>
         <br/>
         <br/>
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Subordinate ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Gender</th>
-                <th>Email</th>
-                <th>Date Of Birth</th>
-                <th>Level</th>
-                <th>Responsibility</th>
-                <th>Remove</th>
+                <th>Order ID</th>
+                <th>Food List</th>
+                <th>Order Status</th>
+                <th>Time Modified</th>
+                <th>Total Price</th>
+                <th>Customer</th>
+                <th>Cooker</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="cooker : ${subordinates}">
-                <td th:text="${cooker.id}">Cooker ID</td>
-                <td th:text="${cooker.fistName}">First Name</td>
-                <td th:text="${cooker.lastName}">Last Name</td>
-                <td th:text="${cooker.userName}">Username</td>
-                <td th:text="${cooker.gender}">Gender</td>
-                <td th:text="${cooker.email}">Email</td>
-                <td th:text="${cooker.dob}">Date Of Birth</td>
-                <td th:text="${cooker.level}">Level</td>
-                <td th:text="${cooker.responsibility}">Responsibility</td>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">Order ID</td>
                 <td>
-                    <a th:href="@{'/remove_subordinate/' + ${cooker.id}}">Remove</a>
+                    <table border="1" cellpadding="10">
+                        <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="food : ${order?.getWishLists()}">
+                            <td th:text="${food.foodItem.name}">Food Name</td>
+                            <td th:text="${food.foodItem.price}">Quantity</td>
+                            <td th:text="${food.quantity}">Food Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td th:text="${order.status}">Order Status</td>
+                <td th:text="${order.timeModified}">Time Modified</td>
+                <td th:text="${order.totalPrice}">Total Price</td>
+                <td th:text="${order?.customer?.userName}">Customer</td>
+                <td th:text="${order?.cooker?.userName}">Cooker</td>
+                <td>
+                    <a th:href="@{'/cooker/edit_order/' + ${order.id} + '/' + ${cooker.username}}">Edit</a>
                 </td>
             </tr>
             </tbody>
@@ -82,6 +95,7 @@
         <br/>
     </div>
 </main>
+
 <footer>
     <span class="footerfont">CS5200 Spring 2020 Final Project<br>By: Zefan Zhang/Yujia Liu/Santosh Shenoy Tirthahalli</span>
 </footer>
