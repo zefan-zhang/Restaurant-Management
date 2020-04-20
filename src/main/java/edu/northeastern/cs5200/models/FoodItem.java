@@ -25,8 +25,8 @@ public class FoodItem {
   @Enumerated(EnumType.STRING)
   private FoodCategory category;
   private double price;
-  private int inventory;
   private String description;
+  private String imageUrl;
 
 
   @ManyToOne()
@@ -98,13 +98,6 @@ public class FoodItem {
     this.price = price;
   }
 
-  public int getInventory() {
-    return inventory;
-  }
-
-  public void setInventory(int inventory) {
-    this.inventory = inventory;
-  }
 
   public String getDescription() {
     return description;
@@ -112,5 +105,13 @@ public class FoodItem {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }

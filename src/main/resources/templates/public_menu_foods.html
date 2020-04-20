@@ -30,24 +30,25 @@
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Food ID</th>
+                <th>Food Image</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Category</th>
                 <th>Price</th>
-                <th>Inventory</th>
                 <th>Reviews</th>
                 <th>Add to Wish List</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="fooditem : ${foodsOnMenu}">
-                <td th:text="${fooditem.id}">Food ID</td>
+                <td>
+                    <img style="width:88px;height:88px;" th:src="@{${fooditem.imageUrl}}"/>
+                </td>
+
                 <td th:text="${fooditem.name}">Name</td>
                 <td th:text="${fooditem.description}">Description</td>
                 <td th:text="${fooditem.category}">Category</td>
                 <td th:text="${fooditem.price}">price</td>
-                <td th:text="${fooditem.inventory}">Inventory</td>
                 <td>
                     <a th:href="@{'/public_food_reviews/' + ${fooditem.id}}">Detail</a>
                     <br/><br/>
