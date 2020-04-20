@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cookers</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/systle.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/stytle.css}"/>
 </head>
 <body>
 <header>
@@ -57,8 +57,8 @@
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>Cooker ID</th>
-                <th>Cooker Role</th>
+                <th>ID</th>
+                <th>Role</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
@@ -79,8 +79,8 @@
             </thead>
             <tbody>
             <tr th:each="cooker : ${cookers}">
-                <td th:text="${cooker.id}">Cooker ID</td>
-                <td th:text="${cooker.role}">Cooker ID</td>
+                <td th:text="${cooker.id}">ID</td>
+                <td th:text="${cooker.role}">Role</td>
                 <td th:text="${cooker.fistName}">First Name</td>
                 <td th:text="${cooker.lastName}">Last Name</td>
                 <td th:text="${cooker.userName}">Username</td>

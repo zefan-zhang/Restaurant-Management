@@ -38,14 +38,6 @@ public class RestaurantController {
   @Autowired
   private OrderDao orderDao;
 
-  // home page
-  @GetMapping("/")
-  public String homePage(Model model) {
-    List<Menu> menus = restaurantDao.findAllMenus();
-    model.addAttribute("menus", menus);
-    return "public_homepage";
-  }
-
   // menu
   @GetMapping("/menus")
   public String goPublicMenuPage(Model model) {
